@@ -1,0 +1,64 @@
+{% extends "painel/components/tabela.html" %}
+
+{% block title %}Atividades{% endblock %}
+
+{% block titulo %}
+Atividades
+{% endblock %}
+
+
+{% block descricao %}
+Gerencie as atividades cadastradas.
+{% endblock %}
+
+
+{% block texto_botao %}
+Nova atividade
+{% endblock %}
+
+
+{% block placeholder_busca %}
+Buscar atividade
+{% endblock %}
+
+
+{% block cabecalho %}
+
+<th>Atividade</th>
+<th>Data de Cadastro</th>
+<th class="column-action"></th>
+
+{% endblock %}
+
+
+{% block corpo %}
+
+{% for atividade in atividades %}
+
+<tr>
+    <td>{{ atividade.nome }}</td>
+    <td>{{ atividade.data_cadastro|date:"d/m/Y" }}</td>
+    
+    <td>
+        <button
+            type="button"
+            class="action-button"
+            title="Mais informações"
+            >
+            <i class="fa-solid fa-circle-info"></i>
+        </button>
+    </td>
+</tr>
+
+
+{% empty %}
+
+<tr>
+    <td colspan="6" class="empty-message">
+        Nenhuma atividade cadastrada.
+    </td>
+</tr>
+
+{% endfor %}
+
+{% endblock %}

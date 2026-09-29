@@ -1,0 +1,79 @@
+{% extends "site/base.html" %}
+{% load static %}
+
+{% block title %}Serviços · Centro de Formação Humana e Social{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'site/css/services.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <section class="section section--tinted">
+        <div class="container">
+            <div class="section-title section-title--plain">Próximos Eventos</div>
+            <div class="events-grid--6">
+                {% for evento in proximos_eventos %}
+                <div class="event-card card" style="padding:18px;">
+                    <h3 style="font-size:16px;color:var(--cor-texto);margin-bottom:12px;">{{ evento.nome }}</h3>
+                    <p class="text-muted" style="font-size:14px;margin-bottom:6px;"><strong style="color:var(--cor-texto);">Horário:</strong> {{ evento.horario }}</p>
+                    <p class="text-muted" style="font-size:14px;margin-bottom:6px;"><strong style="color:var(--cor-texto);">Dia:</strong> {{ evento.dia }}</p>
+                    <p class="text-muted" style="font-size:14px;"><strong style="color:var(--cor-texto);">Local:</strong> {{ evento.local }}</p>
+                </div>
+                {% empty %}
+                <p class="text-muted">Nenhum evento programado no momento. Volte em breve!</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section class="section section--tinted" style="padding-top:0;">
+        <div class="container">
+            <div class="activities-toolbar">
+                <div class="activities-toolbar__title">
+                    <h2>Atividades</h2>
+                    {% if atividades %}
+                        <span>{{ atividades_total_inicio }} - {{ atividades_total_fim }}</span>
+                    {% endif %}
+                </div>
+                <div class="activities-toolbar__actions">
+                    <label class="activities-toolbar__search">
+                        <input type="search" placeholder="Buscar atividade...">
+                    </label>
+                    <button class="activities-toolbar__search-btn" aria-label="Buscar">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                    <button class="activities-toolbar__filter">
+                        <i class="fa-solid fa-filter"></i> Filtro
+                    </button>
+                </div>
+            </div>
+
+            <div class="activities-list">
+                {% for atividade in atividades %}
+                <div class="activity-row card">
+                    <img src="{% static 'site/img/atividade-karate.jpg' %}" alt="{{ atividade.nome }}">
+                    <div class="activity-row__info">
+                        <h3>{{ atividade.nome }}</h3>
+                        <p><strong>Horário:</strong> {{ atividade.horario }}</p>
+                        <p><strong>Dias da Semana:</strong> {{ atividade.dias_semana }}</p>
+                        <p><strong>Professor(a):</strong> {{ atividade.professor }}</p>
+                    </div>
+                </div>
+                {% empty %}
+                <p class="text-muted">Nenhuma atividade cadastrada no momento.</p>
+                {% endfor %}
+            </div>
+
+            {% if atividades %}
+            <div class="pagination">
+                <button class="pagination__page active" aria-current="page">1</button>
+                <button class="pagination__page">2</button>
+                <button class="pagination__page">3</button>
+                <button class="pagination__page" aria-label="Próxima página"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+
+{% endblock content %}

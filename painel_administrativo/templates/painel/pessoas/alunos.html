@@ -1,0 +1,87 @@
+{% extends "painel/components/tabela.html" %}
+{% load static %}
+
+{% block individual_css %}
+<link rel="stylesheet" href="{% static 'painel/css/aluno_modal.css' %}">
+<link rel="stylesheet" href="{% static 'painel/css/familia_modal.css' %}">
+{% endblock %}
+
+{% block title %}Alunos{% endblock %}
+
+{% block titulo %}
+Alunos
+{% endblock %}
+
+
+{% block descricao %}
+Gerencie os alunos cadastrados.
+{% endblock %}
+
+
+{% block texto_botao %}
+Novo aluno
+{% endblock %}
+
+
+{% block placeholder_busca %}
+Buscar aluno
+{% endblock %}
+
+
+{% block cabecalho %}
+
+<th>CPF</th>
+<th>Nome</th>
+<th>Data de Nascimento</th>
+<th>Telefone</th>
+<th class="column-action"></th>
+
+{% endblock %}
+
+
+{% block corpo %}
+
+{% for aluno in alunos %}
+
+<tr>
+    <td>{{ aluno.cpf }}</td>
+    <td>{{ aluno.nome }}</td>
+    <td>{{ aluno.data_nascimento|date:"d/m/Y" }}</td>
+    <td>{{ aluno.telefone }}</td>
+
+    <td>
+        <button
+            type="button"
+            class="action-button btn-abrir-aluno"
+            data-aluno-id="{{ aluno.id }}"
+            title="Mais informações">
+
+            <i class="fa-solid fa-circle-info"></i>
+
+        </button>
+    </td>
+</tr>
+
+
+{% empty %}
+
+<tr>
+    <td colspan="6" class="empty-message">
+        Nenhum aluno cadastrado.
+    </td>
+</tr>
+
+{% endfor %}
+
+{% endblock %}
+
+{% block modal %} 
+{% include "painel/components/aluno_modal.html" %}
+{% include "painel/components/familia_modal.html" %}
+{% endblock modal %}
+
+{% block individual_js %}
+<script src="{% static 'painel/js/aluno_modal.js' %}"></script>
+<script src="{% static 'painel/js/familia_modal.js' %}"></script>
+{% endblock %}
+

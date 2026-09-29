@@ -1,0 +1,237 @@
+{% extends "site/base.html" %}
+{% load static %}
+
+{% block title %}Sobre nós · Centro de Formação Humana e Social{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'site/css/about.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <section class="about-intro">
+        <div class="container">
+            <div class="about-intro__text">
+                <h1>Sobre o nosso projeto</h1>
+                <p>
+                    O Centro de Formação Humana e Social nasceu do desejo de oferecer educação,
+                    acolhimento e cuidado a crianças, jovens e famílias em situação de
+                    vulnerabilidade. Ao longo dos anos, construímos uma rede de cursos,
+                    atividades e uma casa de apoio que já impactou centenas de pessoas na
+                    nossa comunidade.
+                </p>
+            </div>
+            <div class="about-intro__icon">
+                <i class="fa-solid fa-hands-holding-child"></i>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="pillars-grid">
+                <div class="pillar-card">
+                    <div class="pillar-card__icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                    <h3>Educação</h3>
+                    <p>Cursos e atividades que abrem caminhos para crianças, jovens e adultos da comunidade.</p>
+                </div>
+                <div class="pillar-card">
+                    <div class="pillar-card__icon"><i class="fa-solid fa-house-chimney-heart"></i></div>
+                    <h3>Acolhimento</h3>
+                    <p>Uma casa de apoio de portas abertas para quem mais precisa de atenção e cuidado.</p>
+                </div>
+                <div class="pillar-card">
+                    <div class="pillar-card__icon"><i class="fa-solid fa-hand-holding-heart"></i></div>
+                    <h3>Cuidado</h3>
+                    <p>Acompanhamento próximo de famílias em situação de vulnerabilidade social.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section--tinted">
+        <div class="container">
+            <div class="section-title">Galeria</div>
+            <div class="gallery-grid--6">
+                <img src="{% static 'site/img/galeria-1.jpg' %}" alt="Momentos do projeto">
+                <img src="{% static 'site/img/galeria-2.jpg' %}" alt="Momentos do projeto">
+                <img src="{% static 'site/img/galeria-3.jpg' %}" alt="Momentos do projeto">
+                <img src="{% static 'site/img/galeria-4.jpg' %}" alt="Momentos do projeto">
+                <img src="{% static 'site/img/galeria-5.jpg' %}" alt="Momentos do projeto">
+                <img src="{% static 'site/img/galeria-6.jpg' %}" alt="Momentos do projeto">
+            </div>
+            <div class="text-center">
+                <a href="#" class="btn btn-primary">Clique para ver mais</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section--tinted" id="doacoes" style="padding-top:0;">
+        <div class="container">
+            <div class="section-title section-title--secundaria">Doações</div>
+            <div class="donate-panel card">
+                <div class="donate-panel__steps" id="donateSteps">
+                    <div class="donate-step active" data-step="1">
+                        <span class="donate-step__circle">1</span>
+                        <span class="donate-step__label">Valor</span>
+                    </div>
+                    <div class="donate-step__line"></div>
+                    <div class="donate-step {% if doacao_concluida %}active{% endif %}" data-step="2">
+                        <span class="donate-step__circle">2</span>
+                        <span class="donate-step__label">Pagamento</span>
+                    </div>
+                    <div class="donate-step__line"></div>
+                    <div class="donate-step {% if doacao_concluida %}active{% endif %}" data-step="3">
+                        <span class="donate-step__circle">3</span>
+                        <span class="donate-step__label">Concluído</span>
+                    </div>
+                </div>
+
+                <form method="post" action="{% url 'about_us' %}#doacoes" id="donatePanelBody" data-initial-step="{% if doacao_concluida %}3{% else %}1{% endif %}">
+                    {% csrf_token %}
+                    <div class="donate-panel__form" data-panel="1" {% if doacao_concluida %}style="display:none;"{% endif %}>
+                        <input type="text" name="nome" id="donateNome" placeholder="Seu nome" maxlength="120" autocomplete="name">
+                        <div class="donate-panel__presets">
+                            <button type="button" class="donate-preset" data-valor="20">R$ 20</button>
+                            <button type="button" class="donate-preset" data-valor="50">R$ 50</button>
+                            <button type="button" class="donate-preset" data-valor="100">R$ 100</button>
+                        </div>
+                        <input type="text" name="valor" id="donateValor" placeholder="R$ 0,00" inputmode="decimal" autocomplete="off">
+                        <button type="button" class="btn btn-primary" id="donateNext">Avançar</button>
+                    </div>
+
+                    <div class="donate-panel__payment" data-panel="2" style="display:none;">
+                        <p class="donate-panel__amount">Valor da doação: <strong id="donateValorConfirm">R$ 0,00</strong></p>
+                        <img src="{% static 'site/img/qrcode-doacao.png' %}" alt="QR Code para doação via Pix" class="donate-panel__qr">
+                        <p class="text-muted">Escaneie o QR code com o app do seu banco para concluir a doação via Pix.</p>
+                        <div class="donate-panel__actions">
+                            <button type="button" class="btn btn-outline" id="donateBack">Voltar</button>
+                            <button type="submit" class="btn btn-primary" id="donateConfirm" disabled>Já fiz o Pix</button>
+                        </div>
+                    </div>
+
+                    <div class="donate-panel__done" data-panel="3" {% if not doacao_concluida %}style="display:none;"{% endif %}>
+                        <div class="donate-panel__done-icon"><i class="fa-solid fa-circle-check"></i></div>
+                        <h3>Obrigado{% if doador_nome %}, {{ doador_nome }}{% endif %}!</h3>
+                        <p class="text-muted">Seu nome já está na lista de doadores logo abaixo. Assim que o Pix for concluído no aplicativo do seu banco, sua contribuição chega até nós e faz toda a diferença.</p>
+                        <a href="{% url 'about_us' %}#doacoes" class="btn btn-outline">Fazer nova doação</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section--tinted" style="padding-top:0;">
+        <div class="container">
+            <div class="section-title">Doadores</div>
+            <ul class="donors-list">
+                {% for doador in doadores %}
+                <li>
+                    <i class="fa-solid fa-heart"></i>
+                    {{ doador.nome }}{% if doador.valor_formatado %} contribuiu com {{ doador.valor_formatado }}{% else %} contribuiu{% endif %} para nossa história, obrigado!
+                </li>
+                {% empty %}
+                <li><i class="fa-regular fa-heart"></i> Seja o primeiro a contribuir com a nossa história!</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+
+{% endblock content %}
+
+{% block extra_js %}
+<script>
+    (function () {
+        const donateForm = document.getElementById("donatePanelBody");
+        if (!donateForm) return;
+
+        const steps = document.querySelectorAll("#donateSteps .donate-step");
+        const panels = donateForm.querySelectorAll("[data-panel]");
+        const nomeInput = document.getElementById("donateNome");
+        const valorInput = document.getElementById("donateValor");
+        const valorConfirm = document.getElementById("donateValorConfirm");
+        const presets = donateForm.querySelectorAll(".donate-preset");
+        const nextBtn = document.getElementById("donateNext");
+        const backBtn = document.getElementById("donateBack");
+        const confirmBtn = document.getElementById("donateConfirm");
+
+        function goToStep(stepNumber) {
+            steps.forEach((step) => {
+                step.classList.toggle("active", Number(step.dataset.step) <= stepNumber);
+            });
+            panels.forEach((panel) => {
+                panel.style.display = Number(panel.dataset.panel) === stepNumber ? "" : "none";
+            });
+            // Mantém o botão de submit real desativado fora da etapa 2, para
+            // que a tecla Enter nos campos da etapa 1 não envie o formulário
+            // antes de o doador ver o QR code.
+            if (confirmBtn) {
+                confirmBtn.disabled = stepNumber !== 2;
+            }
+        }
+
+        function parseValor(raw) {
+            let cleaned = (raw || "").replace(/[^\d.,]/g, "");
+            if (cleaned.includes(",") && cleaned.includes(".")) {
+                cleaned = cleaned.replace(/\./g, "").replace(",", ".");
+            } else {
+                cleaned = cleaned.replace(",", ".");
+            }
+            const num = parseFloat(cleaned);
+            return isNaN(num) ? null : num;
+        }
+
+        function showError(input) {
+            input.classList.add("input-error");
+            input.focus();
+            setTimeout(() => input.classList.remove("input-error"), 900);
+        }
+
+        presets.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                presets.forEach((b) => b.classList.remove("active"));
+                btn.classList.add("active");
+                valorInput.value = "R$ " + btn.dataset.valor + ",00";
+            });
+        });
+
+        if (valorInput) {
+            valorInput.addEventListener("input", () => {
+                presets.forEach((b) => b.classList.remove("active"));
+            });
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener("click", () => {
+                const nome = (nomeInput.value || "").trim();
+                const numero = parseValor(valorInput.value);
+
+                let valido = true;
+                if (!nome) {
+                    showError(nomeInput);
+                    valido = false;
+                }
+                if (numero === null || numero <= 0) {
+                    showError(valorInput);
+                    valido = false;
+                }
+                if (!valido) return;
+
+                valorConfirm.textContent = numero.toLocaleString("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                });
+                goToStep(2);
+            });
+        }
+
+        if (backBtn) backBtn.addEventListener("click", () => goToStep(1));
+
+        // "Já fiz o Pix" é um botão de submit de verdade: ao ser clicado, o
+        // formulário é enviado ao servidor e o nome entra na lista de doadores.
+
+        const initialStep = Number(donateForm.dataset.initialStep) || 1;
+        goToStep(initialStep);
+    })();
+</script>
+{% endblock %}

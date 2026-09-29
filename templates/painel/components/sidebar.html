@@ -1,0 +1,123 @@
+{% load static %}
+
+<aside class="sidebar">
+
+    <!-- Logo -->
+    <div class="sidebar-logo">
+        <img src="{% static 'painel/img/logo.png' %}" alt="Logo da organização">
+        <h4>CENTRO DE FORMAÇÃO HUMANA E SOCIAL</h4>
+    </div>
+
+    <!-- Menu -->
+    <nav class="sidebar-menu">
+
+        <!-- Dashboard -->
+        <a href="{% url 'dashboard' %}" class="menu-item">
+            <i class="fa-solid fa-house"></i>
+            <span>Dashboard</span>
+        </a>
+
+        <!-- Pessoas -->
+        <div class="menu-group">
+            <button class="menu-item menu-toggle">
+                <i class="fa-solid fa-users"></i>
+                <span>Pessoas</span>
+                <i class="fa-solid fa-chevron-down menu-arrow"></i>
+            </button>
+
+            <div class="submenu">
+                <a href="{% url 'alunos' %}">
+                    <span class="submenu-dot"></span>
+                    Alunos
+                </a>
+                <a href="{% url 'profissionais' %}">
+                    <span class="submenu-dot"></span>
+                    Profissionais
+                </a>
+                <a>
+                    <span class="submenu-dot"></span>
+                    Usuários
+                </a>
+            </div>
+        </div>
+
+        <!-- Cursos -->
+        <div class="menu-group">
+            <button class="menu-item menu-toggle">
+                <i class="fa-solid fa-book"></i>
+                <span>Cursos</span>
+                <i class="fa-solid fa-chevron-down menu-arrow"></i>
+            </button>
+
+            <div class="submenu">
+                <a href="{% url 'cursos' %}">
+                    <span class="submenu-dot"></span>
+                    Cursos
+                </a>
+                <a href="{% url 'turmas' %}">
+                    <span class="submenu-dot"></span>
+                    Turmas
+                </a>
+                <a href="{% url 'matriculas' %}">
+                    <span class="submenu-dot"></span>
+                    Matrículas
+                </a>
+                <a href="{% url 'aulas' %}">
+                    <span class="submenu-dot"></span>
+                    Aulas
+                </a>
+            </div>
+        </div>
+
+        <!-- Atividades -->
+        <div class="menu-group">
+            <button class="menu-item menu-toggle">
+                <i class="fa-solid fa-calendar-days"></i>
+                <span>Atividades</span>
+                <i class="fa-solid fa-chevron-down menu-arrow"></i>
+            </button>
+
+            <div class="submenu">
+                <a href="{% url 'atividades' %}">
+                    <span class="submenu-dot"></span>
+                    Atividades
+                </a>
+                <a href="{% url 'eventos' %}">
+                    <span class="submenu-dot"></span>
+                    Eventos
+                </a>
+                <a href="{% url 'encontros' %}">
+                    <span class="submenu-dot"></span>
+                    Encontros
+                </a>
+            </div>
+        </div>
+
+        <!-- Casa de Apoio -->
+        <div class="menu-group">
+            <button class="menu-item menu-toggle">
+                <i class="fa-solid fa-house-medical"></i>
+                <span>Casa de Apoio</span>
+                <i class="fa-solid fa-chevron-down menu-arrow"></i>
+            </button>
+
+            <div class="submenu">
+                <a href="{% url 'pacientes' %}">
+                    <span class="submenu-dot"></span>
+                    Pacientes
+                </a>
+                <a href="{% url 'avaliacoes' %}">
+                    <span class="submenu-dot"></span>
+                    Avaliações
+                </a>
+            </div>
+        </div>
+
+        <!-- Relatórios -->
+        <a class="menu-item">
+            <i class="fa-solid fa-house"></i>
+            <span>Relatórios</span>
+        </a>
+    </nav>
+</aside>
+

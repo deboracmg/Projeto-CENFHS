@@ -1,0 +1,70 @@
+{% extends "painel/components/tabela.html" %}
+
+{% block title %}Profissionais{% endblock %}
+
+{% block titulo %}
+Profissionais
+{% endblock %}
+
+
+{% block descricao %}
+Gerencie os profissionais cadastrados.
+{% endblock %}
+
+
+{% block texto_botao %}
+Novo profissional
+{% endblock %}
+
+
+{% block placeholder_busca %}
+Buscar profissional
+{% endblock %}
+
+
+{% block cabecalho %}
+
+<th>CPF</th>
+<th>Nome</th>
+<th>Data de Nascimento</th>
+<th>Telefone</th>
+<th>Área de Atuação</th>
+<th class="column-action"></th>
+
+{% endblock %}
+
+
+{% block corpo %}
+
+{% for profissional in profissionais %}
+
+<tr>
+    <td>{{ profissional.cpf }}</td>
+    <td>{{ profissional.nome }}</td>
+    <td>{{ profissional.data_nascimento|date:"d/m/Y" }}</td>
+    <td>{{ profissional.telefone }}</td>
+    <td>{{ profissional.area_atuacao }}</td>
+
+    <td>
+        <button
+            type="button"
+            class="action-button"
+            title="Mais informações"
+        >
+            <i class="fa-solid fa-circle-info"></i>
+        </button>
+    </td>
+</tr>
+
+
+{% empty %}
+
+<tr>
+    <td colspan="6" class="empty-message">
+        Nenhum profissional cadastrado.
+    </td>
+</tr>
+
+{% endfor %}
+
+{% endblock %}

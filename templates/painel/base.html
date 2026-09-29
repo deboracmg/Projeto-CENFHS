@@ -1,0 +1,32 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}{% endblock %} - Painel Administrativo</title>
+
+    <link rel="icon" href="{% static 'site/img/logo.png' %}">
+    <link rel="stylesheet" href="{% static 'painel/css/base.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+    <div class="main-container">
+        {% include "painel/components/sidebar.html" %}
+        <main class="header-content">
+            {% include "painel/components/header.html" %}
+            <div class="main-content">
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+    </div>
+
+    <script src="{% static 'painel/js/base.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
+

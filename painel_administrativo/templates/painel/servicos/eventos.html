@@ -1,0 +1,64 @@
+{% extends "painel/components/tabela.html" %}
+
+{% block title %}Eventos{% endblock %}
+
+{% block titulo %}
+Eventos
+{% endblock %}
+
+
+{% block descricao %}
+Gerencie as eventos cadastradas.
+{% endblock %}
+
+
+{% block texto_botao %}
+Novo evento
+{% endblock %}
+
+
+{% block placeholder_busca %}
+Buscar evento
+{% endblock %}
+
+
+{% block cabecalho %}
+
+<th>Evento</th>
+<th>Data de Cadastro</th>
+<th class="column-action"></th>
+
+{% endblock %}
+
+
+{% block corpo %}
+
+{% for evento in eventos %}
+
+<tr>
+    <td>{{ evento.nome }}</td>
+    <td>{{ evento.data_cadastro|date:"d/m/Y" }}</td>
+    
+    <td>
+        <button
+            type="button"
+            class="action-button"
+            title="Mais informações"
+            >
+            <i class="fa-solid fa-circle-info"></i>
+        </button>
+    </td>
+</tr>
+
+
+{% empty %}
+
+<tr>
+    <td colspan="6" class="empty-message">
+        Nenhum evento cadastrado.
+    </td>
+</tr>
+
+{% endfor %}
+
+{% endblock %}

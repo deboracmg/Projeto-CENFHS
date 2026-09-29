@@ -1,0 +1,64 @@
+{% extends "painel/components/tabela.html" %}
+
+{% block title %}Aulas{% endblock %}
+
+{% block titulo %}
+Aulas
+{% endblock %}
+
+
+{% block descricao %}
+Gerencie as aulas cadastradas.
+{% endblock %}
+
+
+{% block texto_botao %}
+Nova aula
+{% endblock %}
+
+
+{% block placeholder_busca %}
+Buscar aula
+{% endblock %}
+
+
+{% block cabecalho %}
+
+<th>Turma</th>
+<th>Data</th>
+<th class="column-action"></th>
+
+{% endblock %}
+
+
+{% block corpo %}
+
+{% for aula in aulas %}
+
+<tr> 
+    <td>{{ aula.turma.descricao }}</td>
+    <td>{{ aula.data|date:"d/m/Y" }}</td>
+    
+    <td>
+        <button
+        type="button"
+        class="action-button"
+        title="Mais informações"
+        >
+            <i class="fa-solid fa-circle-info"></i>
+        </button>
+    </td>
+</tr>
+
+
+{% empty %}
+
+<tr>
+    <td colspan="6" class="empty-message">
+        Nenhuma aula cadastrada.
+    </td>
+</tr>
+
+{% endfor %}
+
+{% endblock %}

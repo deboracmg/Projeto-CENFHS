@@ -1,0 +1,50 @@
+{% load static %}
+
+<header class="top-header">
+    <div class="header-left">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        <a href="{% url 'index' %}" class="header-link" target="_blank">Ver Site</a>
+    </div>
+
+    <div class="header-right">
+        <!-- Notificações -->
+        <button class="header-icon" type="button" title="Notificações">
+            <i class="fa-solid fa-bell"></i>
+        </button>
+
+        <!-- Usuário -->
+        <div class="user-menu">
+            <button class="user-button" type="button">
+                <span class="user-greeting">
+                    Olá, Fulano!
+                    <!-- <strong>{{ request.user.first_name }}</strong> -->
+                </span>
+
+                <!-- <img
+                    src="{% static 'painel/img/avatar-default.png' %}"
+                    alt="Foto do usuário"
+                    class="user-avatar"
+                > -->
+                <i class="fa-solid fa-circle-user" title="Sem foto"></i>
+            </button>
+
+            <!-- Menu suspenso -->
+            <div class="user-dropdown">
+                <a href="#">
+                    <i class="fa-solid fa-user"></i>
+                    Meu perfil
+                </a>
+
+                <a href="#">
+                    <i class="fa-solid fa-gear"></i>
+                    Configurações
+                </a>
+
+                <a href="#" class="dropdown-logout">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Sair
+                </a>
+            </div>
+        </div>
+    </div>
+</header>

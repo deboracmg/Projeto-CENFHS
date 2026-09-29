@@ -1,0 +1,70 @@
+{% extends "painel/components/tabela.html" %}
+
+{% block title %}Turmas{% endblock %}
+
+{% block titulo %}
+Turmas
+{% endblock %}
+
+
+{% block descricao %}
+Gerencie as turmas cadastradas.
+{% endblock %}
+
+
+{% block texto_botao %}
+Nova turma
+{% endblock %}
+
+
+{% block placeholder_busca %}
+Buscar turma
+{% endblock %}
+
+
+{% block cabecalho %}
+
+<th>Descrição</th>
+<th>Dias da Semana</th>
+<th>Hora de Início</th>
+<th>Hora de Fim</th>
+<th>Professor</th>
+<th class="column-action"></th>
+
+{% endblock %}
+
+
+{% block corpo %}
+
+{% for turma in turmas %}
+
+<tr> 
+    <td>{{ turma.descricao }}</td>
+    <td>{{ turma.dias_semana|join:" - " }}</td>
+    <td>{{ turma.hora_inicio }}</td>
+    <td>{{ turma.hora_fim }}</td>
+    <td>{{ turma.responsavel.nome }}</td>
+    
+    <td>
+        <button
+        type="button"
+        class="action-button"
+        title="Mais informações"
+        >
+            <i class="fa-solid fa-circle-info"></i>
+        </button>
+    </td>
+</tr>
+
+
+{% empty %}
+
+<tr>
+    <td colspan="6" class="empty-message">
+        Nenhuma turma cadastrada.
+    </td>
+</tr>
+
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "painel/components/tabela.html" %}
+
+{% block title %}Cursos{% endblock %}
+
+{% block titulo %}
+Cursos
+{% endblock %}
+
+
+{% block descricao %}
+Gerencie os cursos cadastrados.
+{% endblock %}
+
+
+{% block texto_botao %}
+Novo curso
+{% endblock %}
+
+
+{% block placeholder_busca %}
+Buscar curso
+{% endblock %}
+
+
+{% block cabecalho %}
+
+<th>Curso</th>
+<th>Data de Cadastro</th>
+<th class="column-action"></th>
+
+{% endblock %}
+
+
+{% block corpo %}
+
+{% for curso in cursos %}
+
+<tr>
+    <td>{{ curso.nome }}</td>
+    <td>{{ curso.data_cadastro|date:"d/m/Y" }}</td>
+    
+    <td>
+        <button
+            type="button"
+            class="action-button"
+            title="Mais informações"
+            >
+            <i class="fa-solid fa-circle-info"></i>
+        </button>
+    </td>
+</tr>
+
+
+{% empty %}
+
+<tr>
+    <td colspan="6" class="empty-message">
+        Nenhum curso cadastrado.
+    </td>
+</tr>
+
+{% endfor %}
+
+{% endblock %}

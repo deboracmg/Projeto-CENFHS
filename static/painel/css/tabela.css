@@ -1,0 +1,247 @@
+/* Cabeçalho da página */
+.page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.page-header h1 {
+    margin-bottom: 5px;
+    color: var(--cor-texto-principal);
+    font-size: 25px;
+}
+
+.page-header p {
+    color: var(--cor-texto-secundario);
+    font-size: 14px;
+}
+
+/* Botão novo cadastro */
+.btn-new {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 17px;
+    background-color: var(--cor-secundaria);
+    color: var(--cor-fundo);
+    cursor: pointer;
+    border: none;
+    border-radius: 7px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: opacity 0.2s ease;
+}
+
+.btn-new:hover {
+    opacity: 0.9;
+}
+
+/* Card da tabela */
+.data-card {
+    background-color: var(--cor-fundo);
+    border: 1px solid var(--cor-borda);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Barra de ferramentas */
+.table-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--cor-borda);
+}
+
+/* Busca */
+.search-box {
+    position: relative;
+    display: flex;
+    width: 340px;
+}
+
+.search-box i {
+    color: var(--cor-fundo);
+    font-size: 14px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 6px;
+    outline: none;
+    font-size: 14px;
+    transition: border-color 0.2s ease;
+}
+
+.search-box input:focus {
+    border-color: var(--cor-principal);
+}
+
+.search-box button,
+.cpf-box button  {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    padding: 8px 12px;
+    background-color: var(--cor-secundaria);
+    color: var(--cor-fundo);
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
+    font-size: 12px;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.search-box button:hover {
+    opacity: 0.9;
+}
+
+/* Quantidade por página */
+.items-per-page {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--cor-texto-secundario);
+    font-size: 13px;
+}
+
+.items-per-page select {
+    padding: 8px 25px 8px 10px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 6px;
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto-secundario);
+    cursor: pointer;
+    outline: none;
+}
+
+.items-per-page select:focus {
+    border-color: var(--cor-principal);
+}
+
+/* Tabela */
+.table-container {
+    width: 100%;
+    max-height: 54vh;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.data-table thead {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+.data-table th {
+    padding: 13px 15px;
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto-principal);
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.data-table td {
+    padding: 8px 15px;
+    border-top: 1px solid var(--cor-borda);
+    color: var(--cor-texto-secundario);
+}
+
+.data-table tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+.data-table tbody tr:hover {
+    background-color: var(--cor-neutra-hover);
+}
+
+
+/* Botão de ação */
+.column-action {
+    width: 50px;
+}
+
+.action-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 50%;
+    background-color: transparent;
+    color: var(--cor-principal);
+    cursor: pointer;
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.action-button:hover {
+    background-color: var(--cor-clara);
+    color: var(--cor-secundaria);
+}
+
+/* Rodapé */
+.table-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    border-top: 1px solid var(--cor-borda);
+}
+
+.table-footer span {
+    color: var(--cor-texto-secundario);
+    font-size: 13px;
+}
+
+/* Paginação */
+.pagination {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.page-button {
+    min-width: 32px;
+    height: 32px;
+    padding: 0 8px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 5px;
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto-secundario);
+    font-size: 13px;
+    cursor: pointer;
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.page-button:hover:not(:disabled) {
+    background-color: var(--cor-clara);
+    color: var(--cor-principal);
+}
+
+.page-button.active {
+    background-color: var(--cor-principal);
+    border-color: var(--cor-principal);
+    color: var(--cor-fundo);
+}
+
+.page-button:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+

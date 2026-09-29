@@ -1,0 +1,596 @@
+<dialog id="alunoModal" class="aluno-modal">
+    <!-- HEADER -->
+    <div class="modal-header">
+        <div>
+            <h2 id="modalTitulo">Cadastrar novo aluno</h2>
+            <p id="modalSubtitulo">Preencha os dados abaixo</p>
+        </div>
+
+        <button type="button" class="modal-close" id="btnFecharModal">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
+
+    <!-- ABAS -->
+    <div class="modal-tabs">
+        <button
+            type="button"
+            class="tab-button active"
+            data-tab="dados-pessoais"
+        >
+            Dados pessoais
+        </button>
+
+        <button type="button" class="tab-button" data-tab="saude">Saúde</button>
+
+        <button type="button" class="tab-button" data-tab="socioeconomico">
+            Socioeconômico
+        </button>
+
+        <button type="button" class="tab-button" data-tab="familia">
+            Família
+        </button>
+
+        <button type="button" class="tab-button" data-tab="matriculas">
+            Matrículas
+        </button>
+    </div>
+
+    <!-- CONTEÚDO -->
+    <div class="modal-body">
+        <form id="alunoForm" enctype="multipart/form-data">
+            {% csrf_token %}
+            <!-- DADOS PESSOAIS -->
+            <section class="tab-content active" id="dados-pessoais">
+                <div class="form-section">
+                    <h3>Dados pessoais</h3>
+
+                    <div class="form-grid">
+                        <input type="hidden" id="aluno_id" name="aluno_id" value=""/>
+
+                        <div class="form-group form-group-large">
+                            <label for="nome"> Nome completo </label>
+
+                            <input
+                                type="text"
+                                id="nome"
+                                name="nome"
+                                placeholder="Digite o nome completo"
+                                disabled
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cpf">CPF</label>
+
+                            <input
+                                type="text"
+                                id="cpf"
+                                name="cpf"
+                                placeholder="000.000.000-00"
+                                disabled
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="data_nascimento">
+                                Data de nascimento
+                            </label>
+
+                            <input
+                                type="date"
+                                id="data_nascimento"
+                                name="data_nascimento"
+                                disabled
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="genero">Gênero</label>
+
+                            <select id="genero" name="genero" disabled>
+                                <option value="" selected disabled>
+                                    Selecione
+                                </option>
+
+                                {% for valor, rotulo in generos %}
+                                <option value="{{ valor }}">
+                                    {{ rotulo }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="raca">Raça</label>
+
+                            <select id="raca" name="raca" disabled>
+                                <option value="" selected disabled>
+                                    Selecione
+                                </option>
+
+                                {% for valor, rotulo in racas %}
+                                <option value="{{ valor }}">
+                                    {{ rotulo }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="n_certidao">
+                                Certidão de nascimento
+                            </label>
+
+                            <input
+                                type="text"
+                                id="n_certidao"
+                                name="n_certidao"
+                                placeholder="Número da certidão"
+                                disabled
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="telefone">Telefone</label>
+
+                            <input
+                                type="text"
+                                id="telefone"
+                                name="telefone"
+                                placeholder="(00) 00000-0000"
+                                disabled
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">E-mail</label>
+
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="exemplo@email.com"
+                                disabled
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- OUTRAS INFORMAÇÕES -->
+                <div class="form-section">
+                    <h3>Foto e observações</h3>
+
+                    <div class="photo-info-container">
+                        <div class="photo-field">
+                            <input type="hidden" id="remover_foto" name="remover_foto" value="false">
+                            <label for="foto" class="photo-preview">
+                                <i class="fa-solid fa-camera"></i>
+                                <span>Foto do aluno</span>
+                            </label>
+                            <input
+                                type="file"
+                                id="foto"
+                                name="foto"
+                                accept="image/*"
+                            />
+                        </div>
+
+                        <div class="form-group more-info">
+                            <label for="observacoes"> Observações </label>
+
+                            <textarea
+                                id="observacoes"
+                                name="observacoes"
+                                placeholder="Digite observações sobre o aluno"
+                                disabled
+                            ></textarea>
+                        </div>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input
+                            type="checkbox"
+                            id="autoriza_uso_imagem"
+                            name="autoriza_uso_imagem"
+                            disabled
+                        />
+
+                        <label for="autoriza_uso_imagem">
+                            Autoriza o uso de imagem?
+                        </label>
+                    </div>
+                </div>
+
+                <!-- ENDEREÇO -->
+                <div class="form-section">
+                    <h3>Endereço</h3>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="cep">CEP</label>
+
+                            <input
+                                type="text"
+                                id="cep"
+                                name="cep"
+                                placeholder="00000-000"
+                                disabled
+                            />
+                        </div>
+
+                        <div class="form-group form-group-large">
+                            <label for="rua">Rua</label>
+
+                            <input
+                                type="text"
+                                id="rua"
+                                name="rua"
+                                placeholder="Nome da rua"
+                                disabled
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="numero">Número</label>
+
+                            <input
+                                type="text"
+                                id="numero"
+                                name="numero"
+                                placeholder="Número"
+                                disabled
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="bairro">Bairro</label>
+
+                            <input
+                                type="text"
+                                id="bairro"
+                                name="bairro"
+                                placeholder="Bairro"
+                                disabled
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cidade">Cidade</label>
+
+                            <input
+                                type="text"
+                                id="cidade"
+                                name="cidade"
+                                placeholder="Cidade"
+                                disabled
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="uf">UF</label>
+
+                            <input
+                                type="text"
+                                id="uf"
+                                name="uf"
+                                placeholder="UF"
+                                maxlength="2"
+                                disabled
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="zona">Zona</label>
+
+                            <select id="zona" name="zona" disabled>
+                                <option value="" selected disabled>
+                                    Selecione
+                                </option>
+
+                                {% for valor, rotulo in zonas %}
+                                    <option value="{{ valor }}">
+                                        {{ rotulo }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Data de cadastro:
+                        <span id="data_cadastro"></span>
+                    </label>
+                </div>
+            </section>
+
+            <!-- SAÚDE -->
+            <section class="tab-content" id="saude">
+                <div class="form-section">
+                    <h3>Informações de saúde</h3>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="sus">SUS</label>
+
+                            <input
+                                type="text"
+                                id="sus"
+                                name="sus"
+                                placeholder="Número do cartão SUS"
+                                disabled
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="tipo_sanguineo"> Tipo sanguíneo </label>
+
+                            <input
+                                type="text"
+                                id="tipo_sanguineo"
+                                name="tipo_sanguineo"
+                                placeholder="Ex.: O+"
+                                disabled
+                            />
+                        </div>
+
+                        <div class="form-group form-group-full">
+                            <label for="problema_saude">
+                                Problema de saúde
+                            </label>
+
+                            <textarea
+                                id="problema_saude"
+                                name="problema_saude"
+                                placeholder="Informe problemas de saúde"
+                                disabled
+                            ></textarea>
+                        </div>
+
+                        <div class="form-group form-group-full">
+                            <label for="tratamento"> Tratamento </label>
+
+                            <textarea
+                                id="tratamento"
+                                name="tratamento"
+                                placeholder="Informe tratamentos realizados"
+                                disabled
+                            ></textarea>
+                        </div>
+
+                        <div class="form-group form-group-full">
+                            <label for="alergia"> Alergias </label>
+
+                            <textarea
+                                id="alergia"
+                                name="alergia"
+                                placeholder="Informe alergias"
+                                disabled
+                            ></textarea>
+                        </div>
+
+                        <div class="form-group form-group-full">
+                            <label for="medicamento"> Medicamentos </label>
+
+                            <textarea
+                                id="medicamento"
+                                name="medicamento"
+                                placeholder="Informe medicamentos utilizados"
+                                disabled
+                            ></textarea>
+                        </div>
+
+                        <div class="form-group form-group-full">
+                            <label for="vacinas"> Vacinas </label>
+
+                            <textarea
+                                id="vacinas"
+                                name="vacinas"
+                                placeholder="Informações sobre vacinação"
+                                disabled
+                            ></textarea>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SOCIOECONÔMICO -->
+            <section class="tab-content" id="socioeconomico">
+                <div class="form-section">
+                    <h3>Informações socioeconômicas</h3>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="n_bolsa_familia">
+                                Nº Bolsa Família
+                            </label>
+
+                            <input
+                                type="text"
+                                id="n_bolsa_familia"
+                                name="n_bolsa_familia"
+                                placeholder="Número do benefício"
+                                disabled
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="nis">NIS</label>
+
+                            <input
+                                type="text"
+                                id="nis"
+                                name="nis"
+                                placeholder="Número do NIS"
+                                disabled
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="escola"> Escola </label>
+
+                            <input
+                                type="text"
+                                id="escola"
+                                name="escola"
+                                placeholder="Nome da escola"
+                                disabled
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="transporte"> Transporte </label>
+
+                            <input
+                                type="text"
+                                id="transporte"
+                                name="transporte"
+                                placeholder="Tipo de transporte"
+                                disabled
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="renda_familiar"> Renda familiar </label>
+
+                            <input
+                                type="number"
+                                id="renda_familiar"
+                                name="renda_familiar"
+                                placeholder="0,00"
+                                step="0.01"
+                                disabled
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="situacao_moradia">
+                                Situação de moradia
+                            </label>
+
+                            <select
+                                id="situacao_moradia"
+                                name="situacao_moradia"
+                                disabled
+                            >
+                                <option value="" selected disabled>Selecione</option>
+
+                                {% for valor, rotulo in situacao_moradia %}
+                                    <option value="{{ valor }}">{{ rotulo }}</option>                                  
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="qtd_moradores">
+                                Quantidade de moradores
+                            </label>
+
+                            <input
+                                type="number"
+                                id="qtd_moradores"
+                                name="qtd_moradores"
+                                placeholder="Ex.: 4"
+                                min="1"
+                                disabled
+                            />
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FAMÍLIA -->
+            <section class="tab-content" id="familia">
+                <div class="tab-top">
+                    <div>
+                        <h3>Familiares</h3>
+                        <p>Familiares vinculados ao aluno.</p>
+                    </div>
+
+                    <button
+                        type="button"
+                        class="btn-secondary"
+                        id="btnAdicionarFamiliar"
+                        disabled
+                    >
+                        <i class="fa-solid fa-plus"></i>
+                        Adicionar familiar
+                    </button>
+                </div>
+
+                <div class="modal-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="left-content">Parentesco</th>
+                                <th class="left-content">Nome</th>
+                                <th>Responsável</th>
+                                <th>Contato de emergência</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="familiaBody">
+
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- MATRÍCULAS -->
+            <section class="tab-content" id="matriculas">
+                <div class="form-section">
+                    <h3>Matrículas</h3>
+                    <p class="section-description">
+                        Cursos nos quais o aluno está ou esteve matriculado.
+                    </p>
+
+                    <div class="modal-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nº matrícula</th>
+                                    <th>Curso</th>
+                                    <th>Turma</th>
+                                    <th>Aulas assistidas</th>
+                                    <th>Faltas</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="matriculasBody">
+                                <tr>
+                                    <td colspan="5" class="empty-message">
+                                        Nenhuma matrícula encontrada.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </form>
+    </div>
+
+    <!-- FOOTER / AÇÕES -->
+    <div class="modal-footer">
+        <button type="button" class="btn-cancel" id="btnFecharModalFooter">
+            Fechar
+        </button>
+
+        <button type="button" class="btn-edit" id="btnEditar">
+            <i class="fa-solid fa-pen"></i>
+            Editar
+        </button>
+
+        <button
+            type="submit"
+            form="alunoForm"
+            class="btn-save"
+            id="btnSalvar"
+        >
+            <i class="fa-solid fa-floppy-disk"></i>
+            Salvar
+        </button>
+    </div>
+</dialog>

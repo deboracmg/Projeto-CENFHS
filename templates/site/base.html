@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Centro de Formação Humana e Social{% endblock %}</title>
+
+    <link rel="icon" href="{% static 'site/img/logo.png' %}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap">
+
+    <link rel="stylesheet" href="{% static 'site/css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'site/css/header.css' %}">
+    <link rel="stylesheet" href="{% static 'site/css/footer.css' %}">
+    {% block extra_css %}{% endblock %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="container">
+            <a href="{% url 'index' %}" class="site-header__brand">
+                <img src="{% static 'site/img/logo.png' %}" alt="Logo do Centro de Formação Humana e Social">
+                <span>Centro de Formação<br>Humana e Social</span>
+            </a>
+
+            <button class="site-header__toggle" id="navToggle" aria-label="Abrir menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <nav class="site-header__nav" id="siteNav">
+                <a href="{% url 'index' %}" class="{% if active_page == 'index' %}active{% endif %}">Início</a>
+                <a href="{% url 'about_us' %}" class="{% if active_page == 'about_us' %}active{% endif %}">Sobre</a>
+                <a href="{% url 'our_services' %}" class="{% if active_page == 'our_services' %}active{% endif %}">Serviços</a>
+                <a href="{% url 'contact_us' %}" class="{% if active_page == 'contact_us' %}active{% endif %}">Contato</a>
+                <a href="{% url 'admin:index' %}">Entrar</a>
+            </nav>
+        </div>
+    </header>
+
+    {% block breadcrumb %}{% endblock %}
+
+    <main>
+        {% block content %}{% endblock content %}
+    </main>
+
+    <footer class="site-footer">
+        <div class="container site-footer__top">
+            <div class="site-footer__contact">
+                <h4>Onde pode nos encontrar</h4>
+
+                <a href="https://wa.me/5500000000000" class="footer-contact-row">
+                    <span class="footer-contact__icon footer-contact__icon--whatsapp"><i class="fa-brands fa-whatsapp"></i></span>
+                    <span>{{ contato.whatsapp|default:"(00) 00000-0000" }}</span>
+                </a>
+
+                <a href="https://instagram.com/cenfhs_cg" class="footer-contact-row" target="_blank" rel="noopener">
+                    <span class="footer-contact__icon footer-contact__icon--instagram"><i class="fa-brands fa-instagram"></i></span>
+                    <span>{{ contato.instagram|default:"@cenfhs_cg" }}</span>
+                </a>
+
+                <p class="footer-address">
+                    <strong>Endereço:</strong> {{ contato.endereco|default:"Rua do endereço, nº 000, Bairro, CEP 00000-000" }}
+                </p>
+            </div>
+
+            <a href="{% url 'index' %}" class="site-footer__brand">
+                <div>
+                    <strong>Centro de Formação<br>Humana e Social</strong>
+                </div>
+                <img src="{% static 'site/img/logo.png' %}" alt="Logo do Centro de Formação Humana e Social">
+            </a>
+        </div>
+
+        <div class="site-footer__bottom">
+            &copy; {% now "Y" %} Centro de Formação Humana e Social &middot; Todos os direitos reservados
+        </div>
+    </footer>
+
+    <script>
+        const navToggle = document.getElementById("navToggle");
+        const siteNav = document.getElementById("siteNav");
+        if (navToggle) {
+            navToggle.addEventListener("click", () => siteNav.classList.toggle("open"));
+        }
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

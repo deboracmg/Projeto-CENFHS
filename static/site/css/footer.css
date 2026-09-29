@@ -1,0 +1,126 @@
+.site-footer {
+    background-color: #fff;
+    margin-top: 40px;
+    border-top: 1px solid var(--cor-borda);
+}
+
+.site-footer__top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 32px;
+    padding: 44px 0 32px;
+}
+
+.site-footer__contact h4 {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 16px;
+    color: var(--cor-texto-suave);
+}
+
+.footer-contact-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    font-size: 15px;
+    color: var(--cor-texto);
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.footer-contact-row:hover {
+    color: var(--cor-principal);
+}
+
+.footer-contact__icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 16px;
+    flex-shrink: 0;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.footer-contact-row:hover .footer-contact__icon {
+    transform: scale(1.08);
+    box-shadow: var(--sombra);
+}
+
+.footer-contact__icon--whatsapp {
+    background-color: #25D366;
+}
+
+.footer-contact__icon--instagram {
+    background: radial-gradient(circle at 30% 110%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+}
+
+.footer-address {
+    font-size: 14px;
+    color: var(--cor-texto-suave);
+    margin-top: 8px;
+    max-width: 360px;
+}
+
+.footer-address strong {
+    color: var(--cor-texto);
+}
+
+.site-footer__brand {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: opacity 0.2s ease;
+}
+
+.site-footer__brand:hover {
+    opacity: 0.82;
+}
+
+.site-footer__brand strong {
+    display: block;
+    font-size: 19px;
+    color: var(--cor-principal);
+    text-align: right;
+    line-height: 1.3;
+}
+
+.site-footer__brand img {
+    width: 60px;
+    height: 60px;
+}
+
+.site-footer__bottom {
+    border-top: 1px solid var(--cor-borda);
+    padding: 16px 0;
+    font-size: 13px;
+    text-align: center;
+    color: var(--cor-texto-suave);
+}
+
+@media (max-width: 620px) {
+    .site-footer__top {
+        flex-direction: column-reverse;
+        align-items: center;
+        text-align: center;
+    }
+
+    .site-footer__brand {
+        flex-direction: column-reverse;
+    }
+
+    .site-footer__brand strong {
+        text-align: center;
+    }
+
+    .footer-contact-row {
+        justify-content: center;
+    }
+}

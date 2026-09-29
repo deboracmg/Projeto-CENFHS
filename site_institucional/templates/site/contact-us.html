@@ -1,0 +1,76 @@
+{% extends "site/base.html" %}
+{% load static %}
+
+{% block title %}Contato · Centro de Formação Humana e Social{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'site/css/contact.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <section class="contact-panel">
+        <div class="container">
+            <div class="contact-panel__intro">
+                <h1>Entre em contato conosco</h1>
+                <p class="contact-panel__lead">
+                    Tem dúvidas sobre nossos cursos, atividades ou como ajudar? Fale com a
+                    gente por telefone, e-mail ou preenchendo o formulário ao lado.
+                </p>
+
+                <div class="contact-info">
+                    <div class="contact-info__icon"><i class="fa-solid fa-phone"></i></div>
+                    <div>
+                        <h3>Telefone</h3>
+                        <p>{{ contato.telefone|default:"(00) 00000-0000" }} &middot; Segunda a sexta, 8h às 17h</p>
+                    </div>
+                </div>
+
+                <div class="contact-info">
+                    <div class="contact-info__icon"><i class="fa-solid fa-location-dot"></i></div>
+                    <div>
+                        <h3>Endereço</h3>
+                        <p>{{ contato.endereco|default:"Rua do endereço, nº 000, Bairro" }}</p>
+                    </div>
+                </div>
+
+                <div class="contact-info">
+                    <div class="contact-info__icon"><i class="fa-solid fa-envelope"></i></div>
+                    <div>
+                        <h3>E-mail</h3>
+                        <p>{{ contato.email|default:"contato@cenfhs.org.br" }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <form class="contact-form" method="post" action="{% url 'contact_us' %}">
+                {% csrf_token %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <p class="contact-form__alert">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+                <div class="contact-form__row">
+                    <div>
+                        <label for="id_nome">Nome</label>
+                        <input id="id_nome" type="text" name="nome" placeholder="Seu nome completo" required>
+                    </div>
+                    <div>
+                        <label for="id_telefone">Telefone</label>
+                        <input id="id_telefone" type="tel" name="telefone" placeholder="(00) 00000-0000">
+                    </div>
+                </div>
+                <div class="contact-form__row">
+                    <div style="grid-column: 1 / -1;">
+                        <label for="id_email">E-mail</label>
+                        <input id="id_email" type="email" name="email" placeholder="seuemail@exemplo.com" required>
+                    </div>
+                </div>
+                <label for="id_mensagem">Mensagem</label>
+                <textarea id="id_mensagem" name="mensagem" placeholder="Como podemos ajudar?" required></textarea>
+                <button type="submit" class="btn btn-primary">Enviar mensagem</button>
+            </form>
+        </div>
+    </section>
+
+{% endblock content %}

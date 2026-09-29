@@ -1,0 +1,72 @@
+{% extends "painel/components/tabela.html" %}
+
+{% block title %}Encontros{% endblock %}
+
+{% block titulo %}
+Encontros
+{% endblock %}
+
+
+{% block descricao %}
+Gerencie os encontros cadastrados.
+{% endblock %}
+
+
+{% block texto_botao %}
+Novo encontro
+{% endblock %}
+
+
+{% block placeholder_busca %}
+Buscar encontro
+{% endblock %}
+
+
+{% block cabecalho %}
+
+<th>Tipo</th>
+<th>Nome</th>
+<th>Responsável Interno</th>
+<th>Responsável Externo</th>
+<th>Data e Hora</th>
+<th>Local</th>
+<th class="column-action"></th>
+
+{% endblock %}
+
+
+{% block corpo %}
+
+{% for encontro in encontros %}
+
+<tr>
+    <td>{{ encontro.servico.tipo }}</td>
+    <td>{{ encontro.servico.nome }}</td>
+    <td>{{ encontro.responsavel_interno.nome }}</td>
+    <td>{{ encontro.responsavel_externo }}</td>
+    <td>{{ encontro.data_hora|date:"d/m/Y - H" }}h</td>
+    <td>{{ encontro.local }}</td>
+    
+    <td>
+        <button
+            type="button"
+            class="action-button"
+            title="Mais informações"
+            >
+            <i class="fa-solid fa-circle-info"></i>
+        </button>
+    </td>
+</tr>
+
+
+{% empty %}
+
+<tr>
+    <td colspan="6" class="empty-message">
+        Nenhum encontro cadastrado.
+    </td>
+</tr>
+
+{% endfor %}
+
+{% endblock %}

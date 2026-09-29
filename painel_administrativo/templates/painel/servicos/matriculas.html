@@ -1,0 +1,70 @@
+{% extends "painel/components/tabela.html" %}
+
+{% block title %}Matrículas{% endblock %}
+
+{% block titulo %}
+Matrículas
+{% endblock %}
+
+
+{% block descricao %}
+Gerencie as matrículas cadastradas.
+{% endblock %}
+
+
+{% block texto_botao %}
+Nova matrícula
+{% endblock %}
+
+
+{% block placeholder_busca %}
+Buscar matrícula
+{% endblock %}
+
+
+{% block cabecalho %}
+
+<th>Nº Matrícula</th>
+<th>Aluno</th>
+<th>Curso</th>
+<th>Data de Matrícula</th>
+<th>Matriculado Por</th>
+<th class="column-action"></th>
+
+{% endblock %}
+
+
+{% block corpo %}
+
+{% for matricula in matriculas %}
+
+<tr>
+    <td>{{ matricula.id }}</td>
+    <td>{{ matricula.aluno.nome }}</td>
+    <td>{{ matricula.turma.servico.nome }}</td>
+    <td>{{ matricula.data_matricula|date:"d/m/Y" }}</td>
+    <td>{{ matricula.matriculado_por }}</td>
+    
+    <td>
+        <button
+            type="button"
+            class="action-button"
+            title="Mais informações"
+            >
+            <i class="fa-solid fa-circle-info"></i>
+        </button>
+    </td>
+</tr>
+
+
+{% empty %}
+
+<tr>
+    <td colspan="6" class="empty-message">
+        Nenhuma matricula cadastrada.
+    </td>
+</tr>
+
+{% endfor %}
+
+{% endblock %}

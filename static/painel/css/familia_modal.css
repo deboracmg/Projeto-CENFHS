@@ -1,0 +1,34 @@
+.familia-modal {
+    width: min(800px, 90vw);
+    margin: auto;
+    border: none;
+    border-radius: 12px;
+    padding: 0;
+}
+
+.familia-modal:open {
+    display: flex;
+    flex-direction: column;
+}
+
+.familia-modal::backdrop {
+    background: rgb(0 0 0 / 50%);
+}
+
+.campos-familiar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.vinculo-familiar {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-top: 25px;
+}
+
+.cpf-box {
+    position: relative;
+}
+

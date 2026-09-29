@@ -1,0 +1,128 @@
+{% extends "painel/base.html" %}
+{% load static %}
+{% block title %}Dashboard{%endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'painel/css/dashboard.css' %}" />
+{% endblock %}
+
+{% block content %}
+<div class="dashboard">
+    <!-- CENTRO DE FORMAÇÃO -->
+    <section class="group-section">
+        <div class="header-section">
+            <div class="section-title">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <h2>Centro de Formação</h2>
+            </div>
+
+            <div class="dashboard-filters">
+                <div class="filter-group">
+                    <select id="filtroMes">
+                        <option value="1">Janeiro</option>
+                        <option value="2">Fevereiro</option>
+                        <option value="3">Março</option>
+                        <option value="4">Abril</option>
+                        <option value="5">Maio</option>
+                        <option value="6" selected>Junho</option>
+                        <option value="7">Julho</option>
+                        <option value="8">Agosto</option>
+                        <option value="9">Setembro</option>
+                        <option value="10">Outubro</option>
+                        <option value="11">Novembro</option>
+                        <option value="12">Dezembro</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <select id="filtroAno">
+                        <option value="2026" selected>2026</option>
+                        <option value="2025">2025</option>
+                        <option value="2024">2024</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="group-cards">
+            <div class="dashboard-card">
+                <h5 class="metrica-label">Cursos</h5>
+                <p>Frequência média</p>
+                <p>Mensal: 87%</p>
+                <p>Anual: 80%</p>
+            </div>
+
+            <div class="dashboard-card">
+                <h5 class="metrica-label">Atividades</h5>
+                <p>Participantes</p>
+                <p>Mensal: 16</p>
+                <p>Anual: 70</p>
+            </div>
+
+            <div class="dashboard-card">
+                <h5 class="metrica-label">Eventos</h5>
+                <p>Participantes</p>
+                <p>Mensal: 32</p>
+                <p>Anual: 140</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CASA DE APOIO -->
+    <section>
+        <div class="section-title">
+            <i class="fa-solid fa-house-medical"></i>
+            <h2>Casa de Apoio</h2>
+        </div>
+
+        <div class="group-cards">
+            <div class="dashboard-card">
+                <h5 class="metrica-label">Hoje</h5>
+                <p>Pacientes em atendimento: 10</p>
+                <p>Acompanhantes: 7</p>
+            </div>
+            
+            <div class="dashboard-card">
+                <h5 class="metrica-label">Anual</h5>
+                <p>Pacientes atendidos: 38</p>
+                <p>Avaliação de serviço: 4.5</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRÓXIMOS EVENTOS -->
+    <section class="eventos-card">
+        <div class="section-title">
+            <i class="fa-solid fa-calendar-days"></i>
+            <h2>Próximos eventos</h2>
+        </div>
+
+        <div class="eventos-lista">
+            <div class="evento">
+                <div class="evento-data">
+                    <strong>15</strong>
+                    <p>JUL</p>
+                </div>
+
+                <div class="evento-info">
+                    <strong>Evento de integração</strong>
+                    <p>Local: Auditório - Horário: 14:00</p>
+                </div>
+            </div>
+
+            <div class="evento">
+                <div class="evento-data">
+                    <strong>22</strong>
+                    <p>JUL</p>
+                </div>
+
+                <div class="evento-info">
+                    <strong>Encontro de famílias</strong>
+                    <p>Local: Salão - Horário: 09:00</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock %}

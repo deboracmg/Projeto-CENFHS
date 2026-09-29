@@ -1,0 +1,103 @@
+{% extends "painel/base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'painel/css/tabela.css' %}" />
+{% block individual_css %} {% endblock %}
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+        <h1>{% block titulo %}{% endblock %}</h1>
+        <p>{% block descricao %}{% endblock %}</p>
+    </div>
+
+    <button type="button" class="btn-new" id="btnNovoCadastro">
+        <i class="fa-solid fa-plus"></i>
+        {% block texto_botao %}{% endblock %}
+    </button>
+
+</div>
+
+
+<div class="data-card">
+
+    <!-- Ferramentas -->
+    <div class="table-toolbar">
+
+        <div class="search-box">
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="{% block placeholder_busca %}Buscar{% endblock %}"
+            />
+
+            <button type="button">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </div>
+
+
+        <div class="items-per-page">
+            <label for="itemsPerPage">Exibir</label>
+
+            <select id="itemsPerPage">
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+            </select>
+
+            <span>por página</span>
+        </div>
+
+    </div>
+
+
+    <!-- Tabela -->
+    <div class="table-container">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    {% block cabecalho %} {% endblock %}
+                </tr>
+            </thead>
+
+            <tbody id="tableBody">
+                {% block corpo %} {% endblock %}
+            </tbody>
+        </table>
+    </div>
+
+
+    <!-- Rodapé -->
+    <div class="table-footer">
+        <span id="tableInfo"></span>
+        <div class="pagination" id="pagination">
+
+            <button class="page-button" disabled>
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+
+            <button class="page-button active">1</button>
+
+            <button class="page-button" disabled>
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+
+        </div>
+    </div>
+
+</div>
+
+{% block modal %} {% endblock modal %}
+
+{% endblock %}
+
+
+{% block extra_js %}
+<script src="{% static 'painel/js/tabela.js' %}"></script>
+{% block individual_js %} {% endblock %}
+{% endblock %}
