@@ -11,43 +11,51 @@
     </div>
 
     <div class="modal-body">
-        <form id="formFamiliar">
+        <form id="formFamiliar" novalidate>
             {% csrf_token %}
-            <input type="hidden" id="id_aluno_referencia" name="id_aluno_referencia" value=""/>
-
-            <input type="hidden" id="parente_id" name="parente_id" value=""/>
+            <input type="hidden" id="parente_id" name="parente_id" value="" />
 
             <div class="campos-familiar">
-                <!-- CPF + Buscar -->
+                <!-- CPF -->
                 <div class="form-group">
                     <label for="cpf_familiar">CPF</label>
-
-                    <div class="cpf-box">
-                        <input type="text" id="cpf_familiar" name="cpf_familiar" disabled/>
-
-                        <button
-                            type="button"
-                            class="btn-buscar-parente"
-                            id="btnBuscarParente"
-                            title="Buscar CPF"
-                        >
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </button>
-                    </div>
+                    <input
+                        type="text"
+                        id="cpf_familiar"
+                        name="cpf_familiar"
+                        placeholder="000.000.000-00"
+                        maxlength="14"
+                        disabled
+                        required
+                    />
                 </div>
 
                 <!-- Nome -->
                 <div class="form-group">
                     <label for="nome_familiar">Nome completo</label>
-
-                    <input type="text" id="nome_familiar" name="nome_familiar" disabled/>
+                    <input
+                        type="text"
+                        id="nome_familiar"
+                        name="nome_familiar"
+                        placeholder="Nome do familiar"
+                        disabled
+                        required
+                    />
                 </div>
 
                 <!-- Telefone -->
                 <div class="form-group">
                     <label for="telefone_familiar">Telefone</label>
 
-                    <input type="text" id="telefone_familiar" name="telefone_familiar" disabled/>
+                    <input
+                        type="text"
+                        id="telefone_familiar"
+                        name="telefone_familiar"
+                        maxlength="15"
+                        placeholder="(00) 00000-0000"
+                        disabled
+                        required
+                    />
                 </div>
 
                 <!-- Profissão -->
@@ -58,6 +66,7 @@
                         type="text"
                         id="profissao_familiar"
                         name="profissao_familiar"
+                        placeholder="Digite a profissão"
                         disabled
                     />
                 </div>
@@ -72,33 +81,37 @@
                         type="text"
                         id="local_trabalho_familiar"
                         name="local_trabalho_familiar"
+                        placeholder="Nome da empresa"
                         disabled
                     />
                 </div>
 
                 <!-- Escolaridade -->
                 <div class="form-group">
-                    <label for="escolaridade_familiar"> Escolaridade </label>
+                    <label for="escolaridade_familiar">Escolaridade</label>
 
-                    <select id="escolaridade_familiar" name="escolaridade_familiar" disabled>
+                    <select
+                        id="escolaridade_familiar"
+                        name="escolaridade_familiar"
+                        disabled
+                    >
                         <option value="" selected disabled>Selecione</option>
-                        
+
                         {% for valor, rotulo in escolaridade %}
-                            <option value="{{ valor }}">
-                                {{ rotulo }}
-                            </option>
+                        <option value="{{ valor }}">{{ rotulo }}</option>
                         {% endfor %}
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="parentesco_familiar"> Parentesco </label>
-
+                    <label for="parentesco_familiar">Parentesco</label>
                     <input
                         type="text"
                         id="parentesco_familiar"
                         name="parentesco_familiar"
+                        placeholder="Relação familiar"
                         disabled
+                        required
                     />
                 </div>
             </div>
@@ -146,6 +159,11 @@
     </div>
 
     <div class="modal-footer">
+        <button type="button" class="btn-delete" id="btnExcluirFamiliar">
+            <i class="fa-regular fa-trash-can"></i>
+            Excluir
+        </button>
+
         <button type="button" class="btn-edit" id="btnEditarFamiliar">
             <i class="fa-solid fa-pen"></i>
             Editar

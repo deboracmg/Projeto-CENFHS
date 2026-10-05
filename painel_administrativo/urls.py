@@ -12,8 +12,9 @@ urlpatterns = [
     path('alunos/salvar/', views.salvar_aluno, name='salvar_aluno'),
 
     path('parentes/<int:parente_id>/', views.detalhar_parente, name='detalhar_parente'),
-    # path('parentes/buscar/', views.buscar_parente, name='buscar_parente'),
+    path('parentes/buscar-por-cpf/', views.buscar_parente_por_cpf, name='buscar_parente_por_cpf'),
     path('parentes/salvar/', views.salvar_parente, name='salvar_parente'),
+    path('parentes/excluir/', views.excluir_parente, name='excluir_parente'),
 
 
     path('profissionais/', views.listar_profissionais, name='profissionais'),

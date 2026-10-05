@@ -4,6 +4,7 @@ from django.db import models
 class Aluno(models.Model):
     nome = models.CharField(max_length=150)
     cpf = models.CharField(max_length=14, unique=True)
+    rg = models.CharField(max_length=50, null=True, blank=True)
     foto = models.ImageField(upload_to="alunos/", blank=True, null=True)
 
     data_nascimento = models.DateField()
@@ -12,6 +13,8 @@ class Aluno(models.Model):
         FEMININO = "FEMININO", "Feminino"
         OUTRO = "OUTRO", "Outro"
     
+    naturalidade = models.CharField(max_length=100, null=True, blank=True)
+
     genero = models.CharField(
         max_length=20,
         choices=Genero.choices
@@ -153,12 +156,7 @@ class Socioeconomico(models.Model):
     escola = models.CharField(max_length=150, blank=True)
     transporte = models.CharField(max_length=100, blank=True)
 
-    renda_familiar = models.DecimalField(
-        max_digits=10,
-        decimal_places=2,
-        null=True,
-        blank=True
-    )
+    renda_familiar = models.PositiveIntegerField(null=True, blank=True)
 
     class SituacaoMoradia(models.TextChoices):
             PROPRIA = "PROPRIA", "Própria"

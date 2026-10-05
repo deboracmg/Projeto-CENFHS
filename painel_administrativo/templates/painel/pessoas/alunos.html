@@ -2,8 +2,9 @@
 {% load static %}
 
 {% block individual_css %}
-<link rel="stylesheet" href="{% static 'painel/css/aluno_modal.css' %}">
-<link rel="stylesheet" href="{% static 'painel/css/familia_modal.css' %}">
+<link rel="stylesheet" href="{% static 'painel/css/alunos.css' %}">
+<link rel="stylesheet" href="{% static 'painel/css/familia.css' %}">
+<link rel="stylesheet" href="{% static 'painel/css/modal_confirmacao.css' %}">
 {% endblock %}
 
 {% block title %}Alunos{% endblock %}
@@ -30,6 +31,7 @@ Buscar aluno
 
 {% block cabecalho %}
 
+<th>Código</th>
 <th>CPF</th>
 <th>Nome</th>
 <th>Data de Nascimento</th>
@@ -44,6 +46,7 @@ Buscar aluno
 {% for aluno in alunos %}
 
 <tr>
+    <td>{{ aluno.id }}</td>
     <td>{{ aluno.cpf }}</td>
     <td>{{ aluno.nome }}</td>
     <td>{{ aluno.data_nascimento|date:"d/m/Y" }}</td>
@@ -76,12 +79,15 @@ Buscar aluno
 {% endblock %}
 
 {% block modal %} 
-{% include "painel/components/aluno_modal.html" %}
-{% include "painel/components/familia_modal.html" %}
+{% include "painel/components/modal_aluno.html" %}
+{% include "painel/components/modal_familia.html" %}
+{% include "painel/components/modal_confirmacao.html" %}
 {% endblock modal %}
 
+
 {% block individual_js %}
-<script src="{% static 'painel/js/aluno_modal.js' %}"></script>
-<script src="{% static 'painel/js/familia_modal.js' %}"></script>
+<script src="{% static 'painel/js/utils.js' %}"></script>
+<script src="{% static 'painel/js/alunos.js' %}"></script>
+<script src="{% static 'painel/js/familia.js' %}"></script>
 {% endblock %}
 
