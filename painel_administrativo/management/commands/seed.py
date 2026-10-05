@@ -193,7 +193,7 @@ class Command(BaseCommand):
                     "Transporte escolar",
                 ][i % 3],
                 renda_familiar=Decimal(
-                    ["800.00", "1200.00", "1500.00", "1800.00"][i % 4]
+                    ["800", "1200", "1500", "1800"][i % 4]
                 ),
                 situacao_moradia=situacoes[i % 3],
                 qtd_moradores=[4, 5, 3, 6][i % 4],

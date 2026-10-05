@@ -154,6 +154,22 @@
     font-weight: 600;
 }
 
+label:has(+ input[required])::after,
+label:has(+ select[required])::after,
+label:has(+ textarea[required])::after {
+    content: " *";
+    color: var(--cor-vermelha);
+    font-size: 16px;
+    font-weight: bold;
+}
+
+form.com-erro input:invalid,
+form.com-erro select:invalid,
+form.com-erro textarea:invalid {
+    border: 1px solid var(--cor-vermelha);
+    box-shadow: 0 0 5px rgba(220, 53, 69, 0.4);
+}
+
 .form-group input,
 .form-group select,
 .form-group textarea {
@@ -344,7 +360,7 @@ input[type="checkbox"] {
 }
 
 .modal-footer button,
-.btn-secondary {
+.btn-add-familiar {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -355,10 +371,23 @@ input[type="checkbox"] {
     cursor: pointer;
 }
 
+.btn-add-familiar {
+    border: none;
+    background-color: var(--cor-secundaria);
+    color: white;
+}
+
 .btn-cancel {
     border: 1px solid #ccc;
     background-color: white;
     color: #555;
+}
+
+.btn-delete,
+.btn-negar {
+    border: none;
+    background-color: var(--cor-vermelha);
+    color: var(--cor-fundo);
 }
 
 .btn-edit {
@@ -367,30 +396,30 @@ input[type="checkbox"] {
     color: var(--cor-fundo);
 }
 
-.btn-save {
+.btn-save,
+.btn-confirmar {
     border: none;
     background-color: var(--cor-secundaria);
     color: white;
 }
 
-.btn-secondary {
-    border: none;
-    background-color: var(--cor-secundaria);
-    color: white;
-}
-
+.btn-delete:hover,
+.btn-negar:hover,
 .btn-edit:hover,
-.btn-secondary:hover,
+.btn-add-familiar:hover,
 .btn-save:hover,
+.btn-confirmar:hover,
 .btn-buscar-parente:hover {
     opacity: 0.9;
 }
 
+.btn-delete:disabled,
 .btn-save:disabled,
 .btn-edit:disabled,
-.btn-secondary:disabled,
+.btn-add-familiar:disabled,
 .btn-remover-foto:disabled,
-.btn-buscar-parente:disabled {
+.btn-buscar-parente:disabled,
+.btn-abrir-parente:disabled {
     opacity: 0.45;
     cursor: not-allowed;
 }

@@ -38,7 +38,7 @@
 
     <!-- CONTEÚDO -->
     <div class="modal-body">
-        <form id="alunoForm" enctype="multipart/form-data">
+        <form id="alunoForm" enctype="multipart/form-data" novalidate>
             {% csrf_token %}
             <!-- DADOS PESSOAIS -->
             <section class="tab-content active" id="dados-pessoais">
@@ -49,7 +49,7 @@
                         <input type="hidden" id="aluno_id" name="aluno_id" value=""/>
 
                         <div class="form-group form-group-large">
-                            <label for="nome"> Nome completo </label>
+                            <label for="nome">Nome completo</label>
 
                             <input
                                 type="text"
@@ -57,6 +57,7 @@
                                 name="nome"
                                 placeholder="Digite o nome completo"
                                 disabled
+                                required
                             />
                         </div>
 
@@ -68,7 +69,9 @@
                                 id="cpf"
                                 name="cpf"
                                 placeholder="000.000.000-00"
+                                maxlength="14"
                                 disabled
+                                required
                             />
                         </div>
 
@@ -82,39 +85,32 @@
                                 id="data_nascimento"
                                 name="data_nascimento"
                                 disabled
+                                required
                             />
                         </div>
 
                         <div class="form-group">
-                            <label for="genero">Gênero</label>
+                            <label for="naturalidade">Naturalidade</label>
 
-                            <select id="genero" name="genero" disabled>
-                                <option value="" selected disabled>
-                                    Selecione
-                                </option>
-
-                                {% for valor, rotulo in generos %}
-                                <option value="{{ valor }}">
-                                    {{ rotulo }}
-                                </option>
-                                {% endfor %}
-                            </select>
+                            <input
+                                type="text"
+                                id="naturalidade"
+                                name="naturalidade"
+                                placeholder="Cidade de nascimento"
+                                disabled
+                            />
                         </div>
 
                         <div class="form-group">
-                            <label for="raca">Raça</label>
+                            <label for="rg">RG</label>
 
-                            <select id="raca" name="raca" disabled>
-                                <option value="" selected disabled>
-                                    Selecione
-                                </option>
-
-                                {% for valor, rotulo in racas %}
-                                <option value="{{ valor }}">
-                                    {{ rotulo }}
-                                </option>
-                                {% endfor %}
-                            </select>
+                            <input
+                                type="text"
+                                id="rg"
+                                name="rg"
+                                placeholder="Número da identidade"
+                                disabled
+                            />
                         </div>
 
                         <div class="form-group">
@@ -132,12 +128,45 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="genero">Gênero</label>
+
+                            <select id="genero" name="genero" disabled required>
+                                <option value="" selected disabled>
+                                    Selecione
+                                </option>
+
+                                {% for valor, rotulo in generos %}
+                                <option value="{{ valor }}">
+                                    {{ rotulo }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="raca">Raça</label>
+
+                            <select id="raca" name="raca" disabled required>
+                                <option value="" selected disabled>
+                                    Selecione
+                                </option>
+
+                                {% for valor, rotulo in racas %}
+                                <option value="{{ valor }}">
+                                    {{ rotulo }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="form-group">
                             <label for="telefone">Telefone</label>
 
                             <input
                                 type="text"
                                 id="telefone"
                                 name="telefone"
+                                maxlength="15"
                                 placeholder="(00) 00000-0000"
                                 disabled
                             />
@@ -177,7 +206,7 @@
                         </div>
 
                         <div class="form-group more-info">
-                            <label for="observacoes"> Observações </label>
+                            <label for="observacoes">Observações</label>
 
                             <textarea
                                 id="observacoes"
@@ -215,7 +244,9 @@
                                 id="cep"
                                 name="cep"
                                 placeholder="00000-000"
+                                maxlength="9"
                                 disabled
+                                required
                             />
                         </div>
 
@@ -228,6 +259,7 @@
                                 name="rua"
                                 placeholder="Nome da rua"
                                 disabled
+                                required
                             />
                         </div>
 
@@ -239,7 +271,9 @@
                                 id="numero"
                                 name="numero"
                                 placeholder="Número"
+                                maxlength="10"
                                 disabled
+                                required
                             />
                         </div>
 
@@ -252,6 +286,7 @@
                                 name="bairro"
                                 placeholder="Bairro"
                                 disabled
+                                required
                             />
                         </div>
 
@@ -264,6 +299,7 @@
                                 name="cidade"
                                 placeholder="Cidade"
                                 disabled
+                                required
                             />
                         </div>
 
@@ -277,6 +313,7 @@
                                 placeholder="UF"
                                 maxlength="2"
                                 disabled
+                                required
                             />
                         </div>
 
@@ -312,24 +349,26 @@
 
                     <div class="form-grid">
                         <div class="form-group">
-                            <label for="sus">SUS</label>
+                            <label for="sus">Nº SUS</label>
 
                             <input
                                 type="text"
                                 id="sus"
                                 name="sus"
                                 placeholder="Número do cartão SUS"
+                                maxlength="20"
                                 disabled
                             />
                         </div>
 
                         <div class="form-group">
-                            <label for="tipo_sanguineo"> Tipo sanguíneo </label>
+                            <label for="tipo_sanguineo">Tipo sanguíneo </label>
 
                             <input
                                 type="text"
                                 id="tipo_sanguineo"
                                 name="tipo_sanguineo"
+                                maxlength="3"
                                 placeholder="Ex.: O+"
                                 disabled
                             />
@@ -410,18 +449,20 @@
                                 type="text"
                                 id="n_bolsa_familia"
                                 name="n_bolsa_familia"
+                                maxlength="20"
                                 placeholder="Número do benefício"
                                 disabled
                             />
                         </div>
 
                         <div class="form-group">
-                            <label for="nis">NIS</label>
+                            <label for="nis">Nº NIS</label>
 
                             <input
                                 type="text"
                                 id="nis"
                                 name="nis"
+                                maxlength="20"
                                 placeholder="Número do NIS"
                                 disabled
                             />
@@ -455,11 +496,11 @@
                             <label for="renda_familiar"> Renda familiar </label>
 
                             <input
-                                type="number"
+                                type="text"
                                 id="renda_familiar"
                                 name="renda_familiar"
+                                maxlength="10"
                                 placeholder="0,00"
-                                step="0.01"
                                 disabled
                             />
                         </div>
@@ -488,11 +529,11 @@
                             </label>
 
                             <input
-                                type="number"
+                                type="text"
                                 id="qtd_moradores"
                                 name="qtd_moradores"
                                 placeholder="Ex.: 4"
-                                min="1"
+                                maxlength="3"
                                 disabled
                             />
                         </div>
@@ -510,7 +551,7 @@
 
                     <button
                         type="button"
-                        class="btn-secondary"
+                        class="btn-add-familiar"
                         id="btnAdicionarFamiliar"
                         disabled
                     >
@@ -574,23 +615,15 @@
 
     <!-- FOOTER / AÇÕES -->
     <div class="modal-footer">
-        <button type="button" class="btn-cancel" id="btnFecharModalFooter">
-            Fechar
-        </button>
-
         <button type="button" class="btn-edit" id="btnEditar">
             <i class="fa-solid fa-pen"></i>
             Editar
         </button>
-
-        <button
-            type="submit"
-            form="alunoForm"
-            class="btn-save"
-            id="btnSalvar"
-        >
+        
+        <button type="submit" form="alunoForm" class="btn-save" id="btnSalvar">
             <i class="fa-solid fa-floppy-disk"></i>
             Salvar
         </button>
     </div>
+
 </dialog>
