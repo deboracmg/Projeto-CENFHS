@@ -14,7 +14,7 @@ def cursos(request):
 
 
 def turmas(request):
-    turmas = Turma.objects.select_related("responsavel").all()
+    turmas = Turma.objects.select_related("responsavel").all().order_by("-data_cadastro")
 
     return render(
         request,

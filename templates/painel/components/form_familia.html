@@ -1,4 +1,4 @@
-<dialog class="familia-modal" id="familiaModal">
+<dialog id="modalFamiliar" class="small-modal">
     <div class="modal-header">
         <div>
             <h2 id="tituloModalFamiliar">Adicionar familiar</h2>
@@ -15,7 +15,7 @@
             {% csrf_token %}
             <input type="hidden" id="parente_id" name="parente_id" value="" />
 
-            <div class="campos-familiar">
+            <div class="form-grid">
                 <!-- CPF -->
                 <div class="form-group">
                     <label for="cpf_familiar">CPF</label>
@@ -38,6 +38,7 @@
                         id="nome_familiar"
                         name="nome_familiar"
                         placeholder="Nome do familiar"
+                        maxlength="150"
                         disabled
                         required
                     />
@@ -67,6 +68,7 @@
                         id="profissao_familiar"
                         name="profissao_familiar"
                         placeholder="Digite a profissão"
+                        maxlength="100"
                         disabled
                     />
                 </div>
@@ -82,6 +84,7 @@
                         id="local_trabalho_familiar"
                         name="local_trabalho_familiar"
                         placeholder="Nome da empresa"
+                        maxlength="150"
                         disabled
                     />
                 </div>
@@ -110,6 +113,7 @@
                         id="parentesco_familiar"
                         name="parentesco_familiar"
                         placeholder="Relação familiar"
+                        maxlength="30"
                         disabled
                         required
                     />

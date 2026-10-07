@@ -77,7 +77,7 @@
 }
 
 .search-box input:focus {
-    border-color: var(--cor-principal);
+    border-color: var(--cor-secundaria);
 }
 
 .search-box button,

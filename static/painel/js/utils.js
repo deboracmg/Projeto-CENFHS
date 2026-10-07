@@ -1,19 +1,52 @@
-function pedirConfirmacao(mensagem) {
-    return new Promise((resolve) => {
-        document.getElementById("descriptionModal").textContent = mensagem;
-        const modalConfirmacao = document.getElementById("confirmacaoModal");
-        modalConfirmacao.showModal();
+/* =========================================================
+   FETCH SALVAR
+========================================================= */
 
-        document.getElementById("btnNegar").onclick = () => {
-            modalConfirmacao.close();
-            resolve(false);
-        };
+async function salvarCadastro(url, formData) {
+    const csrfToken =
+        document.querySelector("[name=csrfmiddlewaretoken]")?.value || "";
 
-        document.getElementById("btnConfirmar").onclick = () => {
-            modalConfirmacao.close();
-            resolve(true);
-        };
+    const response = await fetch(url, {
+        method: "POST",
+        body: formData,
+        headers: {
+            "X-CSRFToken": csrfToken,
+        },
     });
+
+    const dados = await response.json();
+
+    if (!response.ok) {
+        throw new Error(dados.mensagem);
+    }
+    return dados;
+}
+
+/* =========================================================
+   VALIDAÇÃO
+========================================================= */
+
+function checarFormulário(form) {
+    if (form.checkValidity()) return;
+
+    form.classList.add("com-erro");
+    throw new Error("Preencha todos os campos obrigatórios.");
+}
+
+function checarCpf(campoCpf, form) {
+    if (validarCPF(campoCpf.value)) return;
+
+    form.classList.add("com-erro");
+    campoCpf.setCustomValidity("CPF inválido");
+    throw new Error("CPF inválido. Verifique o CPF informado.");
+}
+
+function checarCep(campoCep, form) {
+    if (campoCep.value.length === 9) return;
+
+    form.classList.add("com-erro");
+    campoCep.setCustomValidity("CEP inválido");
+    throw new Error("O CEP deve conter exatamente 8 números.");
 }
 
 function validarCPF(cpf) {
@@ -58,6 +91,10 @@ function validarCPF(cpf) {
     return resto === Number(cpf[10]);
 }
 
+/* =========================================================
+   FORMATAÇÃO
+========================================================= */
+
 function permitirApenasNumeros(event) {
     return event.target.value.replace(/\D/g, "");
 }
@@ -98,6 +135,31 @@ function formatarCampoCep(e) {
     return valor;
 }
 
+/* =========================================================
+   CONFIRMAR AÇÃO
+========================================================= */
+
+function pedirConfirmacao(mensagem) {
+    return new Promise((resolve) => {
+        document.getElementById("descriptionModal").textContent = mensagem;
+        const modalConfirmacao = document.getElementById("confirmacaoModal");
+        modalConfirmacao.showModal();
+
+        document.getElementById("btnNegar").onclick = () => {
+            modalConfirmacao.close();
+            resolve(false);
+        };
+
+        document.getElementById("btnConfirmar").onclick = () => {
+            modalConfirmacao.close();
+            resolve(true);
+        };
+    });
+}
+
+/* =========================================================
+   ENDEREÇO
+========================================================= */
 
 async function buscarEnderecoPorCEP(cep) {
     cep = cep.replace(/\D/g, "");
@@ -144,6 +206,10 @@ async function preencherEnderecoAutomaticamente(cepDigitado, campos) {
         campos.rua.placeholder = "Nome da rua";
     }
 }
+
+/* =========================================================
+   NOTIFICAÇÃO
+========================================================= */
 
 function obterContainerNotificacao() {
     const container = document.getElementById("notificacoes");
@@ -260,7 +326,7 @@ function exibirNotificacao(mensagem, tipo = "info", duracao = 4000) {
     }
 }
 
-function salvarNotificacaoERecarregar(mensagem, tipo) {
+function exibirNotificacaoComReload(mensagem, tipo) {
     sessionStorage.setItem(
         "notificacao",
         JSON.stringify({
@@ -281,3 +347,40 @@ document.addEventListener("DOMContentLoaded", () => {
     sessionStorage.removeItem("notificacao");
     exibirNotificacao(dados.mensagem, dados.tipo);
 });
+
+/* =========================================================
+   ABAS
+========================================================= */
+function gerenciarAbas(button, tabButtons, tabContents, modalBody) {
+    button.addEventListener("click", () => {
+        const tabId = button.dataset.tab;
+
+        tabButtons.forEach((item) => {
+            item.classList.remove("active");
+        });
+
+        tabContents.forEach((content) => {
+            content.classList.remove("active");
+        });
+
+        button.classList.add("active");
+        document.getElementById(tabId).classList.add("active");
+        modalBody.scrollTo(0, 0);
+    });
+}
+
+function abrirAbaInicial(tabButtons, tabContents) {
+    tabButtons.forEach((button) => {
+        button.classList.remove("active");
+    });
+
+    tabContents.forEach((content) => {
+        content.classList.remove("active");
+    });
+
+    document
+        .querySelector('[data-tab="dados-pessoais"]')
+        .classList.add("active");
+
+    document.getElementById("dados-pessoais").classList.add("active");
+}

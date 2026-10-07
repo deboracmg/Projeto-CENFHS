@@ -1,4 +1,5 @@
 {% extends "painel/components/tabela.html" %}
+{% load static %}
 
 {% block title %}Pacientes{% endblock %}
 
@@ -46,7 +47,8 @@ Buscar paciente
     <td>
         <button
             type="button"
-            class="action-button"
+            class="action-button btn-abrir-paciente"
+            data-paciente-id="{{ paciente.id }}"
             title="Mais informações"
         >
             <i class="fa-solid fa-circle-info"></i>
@@ -65,4 +67,14 @@ Buscar paciente
 
 {% endfor %}
 
+{% endblock %}
+
+{% block modal %} 
+{% include "painel/components/form_paciente.html" %}
+{% include "painel/components/form_tratamento.html" %}
+{% endblock modal %}
+
+{% block individual_js %}
+<script src="{% static 'painel/js/pacientes.js' %}"></script>
+<script src="{% static 'painel/js/tratamentos.js' %}"></script>
 {% endblock %}
