@@ -1,11 +1,13 @@
-const modalFamiliar = document.getElementById("familiaModal");
+const modalFamiliar = document.getElementById("modalFamiliar");
 const formFamiliar = document.getElementById("formFamiliar");
-const campos = formFamiliar.querySelectorAll("input, select");
+const camposFamiliar = formFamiliar.querySelectorAll("input, select");
 
 const tituloModalFamiliar = document.getElementById("tituloModalFamiliar");
-const subtituloModalFamiliar = document.getElementById("subtituloModalFamiliar");
-const cpfFamiliar = document.querySelector("#cpf_familiar");
-const telefoneFamiliar = document.querySelector("#telefone_familiar");
+const subtituloModalFamiliar = document.getElementById(
+    "subtituloModalFamiliar",
+);
+const cpfFamiliar = document.getElementById("cpf_familiar");
+const telefoneFamiliar = document.getElementById("telefone_familiar");
 
 const btnAdicionarFamiliar = document.getElementById("btnAdicionarFamiliar");
 const btnExcluirFamiliar = document.getElementById("btnExcluirFamiliar");
@@ -14,7 +16,7 @@ const btnFecharFamiliar = document.getElementById("btnFecharFamiliar");
 const btnSalvarFamiliar = document.getElementById("btnSalvarFamiliar");
 
 function desabilitarCamposFamiliar() {
-    campos.forEach(campo => {
+    camposFamiliar.forEach((campo) => {
         campo.disabled = true;
     });
 
@@ -22,7 +24,7 @@ function desabilitarCamposFamiliar() {
 }
 
 function habilitarCamposFamiliar() {
-    campos.forEach((campo) => {
+    camposFamiliar.forEach((campo) => {
         campo.disabled = false;
     });
 
@@ -39,7 +41,8 @@ btnEditarFamiliar.addEventListener("click", () => {
 async function formNovoFamiliar() {
     const idAlunoReferencia = document.getElementById("aluno_id").value;
     if (!idAlunoReferencia) {
-        const mensagem = "Para adicionar um familiar, é necessário salvar o aluno primeiro. Deseja salvá-lo agora?";
+        const mensagem =
+            "Para adicionar um familiar, é necessário salvar o aluno primeiro. Deseja salvá-lo agora?";
         const confirmacao = await pedirConfirmacao(mensagem);
         if (!confirmacao) return;
 
@@ -47,15 +50,16 @@ async function formNovoFamiliar() {
         if (!salvou || !salvou.sucesso) return;
         exibirNotificacao(salvou.mensagem, "sucesso");
 
-        modalTitulo.textContent = "Editando dados do aluno";
-        modalSubtitulo.textContent = "Código: " + document.getElementById("aluno_id").value;
+        tituloModalAluno.textContent = "Editando dados do aluno";
+        subtituloModalAluno.textContent =
+            "Código: " + document.getElementById("aluno_id").value;
     }
 
     modalFamiliar.showModal();
     formFamiliar.reset();
-    if (formFamiliar.classList.contains("com-erro")) {
-        formFamiliar.classList.remove("com-erro");
-    }
+    formFamiliar.classList.remove("com-erro");
+    document.getElementById("parente_id").value = "";
+    document.getElementById("parentesco_id").value = "";
 
     tituloModalFamiliar.textContent = "Cadastrar novo familiar";
     subtituloModalFamiliar.textContent = "Preencha os dados abaixo";
@@ -67,76 +71,70 @@ async function formNovoFamiliar() {
     habilitarCamposFamiliar();
 }
 
-btnAdicionarFamiliar.addEventListener("click", formNovoFamiliar)
+btnAdicionarFamiliar.addEventListener("click", formNovoFamiliar);
 
-function detalharParente(aluno_id, parente) {
-    preencherFormularioFamiliar(parente);
+function detalharFamiliar(aluno_id, familiar) {
+    preencherFormularioFamiliar(familiar);
     tituloModalFamiliar.textContent = "Dados do familiar";
-    subtituloModalFamiliar.textContent = "Código: " + parente.parente_id;
+    subtituloModalFamiliar.textContent = "Código: " + familiar.parente_id;
 
     desabilitarCamposFamiliar();
     btnEditarFamiliar.disabled = false;
     btnExcluirFamiliar.disabled = false;
-    btnExcluirFamiliar.dataset.parenteId = parente.parente_id;
+    btnExcluirFamiliar.dataset.parenteId = familiar.parente_id;
     btnExcluirFamiliar.dataset.alunoId = aluno_id;
 
     modalFamiliar.showModal();
 }
 
-
-function preencherFormularioFamiliar(parente) {
-    document.getElementById("parente_id").value = parente.parente_id || "";
-    document.getElementById("cpf_familiar").value = parente.cpf || "";
-    document.getElementById("nome_familiar").value = parente.nome || "";
-    document.getElementById("telefone_familiar").value = parente.telefone || "";
-    document.getElementById("profissao_familiar").value = parente.profissao || "";
-    document.getElementById("local_trabalho_familiar").value = parente.local_trabalho || "";
-    document.getElementById("escolaridade_familiar").value = parente.escolaridade || "";
-    document.getElementById("parentesco_id").value = parente.parentesco_id || "";
-    document.getElementById("parentesco_familiar").value = parente.parentesco || "";
-    document.getElementById("familiar_vivo").checked = parente.vivo || false;
-    document.getElementById("familiar_responsavel").checked = parente.responsavel || false;
-    document.getElementById("familiar_emergencia").checked = parente.contato_emergencia || false;
+function preencherFormularioFamiliar(familiar) {
+    document.getElementById("parente_id").value = familiar.parente_id || "";
+    document.getElementById("cpf_familiar").value = familiar.cpf || "";
+    document.getElementById("nome_familiar").value = familiar.nome || "";
+    document.getElementById("telefone_familiar").value =
+        familiar.telefone || "";
+    document.getElementById("profissao_familiar").value =
+        familiar.profissao || "";
+    document.getElementById("local_trabalho_familiar").value =
+        familiar.local_trabalho || "";
+    document.getElementById("escolaridade_familiar").value =
+        familiar.escolaridade || "";
+    document.getElementById("parentesco_id").value =
+        familiar.parentesco_id || "";
+    document.getElementById("parentesco_familiar").value =
+        familiar.parentesco || "";
+    document.getElementById("familiar_vivo").checked = familiar.vivo || false;
+    document.getElementById("familiar_responsavel").checked =
+        familiar.responsavel || false;
+    document.getElementById("familiar_emergencia").checked =
+        familiar.contato_emergencia || false;
 }
 
+async function buscarFamiliarPorCpf() {
+    const cpf = cpfFamiliar.value;
+    if (!cpf) return;
 
-async function buscarParentePorCpf() {
-    const cpf = cpfFamiliar.value.trim();
-
-    if (!cpf) {
-        return;
-    }
-
-    const params = new URLSearchParams({cpf: cpf});
+    const params = new URLSearchParams({ cpf: cpf });
     const resposta = await fetch(
-        `/dashboard/parentes/buscar-por-cpf/?${params}`
+        `/dashboard/parentes/buscar-por-cpf/?${params}`,
     );
 
     const dados = await resposta.json();
-
     if (dados.encontrado) {
         preencherFormularioFamiliar(dados.parente);
     }
 }
 
-cpfFamiliar.addEventListener("input", function (e) {
-    e.target.value = formatarCampoCpf(e);
-});
-
-cpfFamiliar.addEventListener("blur", buscarParentePorCpf);
-
-telefoneFamiliar.addEventListener("input", function (e) {
-    e.target.value = formatarCampoTelefone(e);
-});
-
 function obterCSRFToken() {
-    return document.querySelector(
-        "[name=csrfmiddlewaretoken]"
-    ).value;
+    return document.querySelector("[name=csrfmiddlewaretoken]").value;
 }
 
-
 async function excluirFamiliar() {
+    const confirmacao = await pedirConfirmacao(
+        "Tem certeza que deseja excluir este familiar?",
+    );
+    if (!confirmacao) return;
+
     const formData = new FormData();
     const parenteId = btnExcluirFamiliar.dataset.parenteId;
     const alunoId = btnExcluirFamiliar.dataset.alunoId;
@@ -148,8 +146,8 @@ async function excluirFamiliar() {
         method: "POST",
         body: formData,
         headers: {
-            "X-CSRFToken": obterCSRFToken()
-        }
+            "X-CSRFToken": obterCSRFToken(),
+        },
     });
 
     const dados = await resposta.json();
@@ -158,60 +156,55 @@ async function excluirFamiliar() {
         exibirNotificacao(dados.mensagem, "erro");
         return;
     }
-    
+
     modalFamiliar.close();
-    exibirFamilia(alunoId, dados.familia)
+    exibirFamilia(alunoId, dados.familia);
     exibirNotificacao(dados.mensagem, "sucesso");
 }
 
+btnExcluirFamiliar.addEventListener("click", excluirFamiliar);
 
-btnExcluirFamiliar.addEventListener("click", excluirFamiliar)
+/* =========================================================
+   VALIDAÇÃO DE CAMPOS
+========================================================= */
+
+cpfFamiliar.addEventListener("input", function (e) {
+    e.target.value = formatarCampoCpf(e);
+    cpfFamiliar.setCustomValidity("");
+});
+
+cpfFamiliar.addEventListener("blur", buscarFamiliarPorCpf);
+
+telefoneFamiliar.addEventListener("input", function (e) {
+    e.target.value = formatarCampoTelefone(e);
+});
 
 /* =========================================================
    SALVAR CADASTRO
 ========================================================= */
 
 formFamiliar.addEventListener("submit", async (event) => {
-    event.preventDefault();
+    try {
+        event.preventDefault();
 
-    if (!formFamiliar.checkValidity()) {
-        formFamiliar.classList.add("com-erro");
-        exibirNotificacao("Preencha todos os campos obrigatórios", "info");
-        return false;
+        formFamiliar.classList.remove("com-erro");
+        cpfFamiliar.setCustomValidity("");
+
+        checarFormulário(formFamiliar);
+        checarCpf(cpfFamiliar);
+
+        const url = "/dashboard/parentes/salvar/";
+        const formData = new FormData(formFamiliar);
+        formData.append("aluno_id", document.getElementById("aluno_id").value);
+        
+        const dados = await salvarCadastro(url, formData);
+
+        modalFamiliar.close();
+        exibirFamilia(dados.aluno_id, dados.familia);
+        exibirNotificacao(dados.mensagem, "sucesso");
+    } catch (erro) {
+        exibirNotificacao(erro.message, "erro");
     }
-
-    if (!validarCPF(cpfFamiliar.value)) {
-        exibirNotificacao("CPF inválido. Verifique o CPF informado.", "erro")
-        return false;
-    }
-
-    const formData = new FormData(formFamiliar);
-    formData.append("aluno_id", document.getElementById("aluno_id").value);
-
-    const csrfToken = document.querySelector(
-        "[name=csrfmiddlewaretoken]",
-    ).value;
-
-    const response = await fetch("/dashboard/parentes/salvar/", {
-        method: "POST",
-        body: formData,
-        headers: {
-            "X-CSRFToken": csrfToken,
-        },
-    });
-
-    const dados = await response.json();
-
-    if (!response.ok) {
-        console.error(dados);
-        return false;
-    }
-
-    modalFamiliar.close();
-    exibirFamilia(dados.aluno_id, dados.familia)
-    exibirNotificacao(dados.mensagem, "sucesso");
-    return true;
 });
 
 btnFecharFamiliar.addEventListener("click", () => modalFamiliar.close());
-

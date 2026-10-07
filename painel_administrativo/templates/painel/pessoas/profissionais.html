@@ -1,4 +1,5 @@
 {% extends "painel/components/tabela.html" %}
+{% load static %}
 
 {% block title %}Profissionais{% endblock %}
 
@@ -48,7 +49,8 @@ Buscar profissional
     <td>
         <button
             type="button"
-            class="action-button"
+            class="action-button btn-abrir-profissional"
+            data-profissional-id="{{ profissional.id }}"
             title="Mais informações"
         >
             <i class="fa-solid fa-circle-info"></i>
@@ -67,4 +69,13 @@ Buscar profissional
 
 {% endfor %}
 
+{% endblock %}
+
+{% block modal %} 
+{% include "painel/components/form_profissional.html" %}
+{% endblock modal %}
+
+
+{% block individual_js %}
+<script src="{% static 'painel/js/profissionais.js' %}"></script>
 {% endblock %}

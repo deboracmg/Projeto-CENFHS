@@ -1,4 +1,4 @@
-<dialog id="alunoModal" class="aluno-modal">
+<dialog id="alunoModal" class="large-modal">
     <!-- HEADER -->
     <div class="modal-header">
         <div>
@@ -38,7 +38,7 @@
 
     <!-- CONTEÚDO -->
     <div class="modal-body">
-        <form id="alunoForm" enctype="multipart/form-data" novalidate>
+        <form id="formAluno" enctype="multipart/form-data" novalidate>
             {% csrf_token %}
             <!-- DADOS PESSOAIS -->
             <section class="tab-content active" id="dados-pessoais">
@@ -46,20 +46,12 @@
                     <h3>Dados pessoais</h3>
 
                     <div class="form-grid">
-                        <input type="hidden" id="aluno_id" name="aluno_id" value=""/>
-
-                        <div class="form-group form-group-large">
-                            <label for="nome">Nome completo</label>
-
-                            <input
-                                type="text"
-                                id="nome"
-                                name="nome"
-                                placeholder="Digite o nome completo"
-                                disabled
-                                required
-                            />
-                        </div>
+                        <input
+                            type="hidden"
+                            id="aluno_id"
+                            name="aluno_id"
+                            value=""
+                        />
 
                         <div class="form-group">
                             <label for="cpf">CPF</label>
@@ -75,6 +67,33 @@
                             />
                         </div>
 
+                        <div class="form-group form-group-large">
+                            <label for="nome">Nome completo</label>
+
+                            <input
+                                type="text"
+                                id="nome"
+                                name="nome"
+                                placeholder="Digite o nome completo"
+                                maxlength="150"
+                                disabled
+                                required
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="rg">RG</label>
+
+                            <input
+                                type="text"
+                                id="rg"
+                                name="rg"
+                                placeholder="Número da identidade"
+                                maxlength="50"
+                                disabled
+                            />
+                        </div>
+                        
                         <div class="form-group">
                             <label for="data_nascimento">
                                 Data de nascimento
@@ -97,18 +116,7 @@
                                 id="naturalidade"
                                 name="naturalidade"
                                 placeholder="Cidade de nascimento"
-                                disabled
-                            />
-                        </div>
-
-                        <div class="form-group">
-                            <label for="rg">RG</label>
-
-                            <input
-                                type="text"
-                                id="rg"
-                                name="rg"
-                                placeholder="Número da identidade"
+                                maxlength="100"
                                 disabled
                             />
                         </div>
@@ -123,6 +131,7 @@
                                 id="n_certidao"
                                 name="n_certidao"
                                 placeholder="Número da certidão"
+                                maxlength="50"
                                 disabled
                             />
                         </div>
@@ -180,6 +189,7 @@
                                 id="email"
                                 name="email"
                                 placeholder="exemplo@email.com"
+                                maxlength="100"
                                 disabled
                             />
                         </div>
@@ -192,7 +202,12 @@
 
                     <div class="photo-info-container">
                         <div class="photo-field">
-                            <input type="hidden" id="remover_foto" name="remover_foto" value="false">
+                            <input
+                                type="hidden"
+                                id="remover_foto"
+                                name="remover_foto"
+                                value="false"
+                            />
                             <label for="foto" class="photo-preview">
                                 <i class="fa-solid fa-camera"></i>
                                 <span>Foto do aluno</span>
@@ -258,6 +273,7 @@
                                 id="rua"
                                 name="rua"
                                 placeholder="Nome da rua"
+                                maxlength="150"
                                 disabled
                                 required
                             />
@@ -285,6 +301,7 @@
                                 id="bairro"
                                 name="bairro"
                                 placeholder="Bairro"
+                                maxlength="100"
                                 disabled
                                 required
                             />
@@ -298,6 +315,7 @@
                                 id="cidade"
                                 name="cidade"
                                 placeholder="Cidade"
+                                maxlength="100"
                                 disabled
                                 required
                             />
@@ -326,9 +344,9 @@
                                 </option>
 
                                 {% for valor, rotulo in zonas %}
-                                    <option value="{{ valor }}">
-                                        {{ rotulo }}
-                                    </option>
+                                <option value="{{ valor }}">
+                                    {{ rotulo }}
+                                </option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -336,7 +354,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Data de cadastro:
+                    <label
+                        >Data de cadastro:
                         <span id="data_cadastro"></span>
                     </label>
                 </div>
@@ -476,6 +495,7 @@
                                 id="escola"
                                 name="escola"
                                 placeholder="Nome da escola"
+                                maxlength="150"
                                 disabled
                             />
                         </div>
@@ -488,6 +508,7 @@
                                 id="transporte"
                                 name="transporte"
                                 placeholder="Tipo de transporte"
+                                maxlength="100"
                                 disabled
                             />
                         </div>
@@ -515,10 +536,14 @@
                                 name="situacao_moradia"
                                 disabled
                             >
-                                <option value="" selected disabled>Selecione</option>
+                                <option value="" selected disabled>
+                                    Selecione
+                                </option>
 
                                 {% for valor, rotulo in situacao_moradia %}
-                                    <option value="{{ valor }}">{{ rotulo }}</option>                                  
+                                <option value="{{ valor }}">
+                                    {{ rotulo }}
+                                </option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -572,9 +597,7 @@
                             </tr>
                         </thead>
 
-                        <tbody id="familiaBody">
-
-                        </tbody>
+                        <tbody id="familiaBody"></tbody>
                     </table>
                 </div>
             </section>
@@ -619,11 +642,10 @@
             <i class="fa-solid fa-pen"></i>
             Editar
         </button>
-        
-        <button type="submit" form="alunoForm" class="btn-save" id="btnSalvar">
+
+        <button type="submit" form="formAluno" class="btn-save" id="btnSalvar">
             <i class="fa-solid fa-floppy-disk"></i>
             Salvar
         </button>
     </div>
-
 </dialog>

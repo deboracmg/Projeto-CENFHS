@@ -56,18 +56,18 @@ class Command(BaseCommand):
         # ==========================================================
 
         alunos_dados = [
-            ("Ana Beatriz Silva", "11111111101", date(2011, 3, 15), "FEMININO", "PARDA"),
-            ("Carlos Eduardo Santos", "11111111102", date(2010, 7, 22), "MASCULINO", "PRETA"),
-            ("Maria Vitória Oliveira", "11111111103", date(2012, 1, 10), "FEMININO", "BRANCA"),
-            ("João Pedro Lima", "11111111104", date(2009, 11, 5), "MASCULINO", "PARDA"),
-            ("Beatriz Souza Costa", "11111111105", date(2013, 5, 18), "FEMININO", "PARDA"),
-            ("Lucas Gabriel Ferreira", "11111111106", date(2011, 9, 30), "MASCULINO", "BRANCA"),
-            ("Mariana Alves Rocha", "11111111107", date(2010, 2, 14), "FEMININO", "PRETA"),
-            ("Pedro Henrique Martins", "11111111108", date(2012, 8, 27), "MASCULINO", "PARDA"),
-            ("Laura Fernanda Gomes", "11111111109", date(2013, 12, 3), "FEMININO", "BRANCA"),
-            ("Rafael Augusto Nunes", "11111111110", date(2009, 6, 19), "MASCULINO", "PARDA"),
-            ("Julia Cristina Barbosa", "11111111111", date(2011, 10, 8), "FEMININO", "AMARELA"),
-            ("Mateus Vinicius Araújo", "11111111112", date(2010, 4, 25), "MASCULINO", "PRETA"),
+            ("Ana Beatriz Silva", "111.111.111-01", "1111101", date(2011, 3, 15), "FEMININO", "PARDA"),
+            ("Carlos Eduardo Santos", "111.111.111-02", "1111102", date(2010, 7, 22), "MASCULINO", "PRETA"),
+            ("Maria Vitória Oliveira", "111.111.111-03", "1111103", date(2012, 1, 10), "FEMININO", "BRANCA"),
+            ("João Pedro Lima", "111.111.111-04", "1111104", date(2009, 11, 5), "MASCULINO", "PARDA"),
+            ("Beatriz Souza Costa", "111.111.111-05", "1111105", date(2013, 5, 18), "FEMININO", "PARDA"),
+            ("Lucas Gabriel Ferreira", "111.111.111-06", "1111106", date(2011, 9, 30), "MASCULINO", "BRANCA"),
+            ("Mariana Alves Rocha", "111.111.111-07", "1111107", date(2010, 2, 14), "FEMININO", "PRETA"),
+            ("Pedro Henrique Martins", "111.111.111-08", "1111108", date(2012, 8, 27), "MASCULINO", "PARDA"),
+            ("Laura Fernanda Gomes", "111.111.111-09", "1111109", date(2013, 12, 3), "FEMININO", "BRANCA"),
+            ("Rafael Augusto Nunes", "111.111.111-10", "1111110", date(2009, 6, 19), "MASCULINO", "PARDA"),
+            ("Julia Cristina Barbosa", "111.111.111-11", "1111111", date(2011, 10, 8), "FEMININO", "AMARELA"),
+            ("Mateus Vinicius Araújo", "111.111.111-12", "1111112", date(2010, 4, 25), "MASCULINO", "PRETA"),
         ]
 
         alunos = []
@@ -77,11 +77,13 @@ class Command(BaseCommand):
             aluno = Aluno.objects.create(
                 nome=dados[0],
                 cpf=dados[1],
-                data_nascimento=dados[2],
-                genero=dados[3],
-                raca=dados[4],
+                rg=dados[2],
+                data_nascimento=dados[3],
+                naturalidade=enderecos[numero][4],
+                genero=dados[4],
+                raca=dados[5],
                 n_certidao=f"CERT-{10000 + i}",
-                telefone=f"(83) 9{90000000 + i:08d}",
+                telefone=f"(83) 9{9000-0000 + i:08d}",
                 email=f"aluno{i + 1}@exemplo.com",
                 cep=enderecos[numero][0],
                 rua=enderecos[numero][1],
@@ -100,12 +102,12 @@ class Command(BaseCommand):
         # ==========================================================
 
         parentes_dados = [
-            ("Maria José Silva", "22222222201", "Professora", "Escola Municipal", "SUPERIOR"),
-            ("José Carlos Santos", "22222222202", "Comerciante", "Comércio local", "MEDIO"),
-            ("Luciana Oliveira", "22222222203", "Costureira", "Autônoma", "MEDIO"),
-            ("Roberto Lima", "22222222204", "Motorista", "Empresa de Transporte", "MEDIO"),
-            ("Fernanda Costa", "22222222205", "Auxiliar administrativa", "Empresa privada", "SUPERIOR"),
-            ("Paulo Ferreira", "22222222206", "Pedreiro", "Autônomo", "FUNDAMENTAL"),
+            ("Maria José Silva", "222.222.222-01", "Professora", "Escola Municipal", "SUPERIOR"),
+            ("José Carlos Santos", "222.222.222-02", "Comerciante", "Comércio local", "MEDIO"),
+            ("Luciana Oliveira", "222.222.222-03", "Costureira", "Autônoma", "MEDIO"),
+            ("Roberto Lima", "222.222.222-04", "Motorista", "Empresa de Transporte", "MEDIO"),
+            ("Fernanda Costa", "222.222.222-05", "Auxiliar administrativa", "Empresa privada", "SUPERIOR"),
+            ("Paulo Ferreira", "222.222.222-06", "Pedreiro", "Autônomo", "FUNDAMENTAL"),
         ]
 
         parentes = []
@@ -117,7 +119,7 @@ class Command(BaseCommand):
                 vivo=True,
                 profissao=dados[2],
                 local_trabalho=dados[3],
-                telefone=f"(83) 9{91000000 + i:08d}",
+                telefone=f"(83) 9{9100-0000 + i:08d}",
                 escolaridade=dados[4],
             )
             parentes.append(parente)
@@ -204,13 +206,13 @@ class Command(BaseCommand):
         # ==========================================================
 
         profissionais_dados = [
-            ("Carlos Alberto Mendes", "33333333301", date(1985, 2, 10), "Professor de Informática"),
-            ("Juliana Martins Silva", "33333333302", date(1990, 6, 21), "Professora de Dança"),
-            ("Ricardo Gomes Oliveira", "33333333303", date(1982, 9, 15), "Professor de Esportes"),
-            ("Patrícia Fernandes Lima", "33333333304", date(1988, 4, 7), "Assistente Social"),
-            ("Marcos Vinicius Costa", "33333333305", date(1979, 12, 19), "Educador"),
-            ("Camila Rodrigues Alves", "33333333306", date(1992, 8, 3), "Psicóloga"),
-            ("Felipe Andrade Souza", "33333333307", date(1986, 11, 25), "Professor de Música"),
+            ("Carlos Alberto Mendes", "333.333.333-01", date(1985, 2, 10), "Professor de Informática"),
+            ("Juliana Martins Silva", "333.333.333-02", date(1990, 6, 21), "Professora de Dança"),
+            ("Ricardo Gomes Oliveira", "333.333.333-03", date(1982, 9, 15), "Professor de Esportes"),
+            ("Patrícia Fernandes Lima", "333.333.333-04", date(1988, 4, 7), "Assistente Social"),
+            ("Marcos Vinicius Costa", "333.333.333-05", date(1979, 12, 19), "Educador"),
+            ("Camila Rodrigues Alves", "333.333.333-06", date(1992, 8, 3), "Psicóloga"),
+            ("Felipe Andrade Souza", "333.333.333-07", date(1986, 11, 25), "Professor de Música"),
         ]
 
         profissionais = []
@@ -220,7 +222,7 @@ class Command(BaseCommand):
                 nome=dados[0],
                 cpf=dados[1],
                 data_nascimento=dados[2],
-                telefone=f"(83) 9{92000000 + i:08d}",
+                telefone=f"(83) 9{9200-0000 + i:08d}",
                 email=f"profissional{i + 1}@exemplo.com",
                 area_atuacao=dados[3],
             )
@@ -231,12 +233,12 @@ class Command(BaseCommand):
         # ==========================================================
 
         pacientes_dados = [
-            ("Antônio Carlos Silva", "44444444401", date(1972, 3, 12), "MASCULINO"),
-            ("Maria de Lourdes Santos", "44444444402", date(1968, 7, 20), "FEMININO"),
-            ("José Pereira Oliveira", "44444444403", date(1959, 11, 5), "MASCULINO"),
-            ("Francisca Maria Lima", "44444444404", date(1975, 1, 28), "FEMININO"),
-            ("Roberto Alves Costa", "44444444405", date(1980, 5, 16), "MASCULINO"),
-            ("Sandra Regina Souza", "44444444406", date(1970, 9, 9), "FEMININO"),
+            ("Antônio Carlos Silva", "444.444.444-01", "1111101", date(1972, 3, 12), "MASCULINO"),
+            ("Maria de Lourdes Santos", "444.444.444-02", "1111102", date(1968, 7, 20), "FEMININO"),
+            ("José Pereira Oliveira", "444.444.444-03", "1111103", date(1959, 11, 5), "MASCULINO"),
+            ("Francisca Maria Lima", "444.444.444-04", "1111104", date(1975, 1, 28), "FEMININO"),
+            ("Roberto Alves Costa", "444.444.444-05", "1111105", date(1980, 5, 16), "MASCULINO"),
+            ("Sandra Regina Souza", "444.444.444-06", "1111106", date(1970, 9, 9), "FEMININO"),
         ]
 
         pacientes = []
@@ -246,9 +248,12 @@ class Command(BaseCommand):
             paciente = Paciente.objects.create(
                 nome=dados[0],
                 cpf=dados[1],
-                data_nascimento=dados[2],
-                genero=dados[3],
-                telefone=f"(83) 9{93000000 + i:08d}",
+                rg=dados[2],
+                data_nascimento=dados[3],
+                naturalidade=enderecos[numero][4],
+                genero=dados[4],
+                telefone=f"(83) 9{9300-0000 + i:08d}",
+                email=f"paciente{i + 1}@exemplo.com",
                 nome_mae=f"Maria da Silva {i + 1}",
                 nome_pai=f"João da Silva {i + 1}",
                 profissao=[
@@ -457,7 +462,7 @@ class Command(BaseCommand):
                     "Ana Oliveira",
                     "Carlos Lima",
                 ][i],
-                telefone_acompanhante=f"(83) 9{94000000 + i:08d}",
+                telefone_acompanhante=f"(83) 9{9400-0000 + i:08d}",
                 registrado_por="Administrador",
             )
             tratamentos.append(tratamento)

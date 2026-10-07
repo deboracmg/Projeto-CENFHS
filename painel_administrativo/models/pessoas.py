@@ -6,15 +6,13 @@ class Aluno(models.Model):
     cpf = models.CharField(max_length=14, unique=True)
     rg = models.CharField(max_length=50, null=True, blank=True)
     foto = models.ImageField(upload_to="alunos/", blank=True, null=True)
-
     data_nascimento = models.DateField()
+    naturalidade = models.CharField(max_length=100, null=True, blank=True)
+
     class Genero(models.TextChoices):
         MASCULINO = "MASCULINO", "Masculino"
         FEMININO = "FEMININO", "Feminino"
         OUTRO = "OUTRO", "Outro"
-    
-    naturalidade = models.CharField(max_length=100, null=True, blank=True)
-
     genero = models.CharField(
         max_length=20,
         choices=Genero.choices
@@ -206,7 +204,9 @@ class Profissional(models.Model):
 class Paciente(models.Model):
     nome = models.CharField(max_length=150)
     cpf = models.CharField(max_length=14, unique=True)
+    rg = models.CharField(max_length=50, null=True, blank=True)
     data_nascimento = models.DateField()
+    naturalidade = models.CharField(max_length=100, null=True, blank=True)
 
     class Genero(models.TextChoices):
         MASCULINO = "MASCULINO", "Masculino"
@@ -218,6 +218,7 @@ class Paciente(models.Model):
         choices=Genero.choices
     )
     telefone = models.CharField(max_length=20)
+    email = models.EmailField(blank=True)
 
     nome_mae = models.CharField(max_length=150, blank=True)
     nome_pai = models.CharField(max_length=150, blank=True)

@@ -26,7 +26,7 @@ def buscar_parente_por_cpf(request):
     if not parente:
         return JsonResponse({
             "encontrado": False
-        }, status=404)
+        })
 
     return JsonResponse({
         "encontrado": True,
@@ -42,27 +42,6 @@ def buscar_parente_por_cpf(request):
             "vivo": parente.vivo,
         }
     }, status=200)
-
-
-def detalhar_parente(request, parente):
-    dados = {
-        "parentesco_id": parente.parentesco.id,
-        "parente_id": parente.id,
-
-        "cpf": parente.cpf,
-        "nome": parente.nome,
-        "telefone": parente.telefone,
-        "profissao": parente.profissao,
-        "local_trabalho": parente.local_trabalho,
-        "escolaridade": parente.escolaridade,
-        "vivo": parente.vivo,
-
-        "parentesco": parente.parentesco,
-        "responsavel": parente.responsavel,
-        "contato_emergencia": parente.contato_emergencia,
-    }
-
-    return JsonResponse(dados)
 
 
 @transaction.atomic

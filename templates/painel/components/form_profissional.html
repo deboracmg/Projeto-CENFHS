@@ -1,0 +1,130 @@
+<dialog id="profissionalModal" class="small-modal">
+    <div class="modal-header">
+        <div>
+            <h2 id="tituloModalProfissional">Cadastrar novo profissional</h2>
+            <p id="subtituloModalProfissional">Preencha os dados abaixo</p>
+        </div>
+
+        <button type="button" class="modal-close" id="btnFecharProfissional">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <form id="formProfissional" novalidate>
+            {% csrf_token %}
+            <input type="hidden" id="profissional_id" name="profissional_id" value="" />
+
+            <div class="form-grid">
+                <!-- CPF -->
+                <div class="form-group">
+                    <label for="cpf">CPF</label>
+                    <input
+                        type="text"
+                        id="cpf"
+                        name="cpf"
+                        placeholder="000.000.000-00"
+                        maxlength="14"
+                        disabled
+                        required
+                    />
+                </div>
+
+                <!-- Nome -->
+                <div class="form-group">
+                    <label for="nome">Nome completo</label>
+                    <input
+                        type="text"
+                        id="nome"
+                        name="nome"
+                        placeholder="Nome do profissional"
+                        maxlength="150"
+                        disabled
+                        required
+                    />
+                </div>
+
+                <!-- Data de nascimento -->
+                <div class="form-group">
+                    <label for="data_nascimento">
+                        Data de nascimento
+                    </label>
+
+                    <input
+                        type="date"
+                        id="data_nascimento"
+                        name="data_nascimento"
+                        disabled
+                        required
+                    />
+                </div>
+
+                <!-- Telefone -->
+                <div class="form-group">
+                    <label for="telefone">Telefone</label>
+
+                    <input
+                        type="text"
+                        id="telefone"
+                        name="telefone"
+                        maxlength="15"
+                        placeholder="(00) 00000-0000"
+                        disabled
+                        required
+                    />
+                </div>
+
+                <!-- E-mail -->
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="exemplo@email.com"
+                        maxlength="100"
+                        disabled
+                    />
+                </div>
+
+                <!-- Profissão -->
+                <div class="form-group">
+                    <label for="area_atuacao">Área de Atuação</label>
+
+                    <input
+                        type="text"
+                        id="area_atuacao"
+                        name="area_atuacao"
+                        placeholder="Digite a profissão"
+                        maxlength="100"
+                        disabled
+                    />
+                </div>
+                
+                <div class="form-group">
+                    <label>Data de cadastro:
+                        <span id="data_cadastro"></span>
+                    </label>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn-edit" id="btnEditarProfissional">
+            <i class="fa-solid fa-pen"></i>
+            Editar
+        </button>
+
+        <button
+            type="submit"
+            form="formProfissional"
+            class="btn-save"
+            id="btnSalvarProfissional"
+        >
+            <i class="fa-solid fa-floppy-disk"></i>
+            Salvar
+        </button>
+    </div>
+</dialog>
