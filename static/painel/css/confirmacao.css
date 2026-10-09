@@ -1,5 +1,5 @@
 .confirmacao-modal {
-    width: min(360px, 90vw);
+    width: min(380px, 90vw);
     margin: auto;
     border: none;
     border-radius: 12px;
@@ -29,7 +29,7 @@
     font-size: 22px;
 }
 
-.modal-body p {
+.descriptionModal {
     text-align: justify;
     font-size: 14px;
     color: var(--cor-texto-principal);
@@ -51,6 +51,7 @@
     align-items: center;
     gap: 8px;
     padding: 7px 13px;
+    border: none;
     border-radius: 6px;
     font-size: 13px;
     font-weight: 600;

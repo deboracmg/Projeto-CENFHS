@@ -10,7 +10,7 @@
         </button>
     </div>
 
-    <div class="modal-body">
+    <div class="modal-body tratamento">
         <form id="formTratamento" novalidate>
             {% csrf_token %}
             <input
@@ -19,132 +19,329 @@
                 name="tratamento_id"
                 value=""
             />
+            <section>
+                <div class="form-section">
+                    <div class="form-grid-triplo">
+                        <!-- Data de entrada -->
+                        <div class="form-group">
+                            <label for="data_entrada"> Data de entrada </label>
 
-            <div class="form-grid">
-                <!-- Data de entrada -->
-                <div class="form-group">
-                    <label for="data_entrada"> Data de entrada </label>
+                            <input
+                                type="date"
+                                id="data_entrada"
+                                name="data_entrada"
+                                disabled
+                                required
+                            />
+                        </div>
 
-                    <input
-                        type="date"
-                        id="data_entrada"
-                        name="data_entrada"
-                        disabled
-                        required
-                    />
+                        <!-- Data de saída -->
+                        <div class="form-group">
+                            <label for="data_saida"> Data de saída </label>
+
+                            <input
+                                type="date"
+                                id="data_saida"
+                                name="data_saida"
+                                disabled
+                            />
+                        </div>
+
+                        <!-- Tipo de paciente -->
+                        <div class="form-group">
+                            <label for="tipo_paciente">Tipo de paciente</label>
+                            <input
+                                type="text"
+                                id="tipo_paciente"
+                                name="tipo_paciente"
+                                placeholder="Tipo de paciente"
+                                maxlength="50"
+                                disabled
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="tratamento">Tratamento</label>
+                            <input
+                                type="text"
+                                id="tratamento"
+                                name="tratamento"
+                                placeholder="Digite o tratamento"
+                                maxlength="150"
+                                disabled
+                                required
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="n_sessoes">Número de sessões</label>
+
+                            <input
+                                type="text"
+                                id="n_sessoes"
+                                name="n_sessoes"
+                                placeholder="Ex.: 4"
+                                maxlength="3"
+                                disabled
+                                required
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="acompanhante">Acompanhante</label>
+                            <input
+                                type="text"
+                                id="acompanhante"
+                                name="acompanhante"
+                                placeholder="Nome do acompanhante"
+                                maxlength="150"
+                                disabled
+                            />
+                        </div>
+
+                        <!-- Telefone -->
+                        <div class="form-group">
+                            <label for="telefone_acompanhante"
+                                >Telefone do acompanhante</label
+                            >
+
+                            <input
+                                type="text"
+                                id="telefone_acompanhante"
+                                name="telefone_acompanhante"
+                                maxlength="15"
+                                placeholder="(00) 00000-0000"
+                                disabled
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="registrado_por">Registrado por</label>
+                            <input
+                                type="text"
+                                id="registrado_por"
+                                name="registrado_por"
+                                placeholder="Nome do voluntário"
+                                maxlength="50"
+                                disabled
+                                required
+                            />
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Data de saída -->
-                <div class="form-group">
-                    <label for="data_saida"> Data de saída </label>
+                <div class="form-section">
+                    <div class="form-group">
+                        <label for="observacoes">Observações</label>
 
-                    <input
-                        type="date"
-                        id="data_saida"
-                        name="data_saida"
-                        disabled
-                    />
+                        <textarea
+                            id="observacoes"
+                            name="observacoes"
+                            placeholder="Digite observações sobre o tratamento"
+                            disabled
+                        ></textarea>
+                    </div>
+                </div>
+            </section>
+
+            <section class="tab-content" id="avaliacao">
+                <div class="form-section">
+                    <h3>Avaliação de serviço</h3>
+                    <div class="form-grid-quadruplo">
+                        <input
+                            type="hidden"
+                            id="avaliacao_id"
+                            name="avaliacao_id"
+                            value=""
+                        />
+                        <div class="form-group">
+                            <label for="atendimento">Atendimento</label>
+
+                            <select
+                                id="atendimento"
+                                name="atendimento"
+                                disabled
+                                required
+                            >
+                                <option value="" selected disabled>
+                                    Selecione
+                                </option>
+
+                                {% for valor, rotulo in opcoes_avaliacao %}
+                                <option value="{{ valor }}">
+                                    {{ rotulo }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="infraestrutura">Infraestrutura</label>
+
+                            <select
+                                id="infraestrutura"
+                                name="infraestrutura"
+                                disabled
+                                required
+                            >
+                                <option value="" selected disabled>
+                                    Selecione
+                                </option>
+
+                                {% for valor, rotulo in opcoes_avaliacao %}
+                                <option value="{{ valor }}">
+                                    {{ rotulo }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="higiene">Higiene</label>
+
+                            <select
+                                id="higiene"
+                                name="higiene"
+                                disabled
+                                required
+                            >
+                                <option value="" selected disabled>
+                                    Selecione
+                                </option>
+
+                                {% for valor, rotulo in opcoes_avaliacao %}
+                                <option value="{{ valor }}">
+                                    {{ rotulo }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="alimentacao">Alimentacao</label>
+
+                            <select
+                                id="alimentacao"
+                                name="alimentacao"
+                                disabled
+                                required
+                            >
+                                <option value="" selected disabled>
+                                    Selecione
+                                </option>
+
+                                {% for valor, rotulo in opcoes_avaliacao %}
+                                <option value="{{ valor }}">
+                                    {{ rotulo }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="comunicacao">Comunicação</label>
+
+                            <select
+                                id="comunicacao"
+                                name="comunicacao"
+                                disabled
+                                required
+                            >
+                                <option value="" selected disabled>
+                                    Selecione
+                                </option>
+
+                                {% for valor, rotulo in opcoes_avaliacao %}
+                                <option value="{{ valor }}">
+                                    {{ rotulo }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="acolhimento">Acolhimento</label>
+
+                            <select
+                                id="acolhimento"
+                                name="acolhimento"
+                                disabled
+                                required
+                            >
+                                <option value="" selected disabled>
+                                    Selecione
+                                </option>
+
+                                {% for valor, rotulo in opcoes_avaliacao %}
+                                <option value="{{ valor }}">
+                                    {{ rotulo }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="organizacao">Organização</label>
+
+                            <select
+                                id="organizacao"
+                                name="organizacao"
+                                disabled
+                                required
+                            >
+                                <option value="" selected disabled>
+                                    Selecione
+                                </option>
+
+                                {% for valor, rotulo in opcoes_avaliacao %}
+                                <option value="{{ valor }}">
+                                    {{ rotulo }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="gestao">Gestão</label>
+
+                            <select id="gestao" name="gestao" disabled required>
+                                <option value="" selected disabled>
+                                    Selecione
+                                </option>
+
+                                {% for valor, rotulo in opcoes_avaliacao %}
+                                <option value="{{ valor }}">
+                                    {{ rotulo }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Tipo de paciente -->
-                <div class="form-group">
-                    <label for="tipo_paciente">Tipo de paciente</label>
-                    <input
-                        type="text"
-                        id="tipo_paciente"
-                        name="tipo_paciente"
-                        placeholder="Tipo de paciente"
-                        maxlength="50"
-                        disabled
-                    />
+                <div class="form-footer">
+                    <p>
+                        Data da avaliação:
+                        <span id="data_avaliacao"></span>
+                    </p>
+
+                    <p>
+                        Avaliação média:
+                        <span id="avaliacao_media"></span>
+                    </p>
                 </div>
-
-                <div class="form-group">
-                    <label for="tratamento">Tratamento</label>
-                    <input
-                        type="text"
-                        id="tratamento"
-                        name="tratamento"
-                        placeholder="Digite o tratamento"
-                        maxlength="150"
-                        disabled
-                        required
-                    />
-                </div>
-
-                <div class="form-group">
-                    <label for="n_sessoes">Número de sessões</label>
-
-                    <input
-                        type="text"
-                        id="n_sessoes"
-                        name="n_sessoes"
-                        placeholder="Ex.: 4"
-                        maxlength="3"
-                        disabled
-                        required
-                    />
-                </div>
-
-                <div class="form-group">
-                    <label for="observacoes">Observações</label>
-
-                    <textarea
-                        id="observacoes"
-                        name="observacoes"
-                        placeholder="Digite observações sobre o paciente"
-                        disabled
-                    ></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="acompanhante">Acompanhante</label>
-                    <input
-                        type="text"
-                        id="acompanhante"
-                        name="acompanhante"
-                        placeholder="Nome do acompanhante"
-                        maxlength="150"
-                        disabled
-                    />
-                </div>
-
-                <!-- Telefone -->
-                <div class="form-group">
-                    <label for="telefone_acompanhante"
-                        >Telefone do acompanhante</label
-                    >
-
-                    <input
-                        type="text"
-                        id="telefone_acompanhante"
-                        name="telefone_acompanhante"
-                        maxlength="15"
-                        placeholder="(00) 00000-0000"
-                        disabled
-                    />
-                </div>
-
-                <div class="form-group">
-                    <label for="registrado_por">Registrado por</label>
-                    <input
-                        type="text"
-                        id="registrado_por"
-                        name="registrado_por"
-                        placeholder="Nome do voluntário"
-                        maxlength="50"
-                        disabled
-                        required
-                    />
-                </div>
-            </div>
+            </section>
         </form>
     </div>
 
     <div class="modal-footer">
-        <button type="button" class="btn-finalizar" id="btnFinalizarTratamento">
-            <i class="fa-regular fa-trash-can"></i>
-            Finalizar Tratamento
+        <button
+            type="button"
+            class="btn-concluir-avaliar"
+            id="btnConcluirAvaliar"
+        >
+            <i class="fa-solid fa-check"></i>
+            Concluir e Avaliar
         </button>
 
         <button type="button" class="btn-edit" id="btnEditarTratamento">

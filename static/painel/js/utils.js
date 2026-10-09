@@ -94,6 +94,20 @@ function validarCPF(cpf) {
 /* =========================================================
    FORMATAÇÃO
 ========================================================= */
+function preencherDataAtual() {
+    const hoje = new Date();
+    const ano = hoje.getFullYear();
+    const mes = String(hoje.getMonth() + 1).padStart(2, "0");
+    const dia = String(hoje.getDate()).padStart(2, "0");
+
+    return `${ano}-${mes}-${dia}`;
+}
+
+function formatarData(data) {
+    if (!data) return "-";
+    const [ano, mes, dia] = data.split("-");
+    return `${dia}/${mes}/${ano}`;
+}
 
 function permitirApenasNumeros(event) {
     return event.target.value.replace(/\D/g, "");
@@ -136,7 +150,7 @@ function formatarCampoCep(e) {
 }
 
 /* =========================================================
-   CONFIRMAR AÇÃO
+   CONFIRMAÇÃO
 ========================================================= */
 
 function pedirConfirmacao(mensagem) {

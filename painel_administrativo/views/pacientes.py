@@ -2,7 +2,8 @@ from django.db import transaction
 from django.http import JsonResponse
 from django.shortcuts import render
 from painel_administrativo.models.pessoas import Paciente
-from painel_administrativo.models.servicos import Tratamento
+from painel_administrativo.models.servicos import Avaliacao
+from painel_administrativo.views.tratamentos import buscar_tratamentos
 
 
 # Casa de Apoio
@@ -18,6 +19,7 @@ def listar_pacientes(request):
     context = {
         "pacientes": pacientes,
         "generos": Paciente.Genero.choices,
+        "opcoes_avaliacao": Avaliacao.OPCOES_AVALIACAO,
     }
 
     return render(
@@ -25,26 +27,6 @@ def listar_pacientes(request):
         "painel/pessoas/pacientes.html",
         context
     )
-
-def buscar_tratamentos(paciente_id):
-    tratamentos = Tratamento.objects.filter(paciente_id=paciente_id).order_by("-data_entrada")
-    dados_tratamentos = []
-    for t in tratamentos:
-        dados_tratamentos.append({
-            "tratamento_id": t.id,
-            "paciente_id": t.paciente_id,
-            "data_entrada": t.data_entrada,
-            "data_saida": t.data_saida,
-            "tipo_paciente": t.tipo_paciente,
-            "tratamento": t.tratamento,
-            "n_sessoes": t.n_sessoes,
-            "acompanhante": t.acompanhante,
-            "telefone_acompanhante": t.telefone_acompanhante,
-            "observacoes": t.observacoes,
-            "registrado_por": t.registrado_por,
-        })
-
-    return dados_tratamentos
 
 def detalhar_paciente(request, id):
     paciente = Paciente.objects.get(id=id)

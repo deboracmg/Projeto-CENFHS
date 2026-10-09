@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 
 from painel_administrativo.models.pessoas import Aluno, Parente, Saude, Socioeconomico
-from painel_administrativo.views.parentes import buscar_familia
+from painel_administrativo.views.familia import buscar_familia
 
 # Centro de Formação
 def listar_alunos(request):
@@ -167,7 +167,7 @@ def salvar_aluno(request):
         if any(dados_saude.values()):
             Saude.objects.update_or_create(
                 aluno=aluno,
-                **dados_saude
+                defaults=dados_saude
             )
         else:
             Saude.objects.filter(aluno=aluno).delete()     
@@ -189,7 +189,7 @@ def salvar_aluno(request):
         if any(dados_socioeconomico.values()):
             Socioeconomico.objects.update_or_create(
                 aluno=aluno,
-                **dados_socioeconomico
+                defaults=dados_socioeconomico
             )
         else:
             Socioeconomico.objects.filter(aluno=aluno).delete()

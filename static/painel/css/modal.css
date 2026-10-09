@@ -199,16 +199,23 @@ dialog::backdrop {
 }
 
 /* GRID */
-.form-grid {
+.form-grid-triplo,
+.form-grid-duplo,
+.form-grid-quadruplo {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
     gap: 18px;
 }
 
 .form-grid-duplo {
-    display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 18px;
+}
+
+.form-grid-triplo {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.form-grid-quadruplo {
+    grid-template-columns: repeat(4, 1fr);
 }
 
 .form-group-large {
@@ -227,11 +234,18 @@ dialog::backdrop {
 }
 
 .form-group label,
+.form-footer p,
 .photo-label,
 .checkbox-group label {
     color: #444;
     font-size: 13px;
     font-weight: 600;
+}
+
+.form-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
 }
 
 label:has(+ input[required])::after,
@@ -323,48 +337,43 @@ input[type="checkbox"] {
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
+    border: none;
 }
 
 .tab-top button {
-    border: none;
     background-color: var(--cor-secundaria);
     color: white;
 }
 
+.btn-concluir-avaliar {
+    background-color: var(--cor-verde);
+    color: var(--cor-fundo);
+}
+
 .btn-delete,
 .btn-negar {
-    border: none;
     background-color: var(--cor-vermelha);
     color: var(--cor-fundo);
 }
 
 .btn-edit {
-    border: none;
     background-color: var(--cor-principal);
     color: var(--cor-fundo);
 }
 
 .btn-save,
 .btn-confirmar {
-    border: none;
     background-color: var(--cor-secundaria);
     color: white;
 }
 
-.btn-delete:hover,
-.btn-negar:hover,
-.btn-edit:hover,
-.tab-top button:hover,
-.btn-save:hover,
-.btn-confirmar:hover {
+.modal-footer button:hover,
+.tab-top button:hover {
     opacity: 0.9;
 }
 
-.btn-delete:disabled,
-.btn-save:disabled,
-.btn-edit:disabled,
+.modal-footer button:disabled,
 .tab-top button:disabled,
-.btn-remover-foto:disabled,
 .action-button:disabled {
     opacity: 0.45;
     cursor: not-allowed;
@@ -381,8 +390,9 @@ input[type="checkbox"] {
         white-space: nowrap;
     }
 
-    .form-grid,
-    .form-grid-duplo {
+    .form-grid-duplo,
+    .form-grid-triplo,
+    .form-grid-quadruplo {
         grid-template-columns: 1fr;
     }
 
