@@ -40,6 +40,7 @@ btnEditarFamiliar.addEventListener("click", () => {
 
 async function formNovoFamiliar() {
     const idAlunoReferencia = document.getElementById("aluno_id").value;
+    let notificacao = "";
     if (!idAlunoReferencia) {
         const mensagem =
             "Para adicionar um familiar, é necessário salvar o aluno primeiro. Deseja salvá-lo agora?";
@@ -48,14 +49,17 @@ async function formNovoFamiliar() {
 
         const salvou = await salvarAluno();
         if (!salvou || !salvou.sucesso) return;
-        exibirNotificacao(salvou.mensagem, "sucesso");
 
         tituloModalAluno.textContent = "Editando dados do aluno";
         subtituloModalAluno.textContent =
             "Código: " + document.getElementById("aluno_id").value;
+
+        notificacao = salvou.mensagem;
     }
 
     modalFamiliar.showModal();
+    if (notificacao) exibirNotificacao(notificacao, "sucesso");
+
     formFamiliar.reset();
     formFamiliar.classList.remove("com-erro");
     document.getElementById("parente_id").value = "";
@@ -66,7 +70,6 @@ async function formNovoFamiliar() {
 
     btnExcluirFamiliar.disabled = true;
     btnEditarFamiliar.disabled = true;
-    btnSalvarFamiliar.disabled = false;
 
     habilitarCamposFamiliar();
 }
@@ -196,7 +199,7 @@ formFamiliar.addEventListener("submit", async (event) => {
         const url = "/dashboard/parentes/salvar/";
         const formData = new FormData(formFamiliar);
         formData.append("aluno_id", document.getElementById("aluno_id").value);
-        
+
         const dados = await salvarCadastro(url, formData);
 
         modalFamiliar.close();

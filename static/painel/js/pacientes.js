@@ -10,6 +10,12 @@ const tituloModalPaciente = document.getElementById("tituloModal");
 const subtituloModalPaciente = document.getElementById("subtituloModal");
 const cpfPaciente = document.getElementById("cpf");
 const telefonePaciente = document.getElementById("telefone");
+const campoCep = document.getElementById("cep");
+const campoRua = document.getElementById("rua");
+const campoBairro = document.getElementById("bairro");
+const campoNumero = document.getElementById("numero");
+const campoCidade = document.getElementById("cidade");
+const campoUf = document.getElementById("uf");
 
 const btnEditarPaciente = document.getElementById("btnEditar");
 const btnSalvarPaciente = document.getElementById("btnSalvar");
@@ -51,10 +57,6 @@ function desabilitarCamposPaciente() {
     });
 
     btnSalvarPaciente.disabled = true;
-    document.getElementById("btnAdicionarTratamento").disabled = true;
-    document.querySelectorAll(".btn-abrir-tratamento").forEach((button) => {
-        button.disabled = true;
-    });
 }
 
 function habilitarCamposPaciente() {
@@ -63,10 +65,6 @@ function habilitarCamposPaciente() {
     });
 
     btnSalvarPaciente.disabled = false;
-    document.getElementById("btnAdicionarTratamento").disabled = false;
-    document.querySelectorAll(".btn-abrir-tratamento").forEach((button) => {
-        button.disabled = false;
-    });
 }
 
 function formNovoPaciente() {
@@ -140,12 +138,6 @@ function exibirTratamentos(paciente_id, tratamentos) {
         return;
     }
 
-    function formatarData(data) {
-        if (!data) return "-";
-        const [ano, mes, dia] = data.split("-");
-        return `${dia}/${mes}/${ano}`;
-    }
-
     let contentTratament = "";
     tratamentos.forEach((t, index) => {
         contentTratament += `
@@ -173,8 +165,8 @@ function exibirTratamentos(paciente_id, tratamentos) {
     document.querySelectorAll(".btn-abrir-tratamento").forEach((button) => {
         button.addEventListener("click", async () => {
             const index = button.dataset.index;
-            const paciente = tratamentos[index];
-            // detalharTratamento(paciente_id, paciente);
+            const tratamento = tratamentos[index];
+            detalharTratamento(tratamento);
         });
     });
 }
@@ -190,16 +182,30 @@ cpfPaciente.addEventListener("input", function (e) {
 
 telefonePaciente.addEventListener("input", function (e) {
     e.target.value = formatarCampoTelefone(e);
-}); 
+});
+
+campoCep.addEventListener("input", (e) => {
+    e.target.value = formatarCampoCep(e);
+    campoCep.setCustomValidity("");
+});
+
+campoCep.addEventListener("blur", async () => {
+    preencherEnderecoAutomaticamente(campoCep.value, {
+        cep: campoCep,
+        rua: campoRua,
+        bairro: campoBairro,
+        numero: campoNumero,
+        cidade: campoCidade,
+        uf: campoUf,
+    });
+});
 
 /* =========================================================
    SALVAR CADASTRO
 ========================================================= */
 
-formPaciente.addEventListener("submit", async (event) => {
+async function salvarPaciente() {
     try {
-        event.preventDefault();
-
         cpfPaciente.setCustomValidity("");
         formPaciente.classList.remove("com-erro");
         
@@ -210,9 +216,18 @@ formPaciente.addEventListener("submit", async (event) => {
         const formData = new FormData(formPaciente);
         const dados = await salvarCadastro(url, formData);
 
-        modalPaciente.close();
-        exibirNotificacaoComReload(dados.mensagem, "sucesso");
+        document.getElementById("paciente_id").value = dados.id;
+        return dados;
     } catch (erro) {
         exibirNotificacao(erro.message, "erro");
+        return null;
+    }
+}
+
+formPaciente.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const salvou = await salvarPaciente();
+    if (salvou && salvou.sucesso) {
+        exibirNotificacaoComReload(salvou.mensagem, "sucesso");
     }
 });

@@ -190,17 +190,17 @@ class Tratamento(models.Model):
 
 class Avaliacao(models.Model):
     OPCOES_AVALIACAO = [
-        (1, "Insatisfeito"),
-        (2, "Ruim"),
-        (3, "Regular"),
-        (4, "Bom"),
         (5, "Ótimo"),
+        (4, "Bom"),
+        (3, "Regular"),
+        (2, "Ruim"),
+        (1, "Insatisfeito"),
     ]
 
-    tratamento = models.ForeignKey(
+    tratamento = models.OneToOneField(
         Tratamento,
         on_delete=models.PROTECT,
-        related_name="avaliacoes"
+        related_name="avaliacao"
     )
     data_avaliacao = models.DateTimeField(auto_now_add=True)
 

@@ -310,7 +310,7 @@ btnEditarAluno.addEventListener("click", () => {
 /* =========================================================
    VALIDAÇÃO DE CAMPOS
    ========================================================= */
-campoCep.addEventListener("input", function (e) {
+campoCep.addEventListener("input", (e) => {
     e.target.value = formatarCampoCep(e);
     campoCep.setCustomValidity("");
 });
@@ -326,31 +326,31 @@ campoCep.addEventListener("blur", async () => {
     });
 });
 
-campoRendaFamiliar.addEventListener("input", function (e) {
+campoRendaFamiliar.addEventListener("input", (e) => {
     e.target.value = permitirApenasNumeros(e);
 });
 
-campoQtdMoradores.addEventListener("input", function (e) {
+campoQtdMoradores.addEventListener("input", (e) => {
     e.target.value = permitirApenasNumeros(e);
 });
 
-campoSus.addEventListener("input", function (e) {
+campoSus.addEventListener("input", (e) => {
     e.target.value = permitirApenasNumeros(e);
 });
 
-campoNBolsaFamilia.addEventListener("input", function (e) {
+campoNBolsaFamilia.addEventListener("input", (e) => {
     e.target.value = permitirApenasNumeros(e);
 });
 
-campoNis.addEventListener("input", function (e) {
+campoNis.addEventListener("input", (e) => {
     e.target.value = permitirApenasNumeros(e);
 });
 
-campoTelefone.addEventListener("input", function (e) {
+campoTelefone.addEventListener("input", (e) => {
     e.target.value = formatarCampoTelefone(e);
 });
 
-campoCpf.addEventListener("input", function (e) {
+campoCpf.addEventListener("input", (e) => {
     e.target.value = formatarCampoCpf(e);
     campoCpf.setCustomValidity("");
 });

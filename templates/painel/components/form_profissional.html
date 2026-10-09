@@ -13,9 +13,14 @@
     <div class="modal-body">
         <form id="formProfissional" novalidate>
             {% csrf_token %}
-            <input type="hidden" id="profissional_id" name="profissional_id" value="" />
+            <input
+                type="hidden"
+                id="profissional_id"
+                name="profissional_id"
+                value=""
+            />
 
-            <div class="form-grid">
+            <div class="form-grid-triplo">
                 <!-- CPF -->
                 <div class="form-group">
                     <label for="cpf">CPF</label>
@@ -46,9 +51,7 @@
 
                 <!-- Data de nascimento -->
                 <div class="form-group">
-                    <label for="data_nascimento">
-                        Data de nascimento
-                    </label>
+                    <label for="data_nascimento"> Data de nascimento </label>
 
                     <input
                         type="date"
@@ -101,11 +104,12 @@
                         disabled
                     />
                 </div>
-                
-                <div class="form-group">
-                    <label>Data de cadastro:
+
+                <div class="form-footer">
+                    <p>
+                        Data de cadastro:
                         <span id="data_cadastro"></span>
-                    </label>
+                    </p>
                 </div>
             </div>
         </form>
