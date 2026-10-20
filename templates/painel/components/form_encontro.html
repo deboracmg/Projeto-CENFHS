@@ -1,0 +1,239 @@
+<dialog id="modalPrimario" class="medium-modal">
+    <div class="modal-header">
+        <div>
+            <h2 id="tituloModal">Cadastrar novo encontro</h2>
+            <p id="subtituloModal">Preencha os dados abaixo</p>
+        </div>
+
+        <button type="button" class="modal-close" id="btnFechar">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <form id="formEncontro" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            <input type="hidden" id="encontro_id" name="encontro_id" value="" />
+
+            <div class="form-grid-triplo">
+                <div class="form-group">
+                    <label for="tipo_servico">Tipo de serviço</label>
+                    <select
+                        id="tipo_servico"
+                        name="tipo_servico"
+                        disabled
+                        required
+                    >
+                        <option value="" selected disabled>Selecione</option>
+
+                        {% for valor, rotulo in tipo_servico %}
+                        <option value="{{ valor }}">{{ rotulo }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="nome_servico" class="obrigatorio"
+                        >Serviço</label
+                    >
+                    <input type="hidden" name="servico_id" id="servico_id" />
+
+                    <div class="campo-busca">
+                        <input
+                            type="text"
+                            id="nome_servico"
+                            name="nome_servico"
+                            placeholder="Selecione um serviço"
+                            readonly
+                            disabled
+                            required
+                        />
+
+                        <button
+                            type="button"
+                            class="btn-buscar"
+                            id="btnBuscarServico"
+                            aria-label="Buscar serviço"
+                            title="Buscar serviço"
+                            disabled
+                        >
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="local">Local</label>
+
+                    <input
+                        type="text"
+                        id="local"
+                        name="local"
+                        placeholder="Local do encontro"
+                        maxlength="150"
+                        disabled
+                        required
+                    />
+                </div>
+
+                <div class="form-group">
+                    <label for="data_encontro">Data do encontro</label>
+
+                    <input
+                        type="date"
+                        id="data_encontro"
+                        name="data_encontro"
+                        disabled
+                        required
+                    />
+                </div>
+
+                <div class="form-group">
+                    <label for="hora_encontro">Horário do encontro</label>
+
+                    <input
+                        type="time"
+                        id="hora_encontro"
+                        name="hora_encontro"
+                        disabled
+                        required
+                    />
+                </div>
+
+                <div class="form-group">
+                    <div class="label-com-acao">
+                        <label for="resp_interno">Responsável interno</label>
+
+                        <button
+                            type="button"
+                            id="btnLimparProfissional"
+                            class="btn-texto-limpar"
+                            hidden
+                        >
+                            Limpar
+                        </button>
+                    </div>
+
+                    <input
+                        type="hidden"
+                        name="profissional_id"
+                        id="profissional_id"
+                    />
+
+                    <div class="campo-busca">
+                        <input
+                            type="text"
+                            id="resp_interno"
+                            name="resp_interno"
+                            placeholder="Voluntário cadastrado"
+                            disabled
+                            readonly
+                        />
+
+                        <button
+                            type="button"
+                            class="btn-buscar"
+                            id="btnBuscarProfissional"
+                            aria-label="Buscar profissional"
+                            title="Buscar profissional"
+                        >
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="resp_externo">Responsável externo</label>
+
+                    <input
+                        type="text"
+                        id="resp_externo"
+                        name="resp_externo"
+                        placeholder="Palestrante ou convidado"
+                        maxlength="150"
+                        disabled
+                    />
+                </div>
+
+                <div class="form-group">
+                    <label for="qtd_participantes"
+                        >Total de participantes</label
+                    >
+
+                    <input
+                        type="text"
+                        id="qtd_participantes"
+                        name="qtd_participantes"
+                        placeholder="Ex.: 25"
+                        maxlength="6"
+                        disabled
+                    />
+                </div>
+            </div>
+
+            <div class="form-group separated">
+                <p>Lista de presença</p>
+                <label
+                    for="lista_presenca"
+                    class="photo-lista"
+                    id="labelArquivo"
+                >
+                    <i class="fa-solid fa-upload"></i>
+                    <span>Selecione um arquivo PDF (máx. 1 MB)</span>
+                </label>
+
+                <input
+                    type="hidden"
+                    id="remover_lista"
+                    name="remover_lista"
+                    value="false"
+                />
+                <input
+                    type="file"
+                    id="lista_presenca"
+                    name="lista_presenca"
+                    accept=".pdf,application/pdf"
+                />
+
+                <div id="arquivoSelecionado" class="arquivo-selecionado" hidden>
+                    <i class="fa-solid fa-file-pdf icone-pdf"></i>
+
+                    <a
+                        id="visualizarListaPresenca"
+                        href="#"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title="Visualizar PDF"
+                    ></a>
+
+                    <button
+                        type="button"
+                        id="removerListaPresenca"
+                        class="btn-remover-arquivo"
+                        aria-label="Remover arquivo"
+                        title="Remover arquivo"
+                    >
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn-edit" id="btnEditar">
+            <i class="fa-solid fa-pen"></i>
+            Editar
+        </button>
+
+        <button
+            type="submit"
+            form="formEncontro"
+            class="btn-save"
+            id="btnSalvar"
+        >
+            <i class="fa-solid fa-floppy-disk"></i>
+            Salvar
+        </button>
+    </div>
+</dialog>
