@@ -17,7 +17,7 @@ from painel_administrativo.models.servicos import (
 
 from painel_administrativo.models.pessoas import (
     Aluno,
-    Parente,
+    Familiar,
     Parentesco,
     Saude,
     Socioeconomico,
@@ -101,7 +101,7 @@ class Command(BaseCommand):
         # 3. PARENTES - 6 registros
         # ==========================================================
 
-        parentes_dados = [
+        familiares_dados = [
             ("Maria José Silva", "222.222.222-01", "Professora", "Escola Municipal", "SUPERIOR"),
             ("José Carlos Santos", "222.222.222-02", "Comerciante", "Comércio local", "MEDIO"),
             ("Luciana Oliveira", "222.222.222-03", "Costureira", "Autônoma", "MEDIO"),
@@ -110,10 +110,10 @@ class Command(BaseCommand):
             ("Paulo Ferreira", "222.222.222-06", "Pedreiro", "Autônomo", "FUNDAMENTAL"),
         ]
 
-        parentes = []
+        familiares = []
 
-        for i, dados in enumerate(parentes_dados):
-            parente = Parente.objects.create(
+        for i, dados in enumerate(familiares_dados):
+            familiar = Familiar.objects.create(
                 nome=dados[0],
                 cpf=dados[1],
                 vivo=True,
@@ -122,7 +122,7 @@ class Command(BaseCommand):
                 telefone=f"(83) 9{9100-0000 + i:08d}",
                 escolaridade=dados[4],
             )
-            parentes.append(parente)
+            familiares.append(familiar)
 
         # ==========================================================
         # 4. PARENTESCO - 6 registros
@@ -140,7 +140,7 @@ class Command(BaseCommand):
         for i, dados in enumerate(parentescos):
             Parentesco.objects.create(
                 aluno=alunos[i],
-                parente=parentes[i],
+                familiar=familiares[i],
                 parentesco=dados[0],
                 responsavel=dados[1],
                 contato_emergencia=dados[2],
@@ -492,7 +492,7 @@ class Command(BaseCommand):
 
         total = (
             + Aluno.objects.count()
-            + Parente.objects.count()
+            + Familiar.objects.count()
             + Parentesco.objects.count()
             + Saude.objects.count()
             + Socioeconomico.objects.count()

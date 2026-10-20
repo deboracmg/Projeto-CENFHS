@@ -46,7 +46,7 @@ def detalhar_paciente(request, id):
         "nome_mae": paciente.nome_mae,
         "nome_pai": paciente.nome_pai,
         "profissao": paciente.profissao,
-        "data_cadastro": paciente.data_cadastro.strftime("%d/%m/%Y"),
+        "data_cadastro": paciente.data_cadastro,
 
         "cep": paciente.cep,
         "rua": paciente.rua,

@@ -67,7 +67,7 @@ class Aluno(models.Model):
         return self.nome
     
 
-class Parente(models.Model):
+class Familiar(models.Model):
     nome = models.CharField(max_length=150)
     cpf = models.CharField(max_length=14, unique=True)
     vivo = models.BooleanField(default=True)
@@ -81,6 +81,7 @@ class Parente(models.Model):
         MEDIO = "MEDIO", "Médio"
         TECNICO = "TECNICO", "Técnico"
         SUPERIOR = "SUPERIOR", "Superior" 
+
     escolaridade = models.CharField(
         max_length=20,
         choices=Escolaridade.choices,
@@ -98,8 +99,8 @@ class Parentesco(models.Model):
         on_delete=models.CASCADE
     )
 
-    parente = models.ForeignKey(
-        Parente,
+    familiar = models.ForeignKey(
+        Familiar,
         on_delete=models.CASCADE
     )
 
@@ -110,13 +111,13 @@ class Parentesco(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=["aluno", "parente"],
-                name="unique_aluno_parente"
+                fields=["aluno", "familiar"],
+                name="unique_aluno_familiar"
             )
         ]
 
     def __str__(self):
-        return f"{self.aluno} - {self.parente}"
+        return f"{self.aluno} - {self.familiar}"
     
     
 class Saude(models.Model):

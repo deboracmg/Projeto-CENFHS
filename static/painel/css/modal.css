@@ -20,8 +20,12 @@ dialog::backdrop {
     height: min(850px, 90vh);
 }
 
-.small-modal {
+.medium-modal {
     width: min(800px, 90vw);
+}
+
+.small-modal {
+    width: min(400px, 120vw);
 }
 
 .vinculo-familiar {
@@ -234,6 +238,7 @@ dialog::backdrop {
 }
 
 .form-group label,
+.form-group p,
 .form-footer p,
 .photo-label,
 .checkbox-group label {
@@ -248,6 +253,7 @@ dialog::backdrop {
     align-items: end;
 }
 
+.obrigatorio::after,
 label:has(+ input[required])::after,
 label:has(+ select[required])::after,
 label:has(+ textarea[required])::after {
@@ -273,7 +279,6 @@ form.com-erro textarea:invalid {
     border-radius: 6px;
     background-color: white;
     color: #333;
-    font-family: inherit;
     font-size: 14px;
     outline: none;
 }
@@ -368,13 +373,16 @@ input[type="checkbox"] {
 }
 
 .modal-footer button:hover,
-.tab-top button:hover {
+.tab-top button:hover,
+.btn-buscar:hover {
     opacity: 0.9;
 }
 
 .modal-footer button:disabled,
 .tab-top button:disabled,
-.action-button:disabled {
+.action-button:disabled,
+.btn-buscar:disabled,
+.btn-remover-arquivo:disabled {
     opacity: 0.45;
     cursor: not-allowed;
 }

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from painel_administrativo.models.pessoas import Aluno, Profissional, Saude, Socioeconomico, Parente, Parentesco, Paciente
+from painel_administrativo.models.pessoas import Aluno, Profissional, Saude, Socioeconomico, Familiar, Parentesco, Paciente
 from painel_administrativo.models.servicos import Aula, Encontro, Frequencia, Matricula, Servico, Turma, Avaliacao, Tratamento
 
 # Register your models here.
@@ -8,7 +8,7 @@ admin.site.register(Aluno)
 admin.site.register(Profissional)
 admin.site.register(Saude)
 admin.site.register(Socioeconomico)
-admin.site.register(Parente)
+admin.site.register(Familiar)
 admin.site.register(Parentesco)
 admin.site.register(Paciente)
 

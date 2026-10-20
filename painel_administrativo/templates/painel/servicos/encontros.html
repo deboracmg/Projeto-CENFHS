@@ -1,4 +1,9 @@
 {% extends "painel/components/tabela.html" %}
+{% load static %}
+
+{% block individual_css %}
+<link rel="stylesheet" href="{% static 'painel/css/encontros.css' %}">
+{% endblock %}
 
 {% block title %}Encontros{% endblock %}
 
@@ -44,13 +49,14 @@ Buscar encontro
     <td>{{ encontro.servico.nome }}</td>
     <td>{{ encontro.responsavel_interno.nome }}</td>
     <td>{{ encontro.responsavel_externo }}</td>
-    <td>{{ encontro.data_hora|date:"d/m/Y - H" }}h</td>
+    <td>{{ encontro.data_hora|date:"d/m/Y - H:i" }}</td>
     <td>{{ encontro.local }}</td>
     
     <td>
         <button
             type="button"
-            class="action-button"
+            class="action-button btn-abrir-encontro"
+            data-encontro-id="{{ encontro.id }}"
             title="Mais informações"
             >
             <i class="fa-solid fa-circle-info"></i>
@@ -69,4 +75,14 @@ Buscar encontro
 
 {% endfor %}
 
+{% endblock %}
+
+{% block modal %} 
+{% include "painel/components/form_encontro.html" %}
+{% include "painel/components/confirmacao.html" %}
+{% include "painel/components/modal_busca.html" %}
+{% endblock modal %}
+
+{% block individual_js %}
+<script src="{% static 'painel/js/encontros.js' %}"></script>
 {% endblock %}

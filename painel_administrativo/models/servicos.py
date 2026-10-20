@@ -48,9 +48,12 @@ class Encontro(models.Model):
 
     data_hora = models.DateTimeField()
     local = models.CharField(max_length=150)
-    qtd_participantes = models.PositiveIntegerField()
+    qtd_participantes = models.PositiveIntegerField(
+        blank=True,
+        null=True
+    )
 
-    lista_presenca = models.ImageField(
+    lista_presenca = models.FileField(
         upload_to="listas_presenca/",
         blank=True,
         null=True

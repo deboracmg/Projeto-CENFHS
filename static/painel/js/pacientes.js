@@ -1,32 +1,32 @@
-const btnNovoPaciente = document.getElementById("btnNovoCadastro");
-const modalPaciente = document.getElementById("pacienteModal");
-const modalBodyPaciente = document.querySelector(".modal-body");
+const modalPaciente = document.getElementById("modalPrimario");
+const modalBodyPaciente = modalPaciente.querySelector(".modal-body");
 const tratamentoBody = document.getElementById("tratamentoBody");
 
 const formPaciente = document.getElementById("formPaciente");
 const camposPaciente = formPaciente.querySelectorAll("input, select");
 
-const tituloModalPaciente = document.getElementById("tituloModal");
-const subtituloModalPaciente = document.getElementById("subtituloModal");
-const cpfPaciente = document.getElementById("cpf");
-const telefonePaciente = document.getElementById("telefone");
-const campoCep = document.getElementById("cep");
-const campoRua = document.getElementById("rua");
-const campoBairro = document.getElementById("bairro");
-const campoNumero = document.getElementById("numero");
-const campoCidade = document.getElementById("cidade");
-const campoUf = document.getElementById("uf");
+const tituloModalPaciente = modalPaciente.querySelector("#tituloModal");
+const subtituloModalPaciente = modalPaciente.querySelector("#subtituloModal");
 
-const btnEditarPaciente = document.getElementById("btnEditar");
-const btnSalvarPaciente = document.getElementById("btnSalvar");
-const btnFecharPaciente = document.getElementById("btnFechar");
+const campoCpf = modalPaciente.querySelector("#cpf");
+const campoTelefone = modalPaciente.querySelector("#telefone");
+const campoCep = modalPaciente.querySelector("#cep");
+const campoRua = modalPaciente.querySelector("#rua");
+const campoBairro = modalPaciente.querySelector("#bairro");
+const campoNumero = modalPaciente.querySelector("#numero");
+const campoCidade = modalPaciente.querySelector("#cidade");
+const campoUf = modalPaciente.querySelector("#uf");
+
+const btnNovoPaciente = document.getElementById("btnNovoCadastro");
+const btnEditarPaciente = modalPaciente.querySelector("#btnEditar");
+const btnSalvarPaciente = modalPaciente.querySelector("#btnSalvar");
+const btnFecharPaciente = modalPaciente.querySelector("#btnFechar");
 const btnsDetalharPaciente = document.querySelectorAll(".btn-abrir-paciente");
 
 const tabButtons = document.querySelectorAll(".tab-button");
-const tabContents = document.querySelectorAll(".tab-content");
 
 tabButtons.forEach((button) => {
-    gerenciarAbas(button, tabButtons, tabContents, modalBodyPaciente)
+    gerenciarAbas(modalPaciente, button)
 });
 
 btnsDetalharPaciente.forEach((button) => {
@@ -45,46 +45,20 @@ btnsDetalharPaciente.forEach((button) => {
 });
 
 btnEditarPaciente.addEventListener("click", () => {
-    habilitarCamposPaciente();
-    btnEditarPaciente.disabled = true;
-
+    habilitarEdicaoFormulario(modalPaciente);
     tituloModalPaciente.textContent = "Editando dados do paciente";
 });
 
-function desabilitarCamposPaciente() {
-    camposPaciente.forEach(campo => {
-        campo.disabled = true;
-    });
-
-    btnSalvarPaciente.disabled = true;
-}
-
-function habilitarCamposPaciente() {
-    camposPaciente.forEach((campo) => {
-        campo.disabled = false;
-    });
-
-    btnSalvarPaciente.disabled = false;
-}
-
-function formNovoPaciente() {
-    modalPaciente.showModal();
-    formPaciente.reset();
-    formPaciente.classList.remove("com-erro");
-    modalBodyPaciente.scrollTo(0, 0);
-
-    tituloModalPaciente.textContent = "Cadastrar novo paciente";
-    subtituloModalPaciente.textContent = "Preencha os dados abaixo";
-    document.getElementById("paciente_id").value = "";
-    document.getElementById("data_cadastro").textContent = "-- / -- / ----";
-
-    btnEditarPaciente.disabled = true;
-
-    habilitarCamposPaciente();
-    abrirAbaInicial(tabButtons, tabContents);
-}
-
-btnNovoPaciente.addEventListener("click", formNovoPaciente)
+btnNovoPaciente.addEventListener("click", () => {
+    tratamentoBody.innerHTML = `
+    <tr>
+        <td colspan="5" class="empty-message">
+            Nenhum tratamento cadastrado.
+        </td>
+    </tr>
+    `;
+    formNovoCadastro(modalPaciente, "paciente");
+})
 btnFecharPaciente.addEventListener("click", () => modalPaciente.close());
 
 function detalharPaciente(paciente) {
@@ -93,11 +67,9 @@ function detalharPaciente(paciente) {
     subtituloModalPaciente.textContent = "Código: " + paciente.id;
     formPaciente.classList.remove("com-erro");
 
-    desabilitarCamposPaciente();
-    btnEditarPaciente.disabled = false;
-    abrirAbaInicial(tabButtons, tabContents);
-
     modalPaciente.showModal();
+    abrirAbaInicial(modalPaciente);
+    desabilitarEdicaoFormulario(modalPaciente);
 }
 
 function preencherFormularioPaciente(paciente) {
@@ -113,7 +85,9 @@ function preencherFormularioPaciente(paciente) {
     document.getElementById("nome_mae").value = paciente.nome_mae || "";
     document.getElementById("nome_pai").value = paciente.nome_pai || "";
     document.getElementById("profissao").value = paciente.profissao || "";
-    document.getElementById("data_cadastro").textContent = paciente.data_cadastro || "";
+
+    const data = converterDataHora(paciente.data_cadastro);
+    document.getElementById("data_cadastro").textContent = data.split(", ").join(" - ");
 
     /* Endereço */
     document.getElementById("cep").value = paciente.cep || "";
@@ -175,12 +149,12 @@ function exibirTratamentos(paciente_id, tratamentos) {
    VALIDAÇÃO DE CAMPOS
 ========================================================= */
 
-cpfPaciente.addEventListener("input", function (e) {
+campoCpf.addEventListener("input", function (e) {
     e.target.value = formatarCampoCpf(e);
-    cpfPaciente.setCustomValidity("");
+    campoCpf.setCustomValidity("");
 });
 
-telefonePaciente.addEventListener("input", function (e) {
+campoTelefone.addEventListener("input", function (e) {
     e.target.value = formatarCampoTelefone(e);
 });
 
@@ -206,11 +180,13 @@ campoCep.addEventListener("blur", async () => {
 
 async function salvarPaciente() {
     try {
-        cpfPaciente.setCustomValidity("");
+        campoCep.setCustomValidity("");
+        campoCpf.setCustomValidity("");
         formPaciente.classList.remove("com-erro");
         
         checarFormulário(formPaciente);
-        checarCpf(cpfPaciente, formPaciente);
+        checarCpf(campoCpf, formPaciente);
+        checarCep(campoCep, formPaciente);
 
         const url = "/dashboard/pacientes/salvar/";
         const formData = new FormData(formPaciente);

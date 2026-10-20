@@ -2,7 +2,7 @@ from django.db import transaction
 from django.http import JsonResponse
 from django.shortcuts import render
 
-from painel_administrativo.models.pessoas import Aluno, Parente, Saude, Socioeconomico
+from painel_administrativo.models.pessoas import Aluno, Familiar, Saude, Socioeconomico
 from painel_administrativo.views.familia import buscar_familia
 
 # Centro de Formação
@@ -22,7 +22,7 @@ def listar_alunos(request):
         "racas": Aluno.Raca.choices,
         "zonas": Aluno.Zona.choices,
         "situacao_moradia": Socioeconomico.SituacaoMoradia.choices,
-        "escolaridade": Parente.Escolaridade.choices
+        "escolaridade": Familiar.Escolaridade.choices
     }
 
     return render(
@@ -79,7 +79,7 @@ def detalhar_aluno(request, id):
         "foto": aluno.foto.url if aluno.foto else "",
         "observacoes": aluno.observacoes,
         "autoriza_uso_imagem": aluno.autoriza_uso_imagem,
-        "data_cadastro": aluno.data_cadastro.strftime("%d/%m/%Y"),
+        "data_cadastro": aluno.data_cadastro,
 
         "cep": aluno.cep,
         "rua": aluno.rua,

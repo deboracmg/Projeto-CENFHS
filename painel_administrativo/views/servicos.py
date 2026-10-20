@@ -1,6 +1,45 @@
 from django.shortcuts import render
+from django.http import JsonResponse
 
-from painel_administrativo.models.servicos import Aula, Avaliacao, Encontro, Matricula, Servico, Turma
+
+from painel_administrativo.models.servicos import Aula, Avaliacao, Matricula, Servico, Turma
+
+def buscar_servicos(request):
+    if request.method != "GET":
+        return JsonResponse({
+            "sucesso": False,            
+            "mensagem": "Método não permitido."
+            },
+            status=405
+        )
+
+    termo = request.GET.get("q", "").strip()
+    tipo = request.GET.get("tipo", "").strip()
+
+    if termo:
+        servicos = Servico.objects.filter(
+            ativo=True,
+            tipo=tipo,
+            nome__icontains=termo,
+        )[:10]
+    else : 
+        servicos = Servico.objects.filter(
+            ativo=True,
+            tipo=tipo,
+        ).order_by("-data_cadastro")[:10]
+    
+
+    resultados = [
+        {
+            "id": servico.id,
+            "nome": servico.nome,
+            "tipo": servico.get_tipo_display(),
+        }
+        for servico in servicos
+    ]
+
+    return JsonResponse({"resultados": resultados})
+
 
 # Centro de Formação
 def cursos(request):
@@ -60,16 +99,6 @@ def eventos(request):
         request,
         "painel/servicos/eventos.html",
         {"eventos": eventos}
-    )
-
-
-def encontros(request):
-    encontros = Encontro.objects.select_related("servico", "responsavel_interno").all()
-
-    return render(
-        request,
-        "painel/servicos/encontros.html",
-        {"encontros": encontros}
     )
 
 

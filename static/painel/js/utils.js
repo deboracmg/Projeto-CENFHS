@@ -1,28 +1,4 @@
 /* =========================================================
-   FETCH SALVAR
-========================================================= */
-
-async function salvarCadastro(url, formData) {
-    const csrfToken =
-        document.querySelector("[name=csrfmiddlewaretoken]")?.value || "";
-
-    const response = await fetch(url, {
-        method: "POST",
-        body: formData,
-        headers: {
-            "X-CSRFToken": csrfToken,
-        },
-    });
-
-    const dados = await response.json();
-
-    if (!response.ok) {
-        throw new Error(dados.mensagem);
-    }
-    return dados;
-}
-
-/* =========================================================
    VALIDAÇÃO
 ========================================================= */
 
@@ -94,6 +70,18 @@ function validarCPF(cpf) {
 /* =========================================================
    FORMATAÇÃO
 ========================================================= */
+function converterDataHora(data_hora) {
+    return new Intl.DateTimeFormat("pt-BR", {
+        timeZone: "America/Sao_Paulo",
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        hourCycle: "h23",
+    }).format(new Date(data_hora));
+}
+
 function preencherDataAtual() {
     const hoje = new Date();
     const ano = hoje.getFullYear();
@@ -306,7 +294,6 @@ function exibirNotificacao(mensagem, tipo = "info", duracao = 4000) {
     // Coloca o container na top layer
     if (!container.matches(":popover-open")) {
         container.showPopover();
-        // atualizarCamadaNotificacao();
     }
 
     let temporizador;
@@ -361,40 +348,3 @@ document.addEventListener("DOMContentLoaded", () => {
     sessionStorage.removeItem("notificacao");
     exibirNotificacao(dados.mensagem, dados.tipo);
 });
-
-/* =========================================================
-   ABAS
-========================================================= */
-function gerenciarAbas(button, tabButtons, tabContents, modalBody) {
-    button.addEventListener("click", () => {
-        const tabId = button.dataset.tab;
-
-        tabButtons.forEach((item) => {
-            item.classList.remove("active");
-        });
-
-        tabContents.forEach((content) => {
-            content.classList.remove("active");
-        });
-
-        button.classList.add("active");
-        document.getElementById(tabId).classList.add("active");
-        modalBody.scrollTo(0, 0);
-    });
-}
-
-function abrirAbaInicial(tabButtons, tabContents) {
-    tabButtons.forEach((button) => {
-        button.classList.remove("active");
-    });
-
-    tabContents.forEach((content) => {
-        content.classList.remove("active");
-    });
-
-    document
-        .querySelector('[data-tab="dados-pessoais"]')
-        .classList.add("active");
-
-    document.getElementById("dados-pessoais").classList.add("active");
-}
