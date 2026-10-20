@@ -145,3 +145,8 @@
         grid-template-columns: 1fr;
     }
 }
+
+.contact-info p a {
+    color: inherit;
+    text-decoration: underline;
+}

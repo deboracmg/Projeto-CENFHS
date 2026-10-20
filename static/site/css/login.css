@@ -1,0 +1,236 @@
+/* Página "Entrar" — azul do site */
+.login-panel {
+    background-color: var(--cor-principal);
+    color: #fff;
+    min-height: 560px;
+    display: flex;
+    align-items: center;
+}
+
+.login-panel .container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    padding-top: 56px;
+    padding-bottom: 56px;
+    align-items: center;
+}
+
+.login-panel__badge {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.16);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.login-panel__intro h1 {
+    font-size: 30px;
+    margin-bottom: 12px;
+}
+
+.login-panel__lead {
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 28px;
+    max-width: 460px;
+}
+
+.login-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.login-info__icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.16);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 19px;
+}
+
+.login-info h3 {
+    font-size: 16px;
+    margin-bottom: 4px;
+}
+
+.login-info p {
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.login-info p a {
+    color: inherit;
+    text-decoration: underline;
+    font-weight: 600;
+}
+
+.login-form {
+    background-color: #fff;
+    color: var(--cor-texto);
+    border-radius: var(--raio);
+    padding: 36px 32px;
+    box-shadow: var(--sombra-hover);
+    max-width: 460px;
+    width: 100%;
+    justify-self: center;
+}
+
+.login-form h2 {
+    font-size: 24px;
+    color: var(--cor-principal-escura);
+    margin-bottom: 6px;
+}
+
+.login-form__sub {
+    font-size: 14px;
+    color: var(--cor-texto-suave);
+    margin-bottom: 22px;
+}
+
+.login-form__alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: #FDECEC;
+    color: #B42318;
+    padding: 12px 14px;
+    border-radius: 10px;
+    margin-bottom: 18px;
+    font-size: 14px;
+}
+
+.login-form__alert i {
+    margin-top: 3px;
+}
+
+.login-form label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--cor-texto-suave);
+    margin-bottom: 6px;
+}
+
+.login-form__field {
+    position: relative;
+    margin-bottom: 16px;
+}
+
+.login-form__field > i {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--cor-texto-suave);
+    font-size: 15px;
+    pointer-events: none;
+}
+
+.login-form__field input {
+    width: 100%;
+    padding: 14px 48px 14px 44px;
+    border-radius: 10px;
+    border: 1.5px solid var(--cor-borda);
+    font-size: 16px;
+    color: var(--cor-texto);
+    font-family: inherit;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.login-form__field input:focus {
+    outline: none;
+    border-color: var(--cor-principal);
+    box-shadow: 0 0 0 3px rgba(60, 105, 166, 0.18);
+}
+
+.login-form__toggle {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 38px;
+    height: 38px;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--cor-texto-suave);
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.login-form__toggle:hover,
+.login-form__toggle:focus-visible {
+    background-color: var(--cor-principal-clara);
+    color: var(--cor-principal);
+}
+
+.login-form .btn {
+    width: 100%;
+    margin-top: 6px;
+}
+
+.login-form .btn-primary {
+    background-color: var(--cor-principal);
+}
+
+.login-form .btn-primary:hover,
+.login-form .btn-primary:focus-visible {
+    background-color: var(--cor-principal-escura);
+}
+
+.login-form__back {
+    display: block;
+    text-align: center;
+    margin-top: 18px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--cor-principal);
+}
+
+.login-form__back:hover {
+    color: var(--cor-principal-escura);
+}
+
+@media (max-width: 860px) {
+    .login-panel .container {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .login-panel__intro {
+        text-align: center;
+    }
+
+    .login-panel__badge {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .login-panel__lead {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .login-info {
+        text-align: left;
+    }
+}
+
+@media (max-width: 520px) {
+    .login-form {
+        padding: 28px 20px;
+    }
+}
