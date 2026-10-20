@@ -1,10 +1,10 @@
 from django.db import transaction
 from django.http import JsonResponse
 
-from painel_administrativo.models.pessoas import Parente, Parentesco
+from painel_administrativo.models.pessoas import Familiar, Parentesco
 
 
-def buscar_parente_por_cpf(request):
+def buscar_familiar_por_cpf(request):
     if request.method != "GET":
         return JsonResponse({
             "sucesso": False,            
@@ -21,31 +21,31 @@ def buscar_parente_por_cpf(request):
             status=400
         )
 
-    parente = Parente.objects.filter(cpf=cpf).first()
+    familiar = Familiar.objects.filter(cpf=cpf).first()
 
-    if not parente:
+    if not familiar:
         return JsonResponse({
             "encontrado": False
         })
 
     return JsonResponse({
         "encontrado": True,
-        "parente": {
-            "parente_id": parente.id,
+        "familiar": {
+            "familiar_id": familiar.id,
 
-            "cpf": parente.cpf,
-            "nome": parente.nome,
-            "telefone": parente.telefone,
-            "profissao": parente.profissao,
-            "local_trabalho": parente.local_trabalho,
-            "escolaridade": parente.escolaridade,
-            "vivo": parente.vivo,
+            "cpf": familiar.cpf,
+            "nome": familiar.nome,
+            "telefone": familiar.telefone,
+            "profissao": familiar.profissao,
+            "local_trabalho": familiar.local_trabalho,
+            "escolaridade": familiar.escolaridade,
+            "vivo": familiar.vivo,
         }
     }, status=200)
 
 
 @transaction.atomic
-def salvar_parente(request):
+def salvar_familiar(request):
     try:
         if request.method != "POST":
             return JsonResponse({
@@ -55,33 +55,33 @@ def salvar_parente(request):
                 status=405
             )
 
-        parente_id = request.POST.get("parente_id")
+        familiar_id = request.POST.get("familiar_id")
         aluno_id = request.POST.get("aluno_id")
 
-        if parente_id:
-            parente = Parente.objects.get(id=parente_id)
+        if familiar_id:
+            familiar = Familiar.objects.get(id=familiar_id)
         else:
-            parente = Parente()
+            familiar = Familiar()
 
-        parente.nome = request.POST.get("nome_familiar")
-        parente.cpf = request.POST.get("cpf_familiar")
-        parente.telefone = request.POST.get("telefone_familiar")
-        parente.profissao = request.POST.get("profissao_familiar")
-        parente.local_trabalho = request.POST.get("local_trabalho_familiar")
-        parente.escolaridade = request.POST.get("escolaridade_familiar") or None
-        parente.vivo = request.POST.get("familiar_vivo") == "on"
+        familiar.nome = request.POST.get("nome_familiar")
+        familiar.cpf = request.POST.get("cpf_familiar")
+        familiar.telefone = request.POST.get("telefone_familiar")
+        familiar.profissao = request.POST.get("profissao_familiar")
+        familiar.local_trabalho = request.POST.get("local_trabalho")
+        familiar.escolaridade = request.POST.get("escolaridade_familiar") or None
+        familiar.vivo = request.POST.get("familiar_vivo") == "on"
 
-        parente.save()
+        familiar.save()
 
         dados_parentesco = {
-            "parentesco": request.POST.get("parentesco_familiar"),
+            "parentesco": request.POST.get("parentesco"),
             "responsavel": request.POST.get("familiar_responsavel") == "on",
             "contato_emergencia": request.POST.get("familiar_emergencia") == "on",
         }
 
         parentesco, created = Parentesco.objects.update_or_create(
             aluno_id=aluno_id,
-            parente_id=parente.id,
+            familiar_id=familiar.id,
             defaults=dados_parentesco
         )
 
@@ -101,29 +101,29 @@ def salvar_parente(request):
         )
 
     except Exception as erro:
-        print(f"Erro ao salvar parente: {erro}")
+        print(f"Erro ao salvar familiar: {erro}")
 
         return JsonResponse({
             "sucesso": False,
-            "mensagem": "Não foi possível salvar o parente."
+            "mensagem": "Não foi possível salvar o familiar."
         }, status=500)
 
 
 def buscar_familia(aluno_id):
-    familia = Parentesco.objects.select_related("parente").filter(aluno_id=aluno_id)
+    familia = Parentesco.objects.select_related("familiar").filter(aluno_id=aluno_id)
     dados_familia = []
     for f in familia:
         dados_familia.append({
-            "parente_id": f.parente_id,
+            "familiar_id": f.familiar_id,
             "parentesco": f.parentesco,
             "parentesco_id": f.id,
-            "nome": f.parente.nome,
-            "cpf": f.parente.cpf,
-            "telefone": f.parente.telefone,
-            "profissao": f.parente.profissao,
-            "local_trabalho": f.parente.local_trabalho,
-            "escolaridade": f.parente.escolaridade,
-            "vivo": f.parente.vivo,
+            "nome": f.familiar.nome,
+            "cpf": f.familiar.cpf,
+            "telefone": f.familiar.telefone,
+            "profissao": f.familiar.profissao,
+            "local_trabalho": f.familiar.local_trabalho,
+            "escolaridade": f.familiar.escolaridade,
+            "vivo": f.familiar.vivo,
             "responsavel": f.responsavel,
             "contato_emergencia": f.contato_emergencia,
         })
@@ -132,7 +132,7 @@ def buscar_familia(aluno_id):
 
 
 @transaction.atomic
-def excluir_parente(request):
+def excluir_familiar(request):
     if request.method != "POST":
         return JsonResponse({
             "sucesso": False,            
@@ -142,9 +142,9 @@ def excluir_parente(request):
         )
 
     aluno_id = request.POST.get("aluno_id")
-    parente_id = request.POST.get("parente_id")
+    familiar_id = request.POST.get("familiar_id")
 
-    if not aluno_id or not parente_id:
+    if not aluno_id or not familiar_id:
         return JsonResponse({
             "sucesso": False,            
             "mensagem": "Aluno ou familiar não informado."
@@ -152,19 +152,19 @@ def excluir_parente(request):
             status=400
         )
 
-    Parentesco.objects.get(aluno_id=aluno_id, parente_id=parente_id).delete()
+    Parentesco.objects.get(aluno_id=aluno_id, familiar_id=familiar_id).delete()
 
     possui_outros_relacionamentos = Parentesco.objects.filter(
-                    parente_id=parente_id).exists()
+                    familiar_id=familiar_id).exists()
 
     if not possui_outros_relacionamentos:
-        Parente.objects.filter(id=parente_id).delete()
+        Familiar.objects.filter(id=familiar_id).delete()
 
     dados_familia = buscar_familia(aluno_id)
 
     return JsonResponse({
         "sucesso": True,
-        "parente_id": int(parente_id),
+        "familiar_id": int(familiar_id),
         "aluno_id": aluno_id,
         "familia": dados_familia,
         "mensagem": "Familiar excluído com sucesso."

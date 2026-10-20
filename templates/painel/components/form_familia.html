@@ -1,11 +1,11 @@
-<dialog id="modalFamiliar" class="small-modal">
+<dialog id="modalSecundario" class="medium-modal">
     <div class="modal-header">
         <div>
-            <h2 id="tituloModalFamiliar">Adicionar familiar</h2>
-            <p id="subtituloModalFamiliar">Preencha os dados abaixo</p>
+            <h2 id="tituloModal">Adicionar familiar</h2>
+            <p id="subtituloModal">Preencha os dados abaixo</p>
         </div>
 
-        <button type="button" class="modal-close" id="btnFecharFamiliar">
+        <button type="button" class="modal-close" id="btnFechar">
             <i class="fa-solid fa-xmark"></i>
         </button>
     </div>
@@ -13,7 +13,7 @@
     <div class="modal-body">
         <form id="formFamiliar" novalidate>
             {% csrf_token %}
-            <input type="hidden" id="parente_id" name="parente_id" value="" />
+            <input type="hidden" id="familiar_id" name="familiar_id" value="" />
 
             <div class="form-grid-triplo">
                 <!-- CPF -->
@@ -75,14 +75,14 @@
 
                 <!-- Local de trabalho -->
                 <div class="form-group">
-                    <label for="local_trabalho_familiar">
+                    <label for="local_trabalho">
                         Local de trabalho
                     </label>
 
                     <input
                         type="text"
-                        id="local_trabalho_familiar"
-                        name="local_trabalho_familiar"
+                        id="local_trabalho"
+                        name="local_trabalho"
                         placeholder="Nome da empresa"
                         maxlength="150"
                         disabled
@@ -107,11 +107,11 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="parentesco_familiar">Parentesco</label>
+                    <label for="parentesco">Parentesco</label>
                     <input
                         type="text"
-                        id="parentesco_familiar"
-                        name="parentesco_familiar"
+                        id="parentesco"
+                        name="parentesco"
                         placeholder="Relação familiar"
                         maxlength="30"
                         disabled
@@ -163,12 +163,12 @@
     </div>
 
     <div class="modal-footer">
-        <button type="button" class="btn-delete" id="btnExcluirFamiliar">
+        <button type="button" class="btn-delete" id="btnExcluir">
             <i class="fa-regular fa-trash-can"></i>
             Excluir
         </button>
 
-        <button type="button" class="btn-edit" id="btnEditarFamiliar">
+        <button type="button" class="btn-edit" id="btnEditar">
             <i class="fa-solid fa-pen"></i>
             Editar
         </button>
@@ -177,7 +177,7 @@
             type="submit"
             form="formFamiliar"
             class="btn-save"
-            id="btnSalvarFamiliar"
+            id="btnSalvar"
         >
             <i class="fa-solid fa-floppy-disk"></i>
             Salvar

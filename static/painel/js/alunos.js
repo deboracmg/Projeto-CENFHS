@@ -1,36 +1,38 @@
-const btnNovoAluno = document.getElementById("btnNovoCadastro");
-const modalAluno = document.getElementById("alunoModal");
-const modalBodyAluno = document.querySelector(".modal-body");
+const modalAluno = document.getElementById("modalPrimario");
+const familiaBody = modalAluno.querySelector("#familiaBody");
 
-const btnFecharAluno = document.getElementById("btnFecharModal");
-const btnEditarAluno = document.getElementById("btnEditar");
-const btnSalvarAluno = document.getElementById("btnSalvar");
+const btnNovoAluno = document.getElementById("btnNovoCadastro");
+const btnFecharAluno = modalAluno.querySelector("#btnFechar");
+const btnEditarAluno = modalAluno.querySelector("#btnEditar");
+const btnSalvarAluno = modalAluno.querySelector("#btnSalvar");
 const btnsDetalharAluno = document.querySelectorAll(".btn-abrir-aluno");
 
 const formAluno = document.getElementById("formAluno");
 const camposAluno = formAluno.querySelectorAll("input, select, textarea");
 
-const tituloModalAluno = document.getElementById("modalTitulo");
-const subtituloModalAluno = document.getElementById("modalSubtitulo");
-const previewPhoto = document.querySelector(".photo-preview");
-const familiaBody = document.getElementById("familiaBody");
-const campoCpf = document.getElementById("cpf");
-const campoTelefone = document.getElementById("telefone");
-const campoRendaFamiliar = document.getElementById("renda_familiar");
-const campoQtdMoradores = document.getElementById("qtd_moradores");
-const campoNBolsaFamilia = document.getElementById("n_bolsa_familia");
-const campoNis = document.getElementById("nis");
-const campoSus = document.getElementById("sus");
+const tituloModalAluno = modalAluno.querySelector("#tituloModal");
+const subtituloModalAluno = modalAluno.querySelector("#subtituloModal");
+const previewPhoto = modalAluno.querySelector(".photo-preview");
+const campoCpf = modalAluno.querySelector("#cpf");
+const campoTelefone = modalAluno.querySelector("#telefone");
+const campoRendaFamiliar = modalAluno.querySelector("#renda_familiar");
+const campoQtdMoradores = modalAluno.querySelector("#qtd_moradores");
+const campoNBolsaFamilia = modalAluno.querySelector("#n_bolsa_familia");
+const campoNis = modalAluno.querySelector("#nis");
+const campoSus = modalAluno.querySelector("#sus");
 
-const campoCep = document.getElementById("cep");
-const campoRua = document.getElementById("rua");
-const campoBairro = document.getElementById("bairro");
-const campoNumero = document.getElementById("numero");
-const campoCidade = document.getElementById("cidade");
-const campoUf = document.getElementById("uf");
+const campoCep = modalAluno.querySelector("#cep");
+const campoRua = modalAluno.querySelector("#rua");
+const campoBairro = modalAluno.querySelector("#bairro");
+const campoNumero = modalAluno.querySelector("#numero");
+const campoCidade = modalAluno.querySelector("#cidade");
+const campoUf = modalAluno.querySelector("#uf");
 
-const tabButtons = document.querySelectorAll(".tab-button");
-const tabContents = document.querySelectorAll(".tab-content");
+const tabButtons = modalAluno.querySelectorAll(".tab-button");
+
+tabButtons.forEach((button) => {
+    gerenciarAbas(modalAluno, button);
+});
 
 btnsDetalharAluno.forEach((button) => {
     button.addEventListener("click", async () => {
@@ -47,62 +49,12 @@ btnsDetalharAluno.forEach((button) => {
     });
 });
 
-tabButtons.forEach((button) => {
-    gerenciarAbas(button, tabButtons, tabContents, modalBodyAluno)
-});
-
-/* =========================================================
-   CAMPOS
-========================================================= */
-
-function habilitarCamposAluno() {
-    camposAluno.forEach((field) => {
-        field.disabled = false;
-    });
-
-    btnSalvarAluno.disabled = false;
-    document.getElementById("btnAdicionarFamiliar").disabled = false;
-    document.querySelectorAll(".btn-abrir-parente").forEach((button) => {
-        button.disabled = false;
-    });
-
-    const btnRemoverFoto = document.getElementById("btnRemoverFoto");
-    if (btnRemoverFoto) {
-        btnRemoverFoto.disabled = false;
-    }
-}
-
-function desabilitarCamposAluno() {
-    camposAluno.forEach((field) => {
-        field.disabled = true;
-    });
-
-    btnSalvarAluno.disabled = true;
-    document.getElementById("btnAdicionarFamiliar").disabled = true;
-    document.querySelectorAll(".btn-abrir-parente").forEach((button) => {
-        button.disabled = true;
-    });
-
-    const btnRemoverFoto = document.getElementById("btnRemoverFoto");
-    if (btnRemoverFoto) {
-        btnRemoverFoto.disabled = true;
-    }
-}
 
 /* =========================================================
    NOVO ALUNO
 ========================================================= */
 
-function formNovoAluno() {
-    modalAluno.showModal();
-    formAluno.reset();
-    formAluno.classList.remove("com-erro");
-    modalBodyAluno.scrollTo(0, 0);
-
-    tituloModalAluno.textContent = "Cadastrar novo aluno";
-    subtituloModalAluno.textContent = "Preencha os dados abaixo";
-    document.getElementById("aluno_id").value = "";
-    document.getElementById("data_cadastro").textContent = "-- / -- / ----";
+btnNovoAluno.addEventListener("click", () => {
     document.getElementById("remover_foto").value = "false";
     previewPhoto.innerHTML = `
         <i class="fa-solid fa-camera"></i>
@@ -115,14 +67,9 @@ function formNovoAluno() {
         </td>
     </tr>
     `;
-
-    btnEditarAluno.disabled = true;
-
-    habilitarCamposAluno();
-    abrirAbaInicial(tabButtons, tabContents);
-}
-
-btnNovoAluno.addEventListener("click", formNovoAluno);
+    
+    formNovoCadastro(modalAluno, "aluno");
+});
 
 /* =========================================================
    VISUALIZAR ALUNO
@@ -134,11 +81,9 @@ function detalharAluno(aluno) {
     subtituloModalAluno.textContent = "Código: " + aluno.id;
     formAluno.classList.remove("com-erro");
 
-    desabilitarCamposAluno();
-    btnEditarAluno.disabled = false;
-    abrirAbaInicial(tabButtons, tabContents);
-
     modalAluno.showModal();
+    abrirAbaInicial(modalAluno);
+    desabilitarEdicaoFormulario(modalAluno);
 }
 
 /* =========================================================
@@ -161,8 +106,9 @@ function preencherFormulario(aluno) {
     document.getElementById("observacoes").value = aluno.observacoes || "";
     document.getElementById("autoriza_uso_imagem").checked =
         aluno.autoriza_uso_imagem || false;
-    document.getElementById("data_cadastro").textContent =
-        aluno.data_cadastro || "";
+
+    const data = converterDataHora(aluno.data_cadastro);
+    document.getElementById("data_cadastro").textContent = data.split(", ").join(" - ");
 
     preencherPreviewFoto(aluno.foto);
 
@@ -301,9 +247,7 @@ function exibirFamilia(aluno_id, familia) {
 ========================================================= */
 
 btnEditarAluno.addEventListener("click", () => {
-    habilitarCamposAluno();
-    btnEditarAluno.disabled = true;
-
+    habilitarEdicaoFormulario(modalAluno);
     tituloModalAluno.textContent = "Editando dados do aluno";
 });
 
@@ -361,9 +305,9 @@ campoCpf.addEventListener("input", (e) => {
 
 async function salvarAluno() {
     try {
-        formAluno.classList.remove("com-erro");
         campoCpf.setCustomValidity("");
         campoCep.setCustomValidity("");
+        formAluno.classList.remove("com-erro");
 
         checarFormulário(formAluno);
         checarCpf(campoCpf, formAluno);

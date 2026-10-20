@@ -24,10 +24,40 @@ def detalhar_profissional(request, id):
         "telefone": profissional.telefone,
         "email": profissional.email,
         "area_atuacao": profissional.area_atuacao,
-        "data_cadastro": profissional.data_cadastro.strftime("%d/%m/%Y"),
+        "data_cadastro": profissional.data_cadastro,
     }
 
     return JsonResponse(dados)
+
+def buscar_profissionais(request):
+    if request.method != "GET":
+        return JsonResponse({
+            "sucesso": False,            
+            "mensagem": "Método não permitido."
+            },
+            status=405
+        )
+
+    termo = request.GET.get("q", "").strip()
+
+    if termo:
+        profissionais = Profissional.objects.filter(
+            nome__icontains=termo,
+        )[:10]
+    else : 
+        profissionais = Profissional.objects.filter(
+        ).order_by("-data_cadastro")[:10]
+    
+
+    resultados = [
+        {
+            "id": profissional.id,
+            "nome": profissional.nome,
+        }
+        for profissional in profissionais
+    ]
+
+    return JsonResponse({"resultados": resultados})
 
 
 @transaction.atomic

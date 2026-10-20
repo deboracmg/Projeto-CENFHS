@@ -1,0 +1,63 @@
+<dialog
+    id="modalBusca"
+    class="modal-busca small-modal"
+    aria-labelledby="tituloModal"
+>
+    <div class="modal-header">
+        <div>
+            <h2 id="tituloModal">Buscar registro</h2>
+            <p id="subtituloModal">Selecione uma opção abaixo</p>
+        </div>
+
+        <button
+            type="button"
+            class="modal-close"
+            id="btnFechar"
+            aria-label="Fechar janela"
+            title="Fechar"
+        >
+            <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <div class="form-group">
+            <div class="barra-busca">
+                <input
+                    type="search"
+                    id="pesquisaRegistro"
+                    placeholder="Digite para pesquisar"
+                    autocomplete="off"
+                />
+
+                <button type="button" class="btn-buscar" id="btnBuscar">
+                    <i
+                        class="fa-solid fa-magnifying-glass"
+                        aria-hidden="true"
+                    ></i>
+                </button>
+            </div>
+        </div>
+
+        <div
+            id="mensagemBusca"
+            class="mensagem-busca"
+            role="status"
+            aria-live="polite"
+        >
+            Faça uma pesquisa para ver os resultados.
+        </div>
+
+        <div id="resultados" class="lista-resultados"></div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn-delete" id="btnCancelar">
+            Cancelar
+        </button>
+
+        <button type="button" class="btn-save" id="btnConfirmar" disabled>
+            Confirmar
+        </button>
+    </div>
+</dialog>
