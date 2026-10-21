@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="{% static 'site/css/base.css' %}">
     <link rel="stylesheet" href="{% static 'site/css/header.css' %}">
     <link rel="stylesheet" href="{% static 'site/css/footer.css' %}">
+    <link rel="stylesheet" href="{% static 'site/css/lightbox.css' %}">
     {% block extra_css %}{% endblock %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
@@ -36,7 +37,11 @@
                 <a href="{% url 'about_us' %}" class="{% if active_page == 'about_us' %}active{% endif %}">Sobre</a>
                 <a href="{% url 'our_services' %}" class="{% if active_page == 'our_services' %}active{% endif %}">Serviços</a>
                 <a href="{% url 'contact_us' %}" class="{% if active_page == 'contact_us' %}active{% endif %}">Contato</a>
-                <a href="{% url 'admin:index' %}">Entrar</a>
+                {% if user.is_authenticated %}
+                <a href="{% url 'dashboard' %}">Painel</a>
+                {% else %}
+                <a href="{% url 'login' %}" class="{% if active_page == 'login' %}active{% endif %}">Entrar</a>
+                {% endif %}
             </nav>
         </div>
     </header>
@@ -52,18 +57,18 @@
             <div class="site-footer__contact">
                 <h4>Onde pode nos encontrar</h4>
 
-                <a href="https://wa.me/5500000000000" class="footer-contact-row">
+                <a href="https://wa.me/5583996577607" class="footer-contact-row">
                     <span class="footer-contact__icon footer-contact__icon--whatsapp"><i class="fa-brands fa-whatsapp"></i></span>
-                    <span>{{ contato.whatsapp|default:"(00) 00000-0000" }}</span>
+                    <span>{{ contato.whatsapp|default:"+55 (83) 99657-7607" }}</span>
                 </a>
 
-                <a href="https://instagram.com/cenfhs_cg" class="footer-contact-row" target="_blank" rel="noopener">
+                <a href="https://instagram.com/cenfhs" class="footer-contact-row" target="_blank" rel="noopener">
                     <span class="footer-contact__icon footer-contact__icon--instagram"><i class="fa-brands fa-instagram"></i></span>
-                    <span>{{ contato.instagram|default:"@cenfhs_cg" }}</span>
+                    <span>{{ contato.instagram|default:"@cenfhs" }}</span>
                 </a>
 
                 <p class="footer-address">
-                    <strong>Endereço:</strong> {{ contato.endereco|default:"Rua do endereço, nº 000, Bairro, CEP 00000-000" }}
+                    <strong>Endereço:</strong> {{ contato.endereco|default:"Rua Dr. Francisco Pinto de Oliveira, 215, Bairro Universitário - Campina Grande, PB" }}
                 </p>
             </div>
 
@@ -79,6 +84,50 @@
             &copy; {% now "Y" %} Centro de Formação Humana e Social &middot; Todos os direitos reservados
         </div>
     </footer>
+
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Foto ampliada" hidden>
+        <button type="button" class="lightbox__close" id="lightboxClose" aria-label="Fechar foto">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        <img src="" alt="" class="lightbox__img" id="lightboxImg">
+    </div>
+
+    <script>
+        (function () {
+            const box = document.getElementById("lightbox");
+            const boxImg = document.getElementById("lightboxImg");
+            const closeBtn = document.getElementById("lightboxClose");
+            let opener = null;
+
+            function abrir(img) {
+                opener = img;
+                boxImg.src = img.currentSrc || img.src;
+                boxImg.alt = img.alt;
+                box.hidden = false;
+                document.body.style.overflow = "hidden";
+                closeBtn.focus();
+            }
+
+            function fechar() {
+                box.hidden = true;
+                boxImg.src = "";
+                document.body.style.overflow = "";
+                if (opener) opener.focus();
+            }
+
+            document.querySelectorAll(".gallery-grid img, .gallery-grid--6 img, .carousel__track img").forEach((img) => {
+                img.tabIndex = 0;
+                img.addEventListener("click", () => abrir(img));
+                img.addEventListener("keydown", (e) => {
+                    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); abrir(img); }
+                });
+            });
+
+            closeBtn.addEventListener("click", fechar);
+            box.addEventListener("click", (e) => { if (e.target === box) fechar(); });
+            document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !box.hidden) fechar(); });
+        })();
+    </script>
 
     <script>
         const navToggle = document.getElementById("navToggle");

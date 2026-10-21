@@ -1,0 +1,91 @@
+{% extends "site/base.html" %}
+{% load static %}
+
+{% block title %}Entrar · Centro de Formação Humana e Social{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'site/css/login.css' %}?v=2">
+{% endblock %}
+
+{% block content %}
+
+    <section class="login-panel">
+        <div class="container">
+            <div class="login-panel__intro">
+                <div class="login-panel__badge"><i class="fa-solid fa-user-lock"></i></div>
+                <h1>Área da equipe</h1>
+                <p class="login-panel__lead">
+                    Entre para acessar o painel do Centro de Formação Humana e Social e
+                    acompanhar atividades, eventos, matrículas e atendimentos.
+                </p>
+
+                <div class="login-info">
+                    <div class="login-info__icon"><i class="fa-solid fa-shield-heart"></i></div>
+                    <div>
+                        <h3>Acesso restrito</h3>
+                        <p>Somente voluntários e colaboradores com cadastro conseguem entrar.</p>
+                    </div>
+                </div>
+
+                <div class="login-info">
+                    <div class="login-info__icon"><i class="fa-solid fa-circle-question"></i></div>
+                    <div>
+                        <h3>Precisa de ajuda?</h3>
+                        <p>Esqueceu a senha ou quer um acesso? <a href="{% url 'contact_us' %}">Fale com a gente</a>.</p>
+                    </div>
+                </div>
+            </div>
+
+            <form class="login-form" method="post" action="{% url 'login' %}" novalidate>
+                {% csrf_token %}
+                <h2>Entrar</h2>
+                <p class="login-form__sub">Use seu usuário e senha para continuar.</p>
+
+                {% if form.errors %}
+                    <div class="login-form__alert" role="alert">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <span>{% for erro in form.non_field_errors %}{{ erro }}{% empty %}Preencha o usuário e a senha para continuar.{% endfor %}</span>
+                    </div>
+                {% endif %}
+
+                <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+                <div class="login-form__field">
+                    <i class="fa-solid fa-user"></i>
+                    {{ form.username }}
+                </div>
+
+                <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+                <div class="login-form__field">
+                    <i class="fa-solid fa-lock"></i>
+                    {{ form.password }}
+                    <button type="button" class="login-form__toggle" id="togglePassword" aria-label="Mostrar senha" aria-pressed="false">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+                </div>
+
+                <input type="hidden" name="next" value="{{ next }}">
+                <button type="submit" class="btn btn-primary">Entrar</button>
+
+                <a href="{% url 'index' %}" class="login-form__back"><i class="fa-solid fa-arrow-left"></i> Voltar para o site</a>
+            </form>
+        </div>
+    </section>
+
+{% endblock content %}
+
+{% block extra_js %}
+<script>
+    (function () {
+        const botao = document.getElementById("togglePassword");
+        const campo = document.getElementById("{{ form.password.id_for_label }}");
+        if (!botao || !campo) return;
+        botao.addEventListener("click", () => {
+            const mostrar = campo.type === "password";
+            campo.type = mostrar ? "text" : "password";
+            botao.setAttribute("aria-pressed", mostrar ? "true" : "false");
+            botao.setAttribute("aria-label", mostrar ? "Ocultar senha" : "Mostrar senha");
+            botao.firstElementChild.className = mostrar ? "fa-solid fa-eye-slash" : "fa-solid fa-eye";
+        });
+    })();
+</script>
+{% endblock %}
