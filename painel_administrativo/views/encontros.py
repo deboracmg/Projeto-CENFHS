@@ -6,7 +6,7 @@ from painel_administrativo.models.servicos import Encontro, Servico
 
 def listar_encontros(request):
     encontros = Encontro.objects.select_related("servico", "responsavel_interno"
-                                            ).all().order_by("-id")
+                                            ).all().order_by("-data_hora")
     tipos_servico = [
         (valor, rotulo)
         for valor, rotulo in Servico.Tipo.choices

@@ -29,7 +29,7 @@ btnAdicionarFamiliar.addEventListener("click", async () => {
     if (!dados) return;
 
     btnExcluirFamiliar.disabled = true;
-    formNovoCadastro(modalFamiliar, "familiar");
+    formNovoCadastro(modalFamiliar, "Cadastrar novo familiar");
     
     if (dados.mensagem) exibirNotificacao(dados.mensagem, "sucesso");
 });

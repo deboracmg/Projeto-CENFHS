@@ -68,7 +68,7 @@ btnNovoAluno.addEventListener("click", () => {
     </tr>
     `;
     
-    formNovoCadastro(modalAluno, "aluno");
+    formNovoCadastro(modalAluno, "Cadastrar novo aluno");
 });
 
 /* =========================================================

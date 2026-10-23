@@ -1,5 +1,6 @@
 from datetime import date, datetime, time, timedelta
 from decimal import Decimal
+from hmac import new
 
 from django.core.management.base import BaseCommand
 from django.db import transaction
@@ -451,7 +452,7 @@ class Command(BaseCommand):
             tratamento = Tratamento.objects.create(
                 paciente=pacientes[i],
                 data_entrada=date(2026, 9, 1 + i),
-                data_saida=None if i < 3 else date(2026, 10, 20),
+                data_saida=None if i < 2 else (date.today()),
                 tipo_paciente="Paciente adulto",
                 tratamento=dados[0],
                 n_sessoes=[10, 20, 8, 15][i],
@@ -471,7 +472,9 @@ class Command(BaseCommand):
         # 16. AVALIAÇÕES - 6 registros
         # ==========================================================
 
-        for i, tratamento in enumerate(tratamentos):
+        tratamentos_finalizados = [tratamentos[2], tratamentos[3]]
+
+        for i, tratamento in enumerate(tratamentos_finalizados):
             nota_base = (i % 3) + 3
 
             Avaliacao.objects.create(

@@ -59,7 +59,7 @@ btnNovoEncontro.addEventListener("click", () => {
     btnBuscarProfissional.disabled = false;
     btnBuscarServico.disabled = true;
     limparArquivo();
-    formNovoCadastro(modalEncontro, "encontro");
+    formNovoCadastro(modalEncontro, "Cadastrar novo encontro");
 });
 
 btnFecharEncontro.addEventListener("click", () => modalEncontro.close());
@@ -259,14 +259,9 @@ btnBuscarServico.addEventListener("click", () => {
         return;
     }
 
-    const opcaoTipos = {
-        ATIVIDADE: "atividade",
-        EVENTO: "evento",
-    };
-
     abrirModalBusca({
-        titulo: `Buscar ${opcaoTipos[tipoServico.value]}`,
-        placeholder: `Buscar ${opcaoTipos[tipoServico.value]} por nome`,
+        titulo: `Buscar ${opcaoTiposServico[tipoServico.value]}`,
+        placeholder: `Buscar ${opcaoTiposServico[tipoServico.value]} por nome`,
         url: "/dashboard/servicos/buscar/",
         parametros: {
             tipo: tipoServico.value,

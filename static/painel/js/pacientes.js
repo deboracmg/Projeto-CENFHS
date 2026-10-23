@@ -57,7 +57,7 @@ btnNovoPaciente.addEventListener("click", () => {
         </td>
     </tr>
     `;
-    formNovoCadastro(modalPaciente, "paciente");
+    formNovoCadastro(modalPaciente, "Cadastrar novo paciente");
 })
 btnFecharPaciente.addEventListener("click", () => modalPaciente.close());
 

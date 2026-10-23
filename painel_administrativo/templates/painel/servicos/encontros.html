@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="{% static 'painel/css/encontros.css' %}">
 {% endblock %}
 
-{% block title %}Encontros{% endblock %}
+{% block pagina_atual %}encontro{% endblock %}
 
 {% block titulo %}
 Encontros
@@ -79,10 +79,10 @@ Buscar encontro
 
 {% block modal %} 
 {% include "painel/components/form_encontro.html" %}
-{% include "painel/components/confirmacao.html" %}
 {% include "painel/components/modal_busca.html" %}
 {% endblock modal %}
 
 {% block individual_js %}
 <script src="{% static 'painel/js/encontros.js' %}"></script>
+<script src="{% static 'painel/js/busca.js' %}"></script>
 {% endblock %}
