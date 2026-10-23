@@ -348,3 +348,9 @@ document.addEventListener("DOMContentLoaded", () => {
     sessionStorage.removeItem("notificacao");
     exibirNotificacao(dados.mensagem, dados.tipo);
 });
+
+const opcaoTiposServico = {
+        CURSO: "curso",
+        ATIVIDADE: "atividade",
+        EVENTO: "evento",
+    };

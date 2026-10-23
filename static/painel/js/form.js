@@ -75,13 +75,12 @@ async function verificarESalvarCadastroRelacionado(
     return salvou;
 }
 
-function formNovoCadastro(modalAtual, tabela) {
+function formNovoCadastro(modalAtual, titulo) {
     const form = modalAtual.querySelector("form");
     form.reset();
     form.classList.remove("com-erro");
 
-    modalAtual.querySelector("#tituloModal").textContent =
-        `Cadastrar novo ${tabela}`;
+    modalAtual.querySelector("#tituloModal").textContent = titulo;
     modalAtual.querySelector("#subtituloModal").textContent =
         "Preencha os dados abaixo";
 

@@ -39,7 +39,7 @@ btnEditarProfissional.addEventListener("click", () => {
 });
 
 btnNovoProfissional.addEventListener("click", () =>
-    formNovoCadastro(modalProfissional, "profissional"),
+    formNovoCadastro(modalProfissional, "Cadastrar novo profissional"),
 );
 btnFecharProfissional.addEventListener("click", () =>
     modalProfissional.close(),

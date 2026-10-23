@@ -19,19 +19,21 @@ urlpatterns = [
     path('profissionais/<int:id>/', views.detalhar_profissional, name='detalhar_profissional'),
     path('profissionais/salvar/', views.salvar_profissional, name='salvar_profissional'),
     path('profissionais/buscar/', views.buscar_profissionais, name='buscar_profissionais'),
-
-    path('cursos/', views.cursos, name='cursos'),
-    path('turmas/', views.turmas, name='turmas'),
-    path('matriculas/', views.matriculas, name='matriculas'),
-    path('aulas/', views.aulas, name='aulas'),
-    path('atividades/', views.atividades, name='atividades'),
-    path('eventos/', views.eventos, name='eventos'),
-    
+ 
+    path('atividades/', views.listar_atividades, name='atividades'),
+    path('eventos/', views.listar_eventos, name='eventos'),
     path('encontros/', views.listar_encontros, name='encontros'),
     path('encontros/<int:id>/', views.detalhar_encontro, name='detalhar_encontro'),
     path('encontros/salvar/', views.salvar_encontro, name='salvar_encontro'),
 
+    path('cursos/', views.listar_cursos, name='cursos'),
+    path('turmas/', views.listar_turmas, name='turmas'),
+    path('matriculas/', views.matriculas, name='matriculas'),
+    path('aulas/', views.aulas, name='aulas'),
+
     path('servicos/buscar/', views.buscar_servicos, name='buscar_servicos'),
+    path('servicos/<int:id>/', views.detalhar_servico, name='detalhar_servico'),
+    path('servicos/salvar/', views.salvar_servico, name='salvar_servico'),
 
     # Casa de Apoio
     path('pacientes/', views.listar_pacientes, name='pacientes'),
@@ -39,6 +41,4 @@ urlpatterns = [
     path('pacientes/salvar/', views.salvar_paciente, name='salvar_paciente'),
 
     path('tratamentos/salvar/', views.salvar_tratamento, name='salvar_tratamento'),
-
-    path('avaliacoes/', views.avaliacoes, name='avaliacoes'),
 ]

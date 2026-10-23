@@ -1,0 +1,70 @@
+<dialog id="modalPrimario" class="medium-modal">
+    <div class="modal-header">
+        <div>
+            <h2 id="tituloModal">Cadastrar novo profissional</h2>
+            <p id="subtituloModal">Preencha os dados abaixo</p>
+        </div>
+
+        <button type="button" class="modal-close" id="btnFechar">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <form id="formServico" novalidate>
+            {% csrf_token %}
+            <input type="hidden" id="servico_id" name="servico_id" value="" />
+            <input type="hidden" id="tipo_servico" name="tipo_servico" value="" />
+
+            <div class="form-group">
+                <label for="nome">Nome</label>
+                <input
+                    type="text"
+                    id="nome"
+                    name="nome"
+                    placeholder="Nome do serviço"
+                    maxlength="150"
+                    disabled
+                    required
+                />
+            </div>
+
+            <div class="form-footer">
+                <div class="checkbox-group">
+                    <input
+                        checked
+                        type="checkbox"
+                        id="ativo"
+                        name="ativo"
+                        disabled
+                    />
+                    <label for="ativo">Ativo?</label>
+                </div>
+
+                <div>
+                    <p>
+                        Data de cadastro:
+                        <span id="data_cadastro"></span>
+                    </p>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn-edit" id="btnEditar">
+            <i class="fa-solid fa-pen"></i>
+            Editar
+        </button>
+
+        <button
+            type="submit"
+            form="formServico"
+            class="btn-save"
+            id="btnSalvar"
+        >
+            <i class="fa-solid fa-floppy-disk"></i>
+            Salvar
+        </button>
+    </div>
+</dialog>

@@ -48,8 +48,9 @@ btnEditarTratamento.addEventListener("click", () => {
 btnConcluirAvaliar.addEventListener("click", () => {
     document.getElementById("data_saida").value = preencherDataAtual();
     exibirNotificacao("Salve o cadastro para efetuar a conclusão.", "info");
-    document.getElementById("avaliacao").classList.add("active");
     document.getElementById("data_avaliacao").textContent = "-- / -- / ----";
+    sectionAvaliacao.classList.add("active");
+    btnConcluirAvaliar.disabled = true;
 
     modalBodyTratamento.scrollTo({
         top: modalBodyTratamento.scrollHeight,
@@ -72,7 +73,10 @@ btnAdicionarTratamento.addEventListener("click", async () => {
     dispensarCamposAvaliacao();
     btnConcluirAvaliar.disabled = true;
 
-    formNovoCadastro(modalTratamento, "tratamento");
+    formNovoCadastro(modalTratamento, "Cadastrar novo tratamento");
+    document.getElementById("avaliacao_media").textContent = "---";
+    document.getElementById("data_avaliacao").textContent = "-- / -- / ----";
+    sectionAvaliacao.classList.remove("active");
     modalTratamento.querySelector("#data_entrada").value = preencherDataAtual();
     if (dados.mensagem) exibirNotificacao(dados.mensagem, "sucesso");
 });
@@ -85,13 +89,14 @@ function detalharTratamento(tratamento) {
     tituloModalTratamento.textContent = "Dados do tratamento";
     subtituloModalTratamento.textContent =
         "Código: " + tratamento.tratamento_id;
+    formTratamento.classList.remove("com-erro");
 
     if (tratamento.avaliacao_id) {
-        document.getElementById("avaliacao").classList.add("active");
+        sectionAvaliacao.classList.add("active");
         btnConcluirAvaliar.disabled = true;
         exigirCamposAvaliacao();
     } else {
-        document.getElementById("avaliacao").classList.remove("active");
+        sectionAvaliacao.classList.remove("active");
         btnConcluirAvaliar.disabled = false;
         dispensarCamposAvaliacao();
     }
