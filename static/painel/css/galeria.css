@@ -1,0 +1,16 @@
+.galeria-painel h1 { color: var(--cor-principal); margin-bottom: 16px; }
+.galeria-painel > p { margin-bottom: 16px; line-height: 1.5; }
+.galeria-grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+.galeria-card { border: 1px solid var(--cor-borda); border-radius: 8px; overflow: hidden; background: white; }
+.galeria-card > img { width: 100%; height: 190px; object-fit: cover; display: block; }
+.galeria-card-conteudo { padding: 18px; }
+.galeria-card h2 { font-size: 18px; margin-bottom: 12px; }
+.galeria-card p { font-size: 14px; color: var(--cor-texto-secundario); margin-bottom: 16px; }
+.galeria-card label { display: block; margin-bottom: 8px; }
+.galeria-card input[type=file] { display: block; width: 100%; margin-bottom: 16px; }
+.galeria-card button { background: var(--cor-principal); color: white; border: 0; border-radius: 5px; padding: 11px 16px; cursor: pointer; }
+.galeria-card button:focus-visible { outline: 3px solid var(--cor-secundaria); outline-offset: 3px; }
+.galeria-sucesso { padding: 14px; background: #e8f5eb; color: #185b2b; }
+.galeria-erros { padding: 16px; background: #fff0f0; color: #8b1717; margin-bottom: 20px; }
+.galeria-erros h2 { font-size: 18px; margin-bottom: 10px; }
+.galeria-erros ul { margin-left: 20px; }

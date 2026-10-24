@@ -1,109 +1,165 @@
 {% extends "site/base.html" %}
 {% load static %}
+{% load imagens_site %}
 
 {% block title %}Início · Centro de Formação Humana e Social{% endblock %}
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'site/css/index.css' %}">
-    <link rel="stylesheet" href="{% static 'site/css/carousel.css' %}">
+<link rel="stylesheet" href="{% static 'site/css/index.css' %}">
+<link rel="stylesheet" href="{% static 'site/css/carousel.css' %}">
 {% endblock %}
 
 {% block content %}
 
-    <section class="hero">
-        <div class="container">
-            <div class="hero__icon">
-                <i class="fa-solid fa-hand-holding-heart"></i>
-            </div>
-            <div class="hero__text">
-                <h1>Centro de Formação Humana e Social</h1>
-                <p>
-                    Acolhemos, educamos e cuidamos de crianças, jovens e famílias por meio de
-                    cursos, atividades e uma casa de apoio dedicada a transformar vidas com
-                    respeito, afeto e oportunidade.
-                </p>
-                <a href="{% url 'about_us' %}" class="btn btn-primary">Clique para saber mais</a>
-            </div>
+<section class="hero">
+    <div class="container">
+        <div class="hero__icon">
+            <i class="fa-solid fa-hand-holding-heart"></i>
         </div>
-    </section>
 
-    <section class="donate-cta">
-        <div class="container">
-            <div class="donate-cta__text">
-                <h2>Contribua para que nossa história continue</h2>
-                <p>
-                    Sua doação ajuda a manter nossos cursos, atividades e a casa de apoio
-                    funcionando para quem mais precisa. Clique no botão abaixo e doe via
-                    Pix em poucos passos.
-                </p>
-                <a href="{% url 'about_us' %}#doacoes" class="btn btn-primary">Quero doar</a>
-            </div>
-        </div>
-    </section>
+        <div class="hero__text">
+            <h1>Centro de Formação Humana e Social</h1>
 
-    <section class="section section--tinted">
-        <div class="container">
-            <div class="section-title">Galeria</div>
-            <div class="carousel" id="galleryCarousel" role="region" aria-roledescription="carrossel" aria-label="Galeria de fotos">
-                <button type="button" class="carousel__btn carousel__btn--prev" id="carouselPrev" aria-label="Fotos anteriores">
-                    <i class="fa-solid fa-chevron-left"></i>
-                </button>
-                <div class="carousel__track" id="carouselTrack">
-                    <img src="{% static 'site/img/fotos/brecho/brecho-3.jpg' %}" alt="Equipe do Brechó Solidário do CENFHS">
-                    <img src="{% static 'site/img/fotos/karate/karate-1.jpg' %}" alt="Equipe de karatê do CENFHS no campeonato paraibano">
-                    <img src="{% static 'site/img/fotos/terapia-comunitaria/terapia-comunitaria-2.jpg' %}" alt="Roda de Terapia Comunitária no Centro de Formação">
-                    <img src="{% static 'site/img/fotos/ioga/ioga-1.jpg' %}" alt="Aula de ioga no Centro de Formação" loading="lazy">
-                    <img src="{% static 'site/img/fotos/redacao/redacao-2.jpg' %}" alt="Aula de redação" loading="lazy">
-                    <img src="{% static 'site/img/fotos/karate/karate-3.jpg' %}" alt="Alunos de karatê com medalhas" loading="lazy">
-                    <img src="{% static 'site/img/fotos/brecho/brecho-1.jpg' %}" alt="Voluntários do Brechó Solidário" loading="lazy">
-                    <img src="{% static 'site/img/fotos/terapia-comunitaria/terapia-comunitaria-1.jpg' %}" alt="Terapia Comunitária no Centro de Formação" loading="lazy">
-                    <img src="{% static 'site/img/fotos/karate/karate-4.jpg' %}" alt="Turma de karatê reunida no tatame" loading="lazy">
-                    <img src="{% static 'site/img/fotos/ioga/ioga-2.jpg' %}" alt="Aula de ioga" loading="lazy">
-                    <img src="{% static 'site/img/fotos/redacao/redacao-3.jpg' %}" alt="Alunos na aula de redação" loading="lazy">
-                    <img src="{% static 'site/img/fotos/terapia-comunitaria/terapia-comunitaria-3.jpg' %}" alt="Roda de Terapia Comunitária" loading="lazy">
-                </div>
-                <button type="button" class="carousel__btn carousel__btn--next" id="carouselNext" aria-label="Próximas fotos">
-                    <i class="fa-solid fa-chevron-right"></i>
-                </button>
-            </div>
-        </div>
-    </section>
+            <p>
+                Acolhemos, educamos e cuidamos de crianças, jovens e famílias por meio de
+                cursos, atividades e uma casa de apoio dedicada a transformar vidas com
+                respeito, afeto e oportunidade.
+            </p>
 
-    <section class="section section--tinted" style="padding-top:0;">
-        <div class="container">
-            <div class="section-title">Atividades</div>
-            <div class="activity-feature card">
-                <img src="{% static 'site/img/fotos/karate/karate-3.jpg' %}" alt="Aulas de Karatê Comunitárias" class="activity-feature__img">
-                <div class="activity-feature__info">
-                    <h3>Aulas de Karatê Comunitárias</h3>
-                    <p><strong>Horário:</strong> 16h às 17h</p>
-                    <p><strong>Dias da Semana:</strong> Segunda a Sexta</p>
-                    <p><strong>Professor(a):</strong> A definir</p>
-                    <a href="{% url 'our_services' %}" class="activity-feature__link">
-                        Ver todas as atividades <i class="fa-solid fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
+            <a href="{% url 'about_us' %}" class="btn btn-primary">
+                Clique para saber mais
+            </a>
         </div>
-    </section>
+    </div>
+</section>
 
-    <section class="section section--tinted">
-        <div class="container">
-            <div class="section-title">Próximos Eventos</div>
-            <div class="events-grid">
-                {% for evento in proximos_eventos %}
-                <div class="event-card card">
-                    <h3>{{ evento.nome }}</h3>
-                    <p><strong>Horário:</strong> {{ evento.horario }}</p>
-                    <p><strong>Dia:</strong> {{ evento.dia }}</p>
-                    <p><strong>Local:</strong> {{ evento.local }}</p>
-                </div>
-                {% empty %}
-                <p class="text-muted">Nenhum evento programado no momento. Volte em breve!</p>
-                {% endfor %}
+<section class="donate-cta">
+    <div class="container">
+        <div class="donate-cta__text">
+            <h2>Contribua para que nossa história continue</h2>
+
+            <p>
+                Sua doação ajuda a manter nossos cursos, atividades e a casa de apoio
+                funcionando para quem mais precisa. Clique no botão abaixo e doe via
+                Pix em poucos passos.
+            </p>
+
+            <a href="{% url 'about_us' %}#doacoes" class="btn btn-primary">
+                Quero doar
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="section section--tinted">
+    <div class="container">
+        <div class="section-title">Galeria</div>
+
+        <div class="carousel" id="galleryCarousel" role="region" aria-roledescription="carrossel"
+            aria-label="Galeria de fotos">
+            <button type="button" class="carousel__btn carousel__btn--prev" id="carouselPrev"
+                aria-label="Fotos anteriores">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+
+            <div class="carousel__track" id="carouselTrack">
+                {% imagem_site 'galeria-1' as foto_galeria_1 %}
+                {% imagem_site 'galeria-2' as foto_galeria_2 %}
+                {% imagem_site 'galeria-3' as foto_galeria_3 %}
+
+                {% static 'site/img/galeria-1.jpg' as padrao_antigo_1 %}
+                {% static 'site/img/galeria-2.jpg' as padrao_antigo_2 %}
+                {% static 'site/img/galeria-3.jpg' as padrao_antigo_3 %}
+
+                <img src="{% if foto_galeria_1 == padrao_antigo_1 %}{% static 'site/img/fotos/brecho/brecho-3.jpg' %}{% else %}{{ foto_galeria_1 }}{% endif %}"
+                    alt="Foto da galeria do Centro de Formação">
+
+                <img src="{% if foto_galeria_2 == padrao_antigo_2 %}{% static 'site/img/fotos/karate/karate-1.jpg' %}{% else %}{{ foto_galeria_2 }}{% endif %}"
+                    alt="Foto da galeria do Centro de Formação">
+
+                <img src="{% if foto_galeria_3 == padrao_antigo_3 %}{% static 'site/img/fotos/terapia-comunitaria/terapia-comunitaria-2.jpg' %}{% else %}{{ foto_galeria_3 }}{% endif %}"
+                    alt="Foto da galeria do Centro de Formação">
+
+                <img src="{% static 'site/img/fotos/ioga/ioga-1.jpg' %}" alt="Aula de ioga no Centro de Formação"
+                    loading="lazy">
+
+                <img src="{% static 'site/img/fotos/redacao/redacao-2.jpg' %}" alt="Aula de redação" loading="lazy">
+
+                <img src="{% static 'site/img/fotos/karate/karate-3.jpg' %}" alt="Alunos de karatê com medalhas"
+                    loading="lazy">
+
+                <img src="{% static 'site/img/fotos/brecho/brecho-1.jpg' %}" alt="Voluntários do Brechó Solidário"
+                    loading="lazy">
+
+                <img src="{% static 'site/img/fotos/terapia-comunitaria/terapia-comunitaria-1.jpg' %}"
+                    alt="Terapia Comunitária no Centro de Formação" loading="lazy">
+
+                <img src="{% static 'site/img/fotos/karate/karate-4.jpg' %}" alt="Turma de karatê reunida no tatame"
+                    loading="lazy">
+
+                <img src="{% static 'site/img/fotos/ioga/ioga-2.jpg' %}" alt="Aula de ioga" loading="lazy">
+
+                <img src="{% static 'site/img/fotos/redacao/redacao-3.jpg' %}" alt="Alunos na aula de redação"
+                    loading="lazy">
+
+                <img src="{% static 'site/img/fotos/terapia-comunitaria/terapia-comunitaria-3.jpg' %}"
+                    alt="Roda de Terapia Comunitária" loading="lazy">
+            </div>
+
+            <button type="button" class="carousel__btn carousel__btn--next" id="carouselNext"
+                aria-label="Próximas fotos">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+</section>
+
+<section class="section section--tinted" style="padding-top:0;">
+    <div class="container">
+        <div class="section-title">Atividades</div>
+
+        <div class="activity-feature card">
+            {% imagem_site 'atividade-karate' as foto_atividade %}
+            {% static 'site/img/atividade-karate.jpg' as padrao_antigo_atividade %}
+
+            <img src="{% if foto_atividade == padrao_antigo_atividade %}{% static 'site/img/fotos/karate/karate-3.jpg' %}{% else %}{{ foto_atividade }}{% endif %}"
+                alt="Aulas de Karatê Comunitárias" class="activity-feature__img">
+
+            <div class="activity-feature__info">
+                <h3>Aulas de Karatê Comunitárias</h3>
+                <p><strong>Horário:</strong> 16h às 17h</p>
+                <p><strong>Dias da Semana:</strong> Segunda a Sexta</p>
+                <p><strong>Professor(a):</strong> A definir</p>
+
+                <a href="{% url 'our_services' %}" class="activity-feature__link">
+                    Ver todas as atividades
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
+<section class="section section--tinted">
+    <div class="container">
+        <div class="section-title">Próximos Eventos</div>
+
+        <div class="events-grid">
+            {% for evento in proximos_eventos %}
+            <div class="event-card card">
+                <h3>{{ evento.nome }}</h3>
+                <p><strong>Horário:</strong> {{ evento.horario }}</p>
+                <p><strong>Dia:</strong> {{ evento.dia }}</p>
+                <p><strong>Local:</strong> {{ evento.local }}</p>
+            </div>
+            {% empty %}
+            <p class="text-muted">
+                Nenhum evento programado no momento. Volte em breve!
+            </p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
 
 {% endblock content %}
 
@@ -112,35 +168,54 @@
     (function () {
         const track = document.getElementById("carouselTrack");
         if (!track) return;
+
         const prev = document.getElementById("carouselPrev");
         const next = document.getElementById("carouselNext");
         const lightbox = document.getElementById("lightbox");
-        const reduzirMovimento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const reduzirMovimento = window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        ).matches;
+
         let pausado = false;
         let timer = null;
 
         function passo() {
             const first = track.querySelector("img");
             const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+
             return first.getBoundingClientRect().width + gap;
         }
 
         function irParaProxima() {
             const fim = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
-            if (fim) track.scrollTo({ left: 0, behavior: "smooth" });
-            else track.scrollBy({ left: passo(), behavior: "smooth" });
+
+            if (fim) {
+                track.scrollTo({ left: 0, behavior: "smooth" });
+            } else {
+                track.scrollBy({ left: passo(), behavior: "smooth" });
+            }
         }
 
         function irParaAnterior() {
-            if (track.scrollLeft <= 4) track.scrollTo({ left: track.scrollWidth, behavior: "smooth" });
-            else track.scrollBy({ left: -passo(), behavior: "smooth" });
+            if (track.scrollLeft <= 4) {
+                track.scrollTo({
+                    left: track.scrollWidth,
+                    behavior: "smooth"
+                });
+            } else {
+                track.scrollBy({ left: -passo(), behavior: "smooth" });
+            }
         }
 
         function iniciar() {
             if (reduzirMovimento || timer) return;
+
             timer = setInterval(() => {
                 const lightboxAberto = lightbox && !lightbox.hidden;
-                if (!pausado && !lightboxAberto && !document.hidden) irParaProxima();
+
+                if (!pausado && !lightboxAberto && !document.hidden) {
+                    irParaProxima();
+                }
             }, 3500);
         }
 
@@ -148,14 +223,35 @@
         prev.addEventListener("click", irParaAnterior);
 
         const area = document.getElementById("galleryCarousel");
-        area.addEventListener("mouseenter", () => { pausado = true; });
-        area.addEventListener("mouseleave", () => { pausado = false; });
-        area.addEventListener("focusin", () => { pausado = true; });
-        area.addEventListener("focusout", () => { pausado = false; });
-        area.addEventListener("touchstart", () => { pausado = true; }, { passive: true });
-        area.addEventListener("touchend", () => { setTimeout(() => { pausado = false; }, 4000); }, { passive: true });
+
+        area.addEventListener("mouseenter", () => {
+            pausado = true;
+        });
+
+        area.addEventListener("mouseleave", () => {
+            pausado = false;
+        });
+
+        area.addEventListener("focusin", () => {
+            pausado = true;
+        });
+
+        area.addEventListener("focusout", () => {
+            pausado = false;
+        });
+
+        area.addEventListener("touchstart", () => {
+            pausado = true;
+        }, { passive: true });
+
+        area.addEventListener("touchend", () => {
+            setTimeout(() => {
+                pausado = false;
+            }, 4000);
+        }, { passive: true });
 
         iniciar();
     })();
 </script>
+
 {% endblock %}
