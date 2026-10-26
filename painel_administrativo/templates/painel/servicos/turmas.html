@@ -1,4 +1,9 @@
 {% extends "painel/components/tabela.html" %}
+{% load static %}
+
+{% block individual_css %}
+<link rel="stylesheet" href="{% static 'painel/css/busca.css' %}">
+{% endblock %}
 
 {% block pagina_atual %}turma{% endblock %}
 
@@ -48,7 +53,8 @@ Buscar turma
     <td>
         <button
         type="button"
-        class="action-button"
+        class="action-button btn-abrir-turma"
+        data-turma-id="{{ turma.id }}"
         title="Mais informações"
         >
             <i class="fa-solid fa-circle-info"></i>
@@ -67,4 +73,14 @@ Buscar turma
 
 {% endfor %}
 
+{% endblock %}
+
+{% block modal %} 
+{% include "painel/components/form_turma.html" %}
+{% include "painel/components/modal_busca.html" %}
+{% endblock modal %}
+
+{% block individual_js %}
+<script src="{% static 'painel/js/turmas.js' %}"></script>
+<script src="{% static 'painel/js/busca.js' %}"></script>
 {% endblock %}

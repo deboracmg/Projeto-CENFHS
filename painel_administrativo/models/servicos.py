@@ -72,7 +72,16 @@ class Turma(models.Model):
 
     descricao = models.CharField(max_length=150)
 
-    dias_semana = models.JSONField()
+    class DiaSemana(models.TextChoices):
+        DOM = "DOM", "Domingo"
+        SEG = "SEG", "Segunda"
+        TER = "TER", "Terça"
+        QUA = "QUA", "Quarta"
+        QUI = "QUI", "Quinta"
+        SEX = "SEX", "Sexta"
+        SAB = "SAB", "Sábado"
+
+    dias_semana = models.JSONField(default=list)
 
     hora_inicio = models.TimeField()
     hora_fim = models.TimeField()

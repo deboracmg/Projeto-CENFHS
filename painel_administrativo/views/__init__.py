@@ -6,7 +6,7 @@ from .tratamentos import salvar_tratamento
 from .profissionais import listar_profissionais, detalhar_profissional, buscar_profissionais, salvar_profissional
 from .pacientes import listar_pacientes, detalhar_paciente, salvar_paciente
 from .servicos import buscar_servicos, detalhar_servico, salvar_servico, listar_cursos, listar_atividades, listar_eventos
-from .turmas import listar_turmas, aulas, matriculas
+from .turmas import listar_turmas, detalhar_turma, salvar_turma, aulas, matriculas
 from .encontros import listar_encontros, detalhar_encontro, salvar_encontro
 
 
