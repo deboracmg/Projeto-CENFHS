@@ -75,9 +75,7 @@
 
                 <!-- Local de trabalho -->
                 <div class="form-group">
-                    <label for="local_trabalho">
-                        Local de trabalho
-                    </label>
+                    <label for="local_trabalho"> Local de trabalho </label>
 
                     <input
                         type="text"
@@ -121,42 +119,48 @@
             </div>
 
             <!-- Parentesco -->
-            <div class="vinculo-familiar">
-                <input type="hidden" id="parentesco_id" name="parentesco_id" />
-
-                <div class="checkbox-group">
+            <div class="section-checkbox">
+                <div class="form-group-checkbox">
                     <input
-                        checked
-                        type="checkbox"
-                        id="familiar_vivo"
-                        name="familiar_vivo"
-                        disabled
+                        type="hidden"
+                        id="parentesco_id"
+                        name="parentesco_id"
                     />
-                    <label for="familiar_vivo">Vivo?</label>
-                </div>
 
-                <div class="checkbox-group">
-                    <input
-                        type="checkbox"
-                        id="familiar_responsavel"
-                        name="familiar_responsavel"
-                        disabled
-                    />
-                    <label for="familiar_responsavel">
-                        Responsável legal?
-                    </label>
-                </div>
+                    <div class="checkbox-group">
+                        <input
+                            checked
+                            type="checkbox"
+                            id="familiar_vivo"
+                            name="familiar_vivo"
+                            disabled
+                        />
+                        <label for="familiar_vivo">Vivo?</label>
+                    </div>
 
-                <div class="checkbox-group">
-                    <input
-                        type="checkbox"
-                        id="familiar_emergencia"
-                        name="familiar_emergencia"
-                        disabled
-                    />
-                    <label for="familiar_emergencia">
-                        Contato de emergência?
-                    </label>
+                    <div class="checkbox-group">
+                        <input
+                            type="checkbox"
+                            id="familiar_responsavel"
+                            name="familiar_responsavel"
+                            disabled
+                        />
+                        <label for="familiar_responsavel">
+                            Responsável legal?
+                        </label>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input
+                            type="checkbox"
+                            id="familiar_emergencia"
+                            name="familiar_emergencia"
+                            disabled
+                        />
+                        <label for="familiar_emergencia">
+                            Contato de emergência?
+                        </label>
+                    </div>
                 </div>
             </div>
         </form>

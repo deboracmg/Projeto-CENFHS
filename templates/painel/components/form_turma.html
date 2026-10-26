@@ -1,0 +1,233 @@
+<dialog id="modalPrimario" class="medium-modal">
+    <div class="modal-header">
+        <div>
+            <h2 id="tituloModal">Cadastrar nova turma</h2>
+            <p id="subtituloModal">Preencha os dados abaixo</p>
+        </div>
+
+        <button type="button" class="modal-close" id="btnFechar">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <form id="formTurma" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            <input type="hidden" id="turma_id" name="turma_id" value="" />
+
+            <div class="form-grid-triplo">
+                <div class="form-group">
+                    <label for="nome_curso" class="obrigatorio">Curso</label>
+                    <input
+                        type="hidden"
+                        name="curso_id"
+                        id="curso_id"
+                        value=""
+                    />
+
+                    <div class="campo-busca">
+                        <input
+                            type="text"
+                            id="nome_curso"
+                            name="nome_curso"
+                            placeholder="Selecione um curso"
+                            readonly
+                            disabled
+                            required
+                        />
+
+                        <button
+                            type="button"
+                            class="btn-buscar"
+                            id="btnBuscarCurso"
+                            aria-label="Buscar curso"
+                            title="Buscar curso"
+                        >
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="professor" class="obrigatorio">Professor</label>
+
+                    <input
+                        type="hidden"
+                        name="professor_id"
+                        id="professor_id"
+                    />
+
+                    <div class="campo-busca">
+                        <input
+                            type="text"
+                            id="professor"
+                            name="professor"
+                            placeholder="Voluntário cadastrado"
+                            disabled
+                            required
+                            readonly
+                        />
+
+                        <button
+                            type="button"
+                            class="btn-buscar"
+                            id="btnBuscarProfessor"
+                            aria-label="Buscar professor"
+                            title="Buscar professor"
+                        >
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="descricao">Descrição</label>
+
+                    <input
+                        type="text"
+                        id="descricao"
+                        name="descricao"
+                        placeholder="Dê um nome a turma"
+                        maxlength="150"
+                        disabled
+                        required
+                    />
+                </div>
+
+                <div class="form-group">
+                    <label for="local">Local</label>
+
+                    <input
+                        type="text"
+                        id="local"
+                        name="local"
+                        placeholder="Local da aula"
+                        maxlength="150"
+                        disabled
+                        required
+                    />
+                </div>
+
+                <div class="form-group">
+                    <label for="hora_inicio">Horário de início</label>
+
+                    <input
+                        type="time"
+                        id="hora_inicio"
+                        name="hora_inicio"
+                        disabled
+                        required
+                    />
+                </div>
+
+                <div class="form-group">
+                    <label for="hora_fim">Horário de fim</label>
+
+                    <input
+                        type="time"
+                        id="hora_fim"
+                        name="hora_fim"
+                        disabled
+                        required
+                    />
+                </div>
+            </div>
+
+            <div class="section-checkbox">
+                <p>Dias de aula</p>
+
+                <div class="form-group-checkbox">
+                    <div class="checkbox-group">
+                        <input
+                            type="checkbox"
+                            id="domingo"
+                            name="dias_semana"
+                            value="DOM"
+                            disabled
+                        />
+                        <label for="domingo">Domingo</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input
+                            type="checkbox"
+                            id="segunda"
+                            name="dias_semana"
+                            value="SEG"
+                            disabled
+                        />
+                        <label for="segunda">Segunda</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input
+                            type="checkbox"
+                            id="terca"
+                            name="dias_semana"
+                            value="TER"
+                            disabled
+                        />
+                        <label for="terca">Terça</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input
+                            type="checkbox"
+                            id="quarta"
+                            name="dias_semana"
+                            value="QUA"
+                            disabled
+                        />
+                        <label for="quarta">Quarta</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input
+                            type="checkbox"
+                            id="quinta"
+                            name="dias_semana"
+                            value="QUI"
+                            disabled
+                        />
+                        <label for="quinta">Quinta</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input
+                            type="checkbox"
+                            id="sexta"
+                            name="dias_semana"
+                            value="SEX"
+                            disabled
+                        />
+                        <label for="sexta">Sexta</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input
+                            type="checkbox"
+                            id="sabado"
+                            name="dias_semana"
+                            value="SAB"
+                            disabled
+                        />
+                        <label for="sabado">Sábado</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-footer separated">
+                <p>
+                    Data de cadastro:
+                    <span id="data_cadastro"></span>
+                </p>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn-edit" id="btnEditar">
+            <i class="fa-solid fa-pen"></i>
+            Editar
+        </button>
+
+        <button type="submit" form="formTurma" class="btn-save" id="btnSalvar">
+            <i class="fa-solid fa-floppy-disk"></i>
+            Salvar
+        </button>
+    </div>
+</dialog>

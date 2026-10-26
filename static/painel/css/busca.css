@@ -1,0 +1,110 @@
+.campo-busca {
+    position: relative;
+}
+
+.campo-busca button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+}
+
+.barra-busca {
+    display: flex;
+    position: relative;
+}
+
+.barra-busca input {
+    padding-right: 45px;
+}
+
+.barra-busca button {
+    position: absolute;
+    right: 0;
+    height: 100%;
+}
+
+.btn-buscar {
+    display: flex;
+    align-items: center;
+    padding: 9px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    background-color: var(--cor-secundaria);
+    color: white;
+}
+
+.mensagem-busca {
+    margin-top: 14px;
+    font-size: 13px;
+    color: var(--cor-texto-secundario);
+}
+
+.lista-resultados {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin: 8px 0 0;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.lista-resultados .item-resultado {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 7px;
+    background: var(--cor-fundo);
+    color: var(--cor-texto-principal);
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.lista-resultados .item-resultado:hover {
+    background: var(--cor-neutra-hover);
+}
+
+.lista-resultados .item-resultado.selecionado {
+    border-color: var(--cor-secundaria);
+    color: var(--cor-secundaria);
+    font-weight: bold;
+}
+
+.item-resultado .resultado-titulo {
+    font-size: 14px;
+}
+
+.item-resultado .resultado-detalhe {
+    font-size: 12px;
+    color: var(--cor-texto-secundario);
+}
+
+.item-resultado:focus-visible {
+    outline: 2px solid var(--cor-secundaria);
+    outline-offset: 2px;
+}
+
+#btnConfirmar:disabled,
+#btnLimparProfissional:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+@media (max-width: 480px) {
+    .barra-busca {
+        flex-direction: column;
+    }
+
+    .barra-busca button {
+        justify-content: center;
+        min-height: 38px;
+    }
+}

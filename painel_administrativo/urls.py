@@ -28,6 +28,9 @@ urlpatterns = [
 
     path('cursos/', views.listar_cursos, name='cursos'),
     path('turmas/', views.listar_turmas, name='turmas'),
+    path('turmas/<int:id>', views.detalhar_turma, name='detalhar_turma'),
+    path('turmas/salvar/', views.salvar_turma, name='salvar_turma'),
+
     path('matriculas/', views.matriculas, name='matriculas'),
     path('aulas/', views.aulas, name='aulas'),
 
