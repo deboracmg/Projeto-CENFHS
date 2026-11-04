@@ -1,6 +1,6 @@
 const modalPaciente = document.getElementById("modalPrimario");
 const modalBodyPaciente = modalPaciente.querySelector(".modal-body");
-const tratamentoBody = document.getElementById("tratamentoBody");
+const tratamentoBody = modalPaciente.querySelector("#tratamentoBody");
 
 const formPaciente = document.getElementById("formPaciente");
 const camposPaciente = formPaciente.querySelectorAll("input, select");
@@ -23,7 +23,7 @@ const btnSalvarPaciente = modalPaciente.querySelector("#btnSalvar");
 const btnFecharPaciente = modalPaciente.querySelector("#btnFechar");
 const btnsDetalharPaciente = document.querySelectorAll(".btn-abrir-paciente");
 
-const tabButtons = document.querySelectorAll(".tab-button");
+const tabButtons = modalPaciente.querySelectorAll(".tab-button");
 
 tabButtons.forEach((button) => {
     gerenciarAbas(modalPaciente, button)
@@ -50,13 +50,7 @@ btnEditarPaciente.addEventListener("click", () => {
 });
 
 btnNovoPaciente.addEventListener("click", () => {
-    tratamentoBody.innerHTML = `
-    <tr>
-        <td colspan="5" class="empty-message">
-            Nenhum tratamento cadastrado.
-        </td>
-    </tr>
-    `;
+    exibirTratamentos(null, []);
     formNovoCadastro(modalPaciente, "Cadastrar novo paciente");
 })
 btnFecharPaciente.addEventListener("click", () => modalPaciente.close());

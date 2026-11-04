@@ -30,8 +30,10 @@ urlpatterns = [
     path('turmas/', views.listar_turmas, name='turmas'),
     path('turmas/<int:id>', views.detalhar_turma, name='detalhar_turma'),
     path('turmas/salvar/', views.salvar_turma, name='salvar_turma'),
+    path('turmas/buscar-alunos-nao-matriculados/<int:turma_id>/', views.buscar_alunos_nao_matriculados, name='buscar_alunos_nao_matriculados'),
 
-    path('matriculas/', views.matriculas, name='matriculas'),
+    path('matriculas/salvar/', views.salvar_matricula, name='salvar_matricula'),
+    path('matriculas/excluir/', views.excluir_matricula, name='excluir_matricula'),
     path('aulas/', views.aulas, name='aulas'),
 
     path('servicos/buscar/', views.buscar_servicos, name='buscar_servicos'),

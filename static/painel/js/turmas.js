@@ -8,6 +8,7 @@ const idProfessor = modalTurma.querySelector("#professor_id");
 const nomeProfessor = modalTurma.querySelector("#professor");
 const idCurso = modalTurma.querySelector("#curso_id");
 const nomeCurso = modalTurma.querySelector("#nome_curso");
+const matriculaBody = modalTurma.querySelector("#matriculaBody");
 
 const btnEditarTurma = modalTurma.querySelector("#btnEditar");
 const btnSalvarTurma = modalTurma.querySelector("#btnSalvar");
@@ -15,6 +16,12 @@ const btnFecharTurma = modalTurma.querySelector("#btnFechar");
 const btnsDetalharTurma = document.querySelectorAll(".btn-abrir-turma");
 const btnBuscarProfessor = modalTurma.querySelector("#btnBuscarProfessor");
 const btnBuscarCurso = modalTurma.querySelector("#btnBuscarCurso");
+
+const tabButtons = modalTurma.querySelectorAll(".tab-button");
+
+tabButtons.forEach((button) => {
+    gerenciarAbas(modalTurma, button);
+});
 
 btnsDetalharTurma.forEach((button) => {
     button.addEventListener("click", async () => {
@@ -41,6 +48,7 @@ btnEditarTurma.addEventListener("click", () => {
 btnNovaTurma.addEventListener("click", () => {
     btnBuscarProfessor.disabled = false;
     btnBuscarCurso.disabled = false;
+    exibirMatriculas(null, []);
     formNovoCadastro(modalTurma, "Cadastrar nova turma");
 });
 
@@ -54,6 +62,8 @@ function detalharTurma(turma) {
 
     modalTurma.showModal();
     btnBuscarProfessor.disabled = true;
+    btnBuscarCurso.disabled = true;
+    abrirAbaInicial(modalTurma);
     desabilitarEdicaoFormulario(modalTurma);
 }
 
@@ -80,15 +90,62 @@ function preencherFormularioTurma(turma) {
     document.getElementById("data_cadastro").textContent = data
         .split(", ")
         .join(" - ");
+
+    exibirMatriculas(turma.id, turma.matriculas);
+}
+
+function exibirMatriculas(turma_id, matriculas) {
+    if (!matriculas.length) {
+        matriculaBody.innerHTML = `
+        <tr>
+            <td colspan="5" class="empty-message">
+                Nenhuma matrícula cadastrada.
+            </td>
+        </tr>
+        `;
+        return;
+    }
+
+    let contentMatricula = "";
+    matriculas.forEach((m, index) => {
+        const dataMatricula = converterDataHora(m.data_matricula);
+
+        contentMatricula += `
+            <tr data-matricula-id="${m.id}">
+                <td>${m.aluno_nome}</td>
+                <td>${m.aluno_cpf}</td>
+                <td>${dataMatricula.split(", ")[0]}</td>
+                <td>${m.matriculado_por}</td>
+                <td class="centralize-button">    
+                    <button
+                        type="button"
+                        class="action-button btn-abrir-matricula"
+                        data-index=${index}
+                        title="Mais informações">
+
+                        <i class="fa-solid fa-circle-info"></i>
+                    </button>
+                </td>
+            </tr>
+        `;
+    });
+
+    matriculaBody.innerHTML = contentMatricula;
+
+    document.querySelectorAll(".btn-abrir-matricula").forEach((button) => {
+        button.addEventListener("click", async () => {
+            const index = button.dataset.index;
+            const matricula = matriculas[index];
+            detalharMatricula(turma_id, matricula);
+        });
+    });
 }
 
 /* =========================================================
    SALVAR CADASTRO
 ========================================================= */
-
-formTurma.addEventListener("submit", async (event) => {
+async function salvarTurma() {
     try {
-        event.preventDefault();
         formTurma.classList.remove("com-erro");
         checarFormulário(formTurma);
 
@@ -105,10 +162,19 @@ formTurma.addEventListener("submit", async (event) => {
 
         const dados = await salvarCadastro(url, formData);
 
-        modalTurma.close();
-        exibirNotificacaoComReload(dados.mensagem, "sucesso");
+        document.getElementById("turma_id").value = dados.id;
+        return dados;
     } catch (erro) {
         exibirNotificacao(erro.message, "erro");
+        return null;
+    }
+}
+
+formTurma.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const salvou = await salvarTurma();
+    if (salvou && salvou.sucesso) {
+        exibirNotificacaoComReload(salvou.mensagem, "sucesso");
     }
 });
 
