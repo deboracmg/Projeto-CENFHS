@@ -1,10 +1,14 @@
 from django.db import transaction
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.db.models import Q
 import json
 
 
-from painel_administrativo.models.servicos import Aula, Matricula, Servico, Turma
+from painel_administrativo.models.servicos import Turma, Matricula
+from painel_administrativo.models.pessoas import Aluno
+from painel_administrativo.views.matriculas import buscar_matriculas
+
 
 def listar_turmas(request):
     turmas = Turma.objects.select_related("responsavel").all().order_by("-data_cadastro")
@@ -18,7 +22,9 @@ def listar_turmas(request):
 def detalhar_turma(request, id):
     turma = Turma.objects.select_related(
         "servico", "responsavel").get(id=id)
-        
+
+    dados_matriculas = buscar_matriculas(id)
+
     dados = {
         "id": turma.id,
         "descricao": turma.descricao,
@@ -31,9 +37,46 @@ def detalhar_turma(request, id):
         "hora_inicio": turma.hora_inicio,
         "hora_fim": turma.hora_fim,
         "data_cadastro": turma.data_cadastro,
+
+        "matriculas": dados_matriculas        
     }
 
     return JsonResponse(dados)
+
+def buscar_alunos_nao_matriculados(request, turma_id):
+    if request.method != "GET":
+        return JsonResponse({
+            "sucesso": False,
+            "mensagem": "Método não permitido."
+        }, status=405)
+
+    termo = request.GET.get("q", "").strip()
+
+    alunos = Aluno.objects.exclude(
+        id__in=Matricula.objects.filter(
+            turma_id=turma_id
+        ).values("aluno_id")
+    )
+
+    if termo:
+        alunos = alunos.filter(
+            Q(nome__icontains=termo) |
+            Q(cpf__icontains=termo)
+        )
+
+    alunos = alunos.order_by("-data_cadastro")[:10]
+
+    resultados = [
+        {
+            "id": aluno.id,
+            "nome": aluno.nome,
+            "cpf": aluno.cpf,
+        }
+        for aluno in alunos
+    ]
+
+    return JsonResponse({"resultados": resultados})
+
 
 @transaction.atomic
 def salvar_turma(request):
@@ -80,23 +123,3 @@ def salvar_turma(request):
             "sucesso": False,
             "mensagem": "Não foi possível salvar a turma."
         }, status=500)
-
-
-def matriculas(request):
-    matriculas = Matricula.objects.select_related("aluno", "turma__servico").all()
-
-    return render(
-        request,
-        "painel/servicos/matriculas.html",
-        {"matriculas": matriculas}
-    )
-
-
-def aulas(request):
-    aulas = Aula.objects.select_related("turma").all()
-
-    return render(
-        request,
-        "painel/servicos/aulas.html",
-        {"aulas": aulas}
-    )

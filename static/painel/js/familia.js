@@ -89,49 +89,6 @@ async function buscarFamiliarPorCpf() {
 }
 
 /* =========================================================
-   EXCLUIR CADASTRO
-========================================================= */
-
-function obterCSRFToken() {
-    return modalFamiliar.querySelector("[name=csrfmiddlewaretoken]").value;
-}
-
-async function excluirFamiliar() {
-    const confirmacao = await pedirConfirmacao(
-        "Tem certeza que deseja excluir este familiar?",
-    );
-    if (!confirmacao) return;
-
-    const formData = new FormData();
-    const familiarId = btnExcluirFamiliar.dataset.familiarId;
-    const alunoId = btnExcluirFamiliar.dataset.alunoId;
-
-    formData.append("familiar_id", familiarId);
-    formData.append("aluno_id", alunoId);
-
-    const resposta = await fetch("/dashboard/familiar/excluir/", {
-        method: "POST",
-        body: formData,
-        headers: {
-            "X-CSRFToken": obterCSRFToken(),
-        },
-    });
-
-    const dados = await resposta.json();
-
-    if (!dados.sucesso) {
-        exibirNotificacao(dados.mensagem, "erro");
-        return;
-    }
-
-    modalFamiliar.close();
-    exibirFamilia(alunoId, dados.familia);
-    exibirNotificacao(dados.mensagem, "sucesso");
-}
-
-btnExcluirFamiliar.addEventListener("click", excluirFamiliar);
-
-/* =========================================================
    VALIDAÇÃO DE CAMPOS
 ========================================================= */
 
@@ -144,6 +101,28 @@ cpfFamiliar.addEventListener("blur", buscarFamiliarPorCpf);
 
 telefoneFamiliar.addEventListener("input", function (e) {
     e.target.value = formatarCampoTelefone(e);
+});
+
+/* =========================================================
+   EXCLUIR CADASTRO
+========================================================= */
+btnExcluirFamiliar.addEventListener("click", async () => {
+    const familiarId = btnExcluirFamiliar.dataset.familiarId;
+    const alunoId = btnExcluirFamiliar.dataset.alunoId;
+
+    await excluirRegistro({
+        modal: modalFamiliar,
+        mensagemConfirmacao: "Tem certeza que deseja excluir este familiar?",
+        url: "/dashboard/familiar/excluir/",
+        dados: {
+            aluno_id: alunoId,
+            familiar_id: familiarId,
+        },
+        aoExcluir: (dados) => {
+            modalFamiliar.close();
+            exibirFamilia(alunoId, dados.familia);
+        },
+    });
 });
 
 /* =========================================================

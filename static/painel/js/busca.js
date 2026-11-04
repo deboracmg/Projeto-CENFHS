@@ -6,7 +6,7 @@ const labelPesquisa = modalBusca.querySelector("#labelPesquisa");
 const mensagemBusca = modalBusca.querySelector("#mensagemBusca");
 const resultadosBusca = modalBusca.querySelector("#resultados");
 const btnBuscar = modalBusca.querySelector("#btnBuscar");
-const btnConfirmar = modalBusca.querySelector("#btnConfirmar");
+const btnSelecionar = modalBusca.querySelector("#btnSelecionar");
 
 let configuracaoBusca = null;
 let registroSelecionado = null;
@@ -33,7 +33,7 @@ function abrirModalBusca(configuracao) {
 
     pesquisaRegistro.value = "";
     resultadosBusca.innerHTML = "";
-    btnConfirmar.disabled = true;
+    btnSelecionar.disabled = true;
 
     modalBusca.showModal();
     pesquisaRegistro.focus();
@@ -60,7 +60,7 @@ async function buscarRegistros(termo = "") {
     const buscaAtual = ++numeroBusca;
 
     registroSelecionado = null;
-    btnConfirmar.disabled = true;
+    btnSelecionar.disabled = true;
     resultadosBusca.innerHTML = "";
     mensagemBusca.textContent = "Carregando resultados...";
 
@@ -137,7 +137,7 @@ function exibirResultados(registros) {
 
             botao.classList.add("selecionado");
             botao.setAttribute("aria-pressed", "true");
-            btnConfirmar.disabled = false;
+            btnSelecionar.disabled = false;
         });
 
         // Confirmar com duplo clique
@@ -155,4 +155,4 @@ function confirmarSelecao() {
 }
 
 // Confirmar a seleção
-btnConfirmar.addEventListener("click", confirmarSelecao);
+btnSelecionar.addEventListener("click", confirmarSelecao);

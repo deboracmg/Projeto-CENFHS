@@ -77,10 +77,13 @@ Buscar turma
 
 {% block modal %} 
 {% include "painel/components/form_turma.html" %}
+{% include "painel/components/form_matricula.html" %}
 {% include "painel/components/modal_busca.html" %}
+{% include "painel/components/confirmacao.html" %}
 {% endblock modal %}
 
 {% block individual_js %}
 <script src="{% static 'painel/js/turmas.js' %}"></script>
+<script src="{% static 'painel/js/matriculas.js' %}"></script>
 <script src="{% static 'painel/js/busca.js' %}"></script>
 {% endblock %}

@@ -25,7 +25,7 @@ dialog::backdrop {
 }
 
 .small-modal {
-    width: min(400px, 120vw);
+    width: min(480px, 120vw);
 }
 
 /* HEADER */
