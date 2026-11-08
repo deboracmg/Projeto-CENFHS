@@ -67,42 +67,38 @@
                 {% imagem_site 'galeria-2' as foto_galeria_2 %}
                 {% imagem_site 'galeria-3' as foto_galeria_3 %}
 
-                {% static 'site/img/galeria-1.jpg' as padrao_antigo_1 %}
-                {% static 'site/img/galeria-2.jpg' as padrao_antigo_2 %}
-                {% static 'site/img/galeria-3.jpg' as padrao_antigo_3 %}
-
-                <img src="{% if foto_galeria_1 == padrao_antigo_1 %}{% static 'site/img/fotos/brecho/brecho-3.jpg' %}{% else %}{{ foto_galeria_1 }}{% endif %}"
+                <img src="{{ foto_galeria_1 }}"
                     alt="Foto da galeria do Centro de Formação">
 
-                <img src="{% if foto_galeria_2 == padrao_antigo_2 %}{% static 'site/img/fotos/karate/karate-1.jpg' %}{% else %}{{ foto_galeria_2 }}{% endif %}"
+                <img src="{{ foto_galeria_2 }}"
                     alt="Foto da galeria do Centro de Formação">
 
-                <img src="{% if foto_galeria_3 == padrao_antigo_3 %}{% static 'site/img/fotos/terapia-comunitaria/terapia-comunitaria-2.jpg' %}{% else %}{{ foto_galeria_3 }}{% endif %}"
+                <img src="{{ foto_galeria_3 }}"
                     alt="Foto da galeria do Centro de Formação">
 
-                <img src="{% static 'site/img/fotos/ioga/ioga-1.jpg' %}" alt="Aula de ioga no Centro de Formação"
+                <img src="{% imagem_site 'galeria-4' %}" alt="Aula de ioga no Centro de Formação"
                     loading="lazy">
 
-                <img src="{% static 'site/img/fotos/redacao/redacao-2.jpg' %}" alt="Aula de redação" loading="lazy">
+                <img src="{% imagem_site 'galeria-5' %}" alt="Aula de redação" loading="lazy">
 
-                <img src="{% static 'site/img/fotos/karate/karate-3.jpg' %}" alt="Alunos de karatê com medalhas"
+                <img src="{% imagem_site 'galeria-6' %}" alt="Alunos de karatê com medalhas"
                     loading="lazy">
 
-                <img src="{% static 'site/img/fotos/brecho/brecho-1.jpg' %}" alt="Voluntários do Brechó Solidário"
+                <img src="{% imagem_site 'galeria-7' %}" alt="Voluntários do Brechó Solidário"
                     loading="lazy">
 
-                <img src="{% static 'site/img/fotos/terapia-comunitaria/terapia-comunitaria-1.jpg' %}"
+                <img src="{% imagem_site 'galeria-8' %}"
                     alt="Terapia Comunitária no Centro de Formação" loading="lazy">
 
-                <img src="{% static 'site/img/fotos/karate/karate-4.jpg' %}" alt="Turma de karatê reunida no tatame"
+                <img src="{% imagem_site 'galeria-9' %}" alt="Turma de karatê reunida no tatame"
                     loading="lazy">
 
-                <img src="{% static 'site/img/fotos/ioga/ioga-2.jpg' %}" alt="Aula de ioga" loading="lazy">
+                <img src="{% imagem_site 'galeria-10' %}" alt="Aula de ioga" loading="lazy">
 
-                <img src="{% static 'site/img/fotos/redacao/redacao-3.jpg' %}" alt="Alunos na aula de redação"
+                <img src="{% imagem_site 'galeria-11' %}" alt="Alunos na aula de redação"
                     loading="lazy">
 
-                <img src="{% static 'site/img/fotos/terapia-comunitaria/terapia-comunitaria-3.jpg' %}"
+                <img src="{% imagem_site 'galeria-12' %}"
                     alt="Roda de Terapia Comunitária" loading="lazy">
             </div>
 
@@ -120,9 +116,8 @@
 
         <div class="activity-feature card">
             {% imagem_site 'atividade-karate' as foto_atividade %}
-            {% static 'site/img/atividade-karate.jpg' as padrao_antigo_atividade %}
 
-            <img src="{% if foto_atividade == padrao_antigo_atividade %}{% static 'site/img/fotos/karate/karate-3.jpg' %}{% else %}{{ foto_atividade }}{% endif %}"
+            <img src="{{ foto_atividade }}"
                 alt="Aulas de Karatê Comunitárias" class="activity-feature__img">
 
             <div class="activity-feature__info">

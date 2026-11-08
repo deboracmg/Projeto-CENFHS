@@ -79,37 +79,6 @@
         {% imagem_site 'galeria-5' as foto_galeria_5 %}
         {% imagem_site 'galeria-6' as foto_galeria_6 %}
 
-        {% static 'site/img/galeria-1.jpg' as padrao_antigo_1 %}
-        {% static 'site/img/galeria-2.jpg' as padrao_antigo_2 %}
-        {% static 'site/img/galeria-3.jpg' as padrao_antigo_3 %}
-        {% static 'site/img/galeria-4.jpg' as padrao_antigo_4 %}
-        {% static 'site/img/galeria-5.jpg' as padrao_antigo_5 %}
-        {% static 'site/img/galeria-6.jpg' as padrao_antigo_6 %}
-
-        {% if foto_galeria_1 == padrao_antigo_1 %}
-            {% static 'site/img/fotos/brecho/brecho-3.jpg' as foto_galeria_1 %}
-        {% endif %}
-
-        {% if foto_galeria_2 == padrao_antigo_2 %}
-            {% static 'site/img/fotos/karate/karate-1.jpg' as foto_galeria_2 %}
-        {% endif %}
-
-        {% if foto_galeria_3 == padrao_antigo_3 %}
-            {% static 'site/img/fotos/terapia-comunitaria/terapia-comunitaria-2.jpg' as foto_galeria_3 %}
-        {% endif %}
-
-        {% if foto_galeria_4 == padrao_antigo_4 %}
-            {% static 'site/img/fotos/ioga/ioga-1.jpg' as foto_galeria_4 %}
-        {% endif %}
-
-        {% if foto_galeria_5 == padrao_antigo_5 %}
-            {% static 'site/img/fotos/redacao/redacao-2.jpg' as foto_galeria_5 %}
-        {% endif %}
-
-        {% if foto_galeria_6 == padrao_antigo_6 %}
-            {% static 'site/img/fotos/karate/karate-3.jpg' as foto_galeria_6 %}
-        {% endif %}
-
         <div class="gallery-grid--6">
             <img src="{{ foto_galeria_1 }}" alt="Foto da galeria do Centro de Formação">
             <img src="{{ foto_galeria_2 }}" alt="Foto da galeria do Centro de Formação">
@@ -119,7 +88,7 @@
             <img src="{{ foto_galeria_6 }}" alt="Foto da galeria do Centro de Formação">
 
             <img
-                src="{% static 'site/img/fotos/brecho/brecho-1.jpg' %}"
+                src="{% imagem_site 'galeria-7' %}"
                 alt="Voluntários do Brechó Solidário"
                 class="gallery-extra"
                 hidden
@@ -127,7 +96,7 @@
             >
 
             <img
-                src="{% static 'site/img/fotos/terapia-comunitaria/terapia-comunitaria-1.jpg' %}"
+                src="{% imagem_site 'galeria-8' %}"
                 alt="Terapia Comunitária no Centro de Formação"
                 class="gallery-extra"
                 hidden
@@ -135,7 +104,7 @@
             >
 
             <img
-                src="{% static 'site/img/fotos/karate/karate-4.jpg' %}"
+                src="{% imagem_site 'galeria-9' %}"
                 alt="Turma de karatê reunida no tatame"
                 class="gallery-extra"
                 hidden
@@ -143,7 +112,7 @@
             >
 
             <img
-                src="{% static 'site/img/fotos/ioga/ioga-2.jpg' %}"
+                src="{% imagem_site 'galeria-10' %}"
                 alt="Aula de ioga no Centro de Formação"
                 class="gallery-extra"
                 hidden
@@ -151,7 +120,7 @@
             >
 
             <img
-                src="{% static 'site/img/fotos/redacao/redacao-3.jpg' %}"
+                src="{% imagem_site 'galeria-11' %}"
                 alt="Alunos na aula de redação"
                 class="gallery-extra"
                 hidden
@@ -159,7 +128,7 @@
             >
 
             <img
-                src="{% static 'site/img/fotos/terapia-comunitaria/terapia-comunitaria-3.jpg' %}"
+                src="{% imagem_site 'galeria-12' %}"
                 alt="Roda de Terapia Comunitária"
                 class="gallery-extra"
                 hidden
@@ -167,7 +136,7 @@
             >
 
             <img
-                src="{% static 'site/img/fotos/karate/karate-5.jpg' %}"
+                src="{% imagem_site 'galeria-13' %}"
                 alt="Crianças do karatê após o treino"
                 class="gallery-extra"
                 hidden
@@ -175,7 +144,7 @@
             >
 
             <img
-                src="{% static 'site/img/fotos/redacao/redacao-1.jpg' %}"
+                src="{% imagem_site 'galeria-14' %}"
                 alt="Aula de redação no Centro de Formação"
                 class="gallery-extra"
                 hidden
@@ -183,7 +152,7 @@
             >
 
             <img
-                src="{% static 'site/img/fotos/karate/karate-2.jpg' %}"
+                src="{% imagem_site 'galeria-15' %}"
                 alt="Alunos de karatê com medalhas e troféu"
                 class="gallery-extra"
                 hidden
@@ -292,7 +261,7 @@
                     </p>
 
                     <img
-                        src="{% static 'site/img/qrcode-doacao.png' %}"
+                        src="{% imagem_site 'qrcode-doacao' %}"
                         alt="QR Code para doação via Pix"
                         class="donate-panel__qr"
                     >

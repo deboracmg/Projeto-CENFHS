@@ -7,7 +7,7 @@ from django.shortcuts import redirect, render
 from django.templatetags.static import static
 from django.views.decorators.http import require_http_methods
 
-from painel_administrativo.forms_galeria import SubstituirImagemForm
+from painel_administrativo.forms_galeria import SubstituirImagemForm, RemoverImagemForm
 from painel_administrativo.models.galeria import (
     ImagemSite,
     POSICOES,
@@ -32,9 +32,36 @@ def galeria(request):
     formulario = None
 
     if request.method == 'POST':
-        formulario = SubstituirImagemForm(request.POST, request.FILES)
+        acao = request.POST.get('acao', 'substituir')
+        if acao == 'remover':
+            formulario = RemoverImagemForm(request.POST)
+            if formulario.is_valid():
+                try:
+                    with transaction.atomic():
+                        registro = (ImagemSite.objects.select_for_update()
+                                    .filter(posicao=formulario.cleaned_data['posicao']).first())
+                        if registro:
+                            nome = registro.imagem.name
+                            storage = registro.imagem.storage
+                            registro.delete()
+                            if nome:
+                                transaction.on_commit(
+                                    lambda storage=storage, nome=nome: apagar_arquivo(storage, nome)
+                                )
+                except Exception:
+                    logger.exception('Falha ao remover imagem do site.')
+                    formulario.add_error(None, 'Não foi possível remover a imagem. Tente novamente.')
+                else:
+                    messages.success(request, 'Imagem personalizada removida. A imagem original foi restaurada.')
+                    return redirect('galeria_site')
+        elif acao == 'substituir':
+            formulario = SubstituirImagemForm(request.POST, request.FILES)
+        else:
+            formulario = RemoverImagemForm(request.POST)
+            formulario.is_valid()
+            formulario.add_error(None, 'Ação inválida.')
 
-        if formulario.is_valid():
+        if acao == 'substituir' and formulario.is_valid():
             novo_nome = None
             storage = ImagemSite._meta.get_field('imagem').storage
 
@@ -64,7 +91,7 @@ def galeria(request):
 
                     if nome_anterior:
                         transaction.on_commit(
-                            lambda: apagar_arquivo(storage, nome_anterior)
+                            lambda storage=storage, nome=nome_anterior: apagar_arquivo(storage, nome)
                         )
 
             except Exception:

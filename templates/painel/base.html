@@ -16,7 +16,7 @@
     {% block extra_css %}{% endblock %}
 </head>
 
-<body>
+<body class="{% block body_class %}{% endblock %}">
     <div class="main-container">
         {% include "painel/components/sidebar.html" %}
         <main class="header-content">

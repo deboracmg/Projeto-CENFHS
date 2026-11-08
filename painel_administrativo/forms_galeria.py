@@ -21,3 +21,7 @@ class SubstituirImagemForm(forms.Form):
             raise forms.ValidationError('A imagem deve ter no máximo 25 milhões de pixels.')
         imagem.seek(0)
         return imagem
+
+
+class RemoverImagemForm(forms.Form):
+    posicao = forms.ChoiceField(choices=POSICOES, widget=forms.HiddenInput)

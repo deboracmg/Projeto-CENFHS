@@ -77,7 +77,6 @@
         </div>
 
         {% imagem_site 'atividade-karate' as foto_atividade %}
-        {% static 'site/img/atividade-karate.jpg' as padrao_antigo_atividade %}
 
         <div class="activities-list">
             {% for atividade in atividades %}
@@ -85,7 +84,7 @@
                 {% if atividade.imagem %}
                 <img src="{% static atividade.imagem %}" alt="{{ atividade.nome }}">
                 {% else %}
-                <img src="{% if foto_atividade == padrao_antigo_atividade %}{% static 'site/img/fotos/karate/karate-3.jpg' %}{% else %}{{ foto_atividade }}{% endif %}"
+                <img src="{{ foto_atividade }}"
                     alt="{{ atividade.nome }}">
                 {% endif %}
 
