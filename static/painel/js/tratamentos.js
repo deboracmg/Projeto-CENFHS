@@ -189,7 +189,7 @@ formTratamento.addEventListener("submit", async (event) => {
         event.preventDefault();
 
         formTratamento.classList.remove("com-erro");
-        checarFormulário(formTratamento);
+        checarFormulario(formTratamento);
 
         const url = "/dashboard/tratamentos/salvar/";
         const formData = new FormData(formTratamento);

@@ -178,7 +178,7 @@ async function salvarPaciente() {
         campoCpf.setCustomValidity("");
         formPaciente.classList.remove("com-erro");
         
-        checarFormulário(formPaciente);
+        checarFormulario(formPaciente);
         checarCpf(campoCpf, formPaciente);
         checarCep(campoCep, formPaciente);
 

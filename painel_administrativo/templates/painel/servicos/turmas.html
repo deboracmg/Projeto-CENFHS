@@ -3,6 +3,7 @@
 
 {% block individual_css %}
 <link rel="stylesheet" href="{% static 'painel/css/busca.css' %}">
+<link rel="stylesheet" href="{% static 'painel/css/aulas.css' %}">
 {% endblock %}
 
 {% block pagina_atual %}turma{% endblock %}
@@ -78,6 +79,7 @@ Buscar turma
 {% block modal %} 
 {% include "painel/components/form_turma.html" %}
 {% include "painel/components/form_matricula.html" %}
+{% include "painel/components/form_aula.html" %}
 {% include "painel/components/modal_busca.html" %}
 {% include "painel/components/confirmacao.html" %}
 {% endblock modal %}
@@ -85,5 +87,6 @@ Buscar turma
 {% block individual_js %}
 <script src="{% static 'painel/js/turmas.js' %}"></script>
 <script src="{% static 'painel/js/matriculas.js' %}"></script>
+<script src="{% static 'painel/js/aulas.js' %}"></script>
 <script src="{% static 'painel/js/busca.js' %}"></script>
 {% endblock %}

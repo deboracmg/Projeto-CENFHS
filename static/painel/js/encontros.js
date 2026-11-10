@@ -124,7 +124,7 @@ formEncontro.addEventListener("submit", async (event) => {
     try {
         event.preventDefault();
         formEncontro.classList.remove("com-erro");
-        checarFormulário(formEncontro);
+        checarFormulario(formEncontro);
 
         const url = "/dashboard/encontros/salvar/";
         const formData = new FormData(formEncontro);

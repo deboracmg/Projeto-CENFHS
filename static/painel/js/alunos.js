@@ -309,7 +309,7 @@ async function salvarAluno() {
         campoCep.setCustomValidity("");
         formAluno.classList.remove("com-erro");
 
-        checarFormulário(formAluno);
+        checarFormulario(formAluno);
         checarCpf(campoCpf, formAluno);
         checarCep(campoCep, formAluno);
 

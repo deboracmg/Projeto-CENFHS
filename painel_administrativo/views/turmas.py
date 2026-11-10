@@ -8,6 +8,7 @@ import json
 from painel_administrativo.models.servicos import Turma, Matricula
 from painel_administrativo.models.pessoas import Aluno
 from painel_administrativo.views.matriculas import buscar_matriculas
+from painel_administrativo.views.aulas import buscar_aulas
 
 
 def listar_turmas(request):
@@ -24,6 +25,7 @@ def detalhar_turma(request, id):
         "servico", "responsavel").get(id=id)
 
     dados_matriculas = buscar_matriculas(id)
+    dados_aulas = buscar_aulas(id)
 
     dados = {
         "id": turma.id,
@@ -38,12 +40,13 @@ def detalhar_turma(request, id):
         "hora_fim": turma.hora_fim,
         "data_cadastro": turma.data_cadastro,
 
-        "matriculas": dados_matriculas        
+        "matriculas": dados_matriculas,
+        "aulas": dados_aulas
     }
 
     return JsonResponse(dados)
 
-def buscar_alunos_nao_matriculados(request, turma_id):
+def buscar_alunos_nao_matriculados_na_turma(request, turma_id):
     if request.method != "GET":
         return JsonResponse({
             "sucesso": False,
@@ -76,6 +79,21 @@ def buscar_alunos_nao_matriculados(request, turma_id):
     ]
 
     return JsonResponse({"resultados": resultados})
+
+
+def buscar_alunos_matriculados_na_turma(request, turma_id):
+    if request.method != "GET":
+        return JsonResponse({
+            "sucesso": False,
+            "mensagem": "Método não permitido."
+        }, status=405)
+
+    alunos = Matricula.objects.filter(
+            turma_id=turma_id
+        ).values("id", "aluno__nome"
+        ).order_by("aluno__nome")
+
+    return JsonResponse(list(alunos), safe=False)
 
 
 @transaction.atomic

@@ -33,8 +33,8 @@ btnsDetalharTurma.forEach((button) => {
             return;
         }
 
-        const encontro = await response.json();
-        detalharTurma(encontro);
+        const turma = await response.json();
+        detalharTurma(turma);
     });
 });
 
@@ -92,6 +92,7 @@ function preencherFormularioTurma(turma) {
         .join(" - ");
 
     exibirMatriculas(turma.id, turma.matriculas);
+    exibirAulas(turma.id, turma.aulas);
 }
 
 function exibirMatriculas(turma_id, matriculas) {
@@ -99,7 +100,7 @@ function exibirMatriculas(turma_id, matriculas) {
         matriculaBody.innerHTML = `
         <tr>
             <td colspan="5" class="empty-message">
-                Nenhuma matrícula cadastrada.
+                Nenhuma matrícula cadastrada
             </td>
         </tr>
         `;
@@ -141,13 +142,56 @@ function exibirMatriculas(turma_id, matriculas) {
     });
 }
 
+function exibirAulas(turma_id, aulas) {
+    if (!aulas.length) {
+        aulaBody.innerHTML = `
+        <tr>
+            <td colspan="5" class="empty-message">
+                Nenhuma aula registrada
+            </td>
+        </tr>
+        `;
+        return;
+    }
+
+    let contentAulas = "";
+    aulas.forEach((a, index) => {
+        contentAulas += `
+            <tr data-aula-id="${a.id}">
+                <td>${a.data}</td>
+                <td>${a.total_presentes}</td>
+                <td class="centralize-button">    
+                    <button
+                        type="button"
+                        class="action-button btn-abrir-aula"
+                        data-index=${index}
+                        title="Mais informações">
+
+                        <i class="fa-solid fa-circle-info"></i>
+                    </button>
+                </td>
+            </tr>
+        `;
+    });
+
+    aulaBody.innerHTML = contentAulas;
+
+    document.querySelectorAll(".btn-abrir-aula").forEach((button) => {
+        button.addEventListener("click", async () => {
+            const index = button.dataset.index;
+            const aula = aulas[index];
+            detalharAula(turma_id, aula);
+        });
+    });
+}
+
 /* =========================================================
    SALVAR CADASTRO
 ========================================================= */
 async function salvarTurma() {
     try {
         formTurma.classList.remove("com-erro");
-        checarFormulário(formTurma);
+        checarFormulario(formTurma);
 
         const url = "/dashboard/turmas/salvar/";
         const formData = new FormData(formTurma);
