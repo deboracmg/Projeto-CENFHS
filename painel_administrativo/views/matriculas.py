@@ -1,5 +1,4 @@
 from django.db import transaction
-from django.shortcuts import render
 from django.http import JsonResponse
 import json
 

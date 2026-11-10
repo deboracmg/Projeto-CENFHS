@@ -93,7 +93,7 @@ formServico.addEventListener("submit", async (event) => {
     try {
         event.preventDefault();
         formServico.classList.remove("com-erro");
-        checarFormulário(formServico);
+        checarFormulario(formServico);
 
         const url = "/dashboard/servicos/salvar/";
         const formData = new FormData(formServico);

@@ -2,13 +2,6 @@
    VALIDAÇÃO
 ========================================================= */
 
-function checarFormulário(form) {
-    if (form.checkValidity()) return;
-
-    form.classList.add("com-erro");
-    throw new Error("Preencha todos os campos obrigatórios.");
-}
-
 function checarCpf(campoCpf, form) {
     if (validarCPF(campoCpf.value)) return;
 

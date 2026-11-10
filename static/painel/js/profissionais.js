@@ -96,7 +96,7 @@ formProfissional.addEventListener("submit", async (event) => {
         campoCpf.setCustomValidity("");
         formProfissional.classList.remove("com-erro");
 
-        checarFormulário(formProfissional);
+        checarFormulario(formProfissional);
         checarCpf(campoCpf, formProfissional);
 
         const url = "/dashboard/profissionais/salvar/";

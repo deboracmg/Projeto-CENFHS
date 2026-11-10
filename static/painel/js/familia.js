@@ -136,7 +136,7 @@ formFamiliar.addEventListener("submit", async (event) => {
         formFamiliar.classList.remove("com-erro");
         cpfFamiliar.setCustomValidity("");
 
-        checarFormulário(formFamiliar);
+        checarFormulario(formFamiliar);
         checarCpf(cpfFamiliar, formFamiliar);
 
         const url = "/dashboard/familiar/salvar/";

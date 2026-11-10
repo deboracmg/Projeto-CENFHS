@@ -19,6 +19,10 @@
         <button type="button" class="tab-button" data-tab="matriculas">
             Matrículas
         </button>
+
+        <button type="button" class="tab-button" data-tab="aulas">
+            Aulas
+        </button>
     </div>
 
     <!-- DADOS DA TURMA -->
@@ -249,7 +253,7 @@
                 <div class="tab-top">
                     <div>
                         <h3>Matrículas</h3>
-                        <p>Alunos matriculados na turma.</p>
+                        <p>Alunos matriculados na turma</p>
                     </div>
 
                     <button
@@ -275,6 +279,39 @@
                         </thead>
 
                         <tbody id="matriculaBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- AULAS -->
+            <section class="tab-content" id="aulas">
+                <div class="tab-top">
+                    <div>
+                        <h3>Aulas</h3>
+                        <p>Aulas referentes a turma</p>
+                    </div>
+
+                    <button
+                        type="button"
+                        class="btn-add-aluno"
+                        id="btnAdicionarAula"
+                    >
+                        <i class="fa-solid fa-plus"></i>
+                        Registrar aula
+                    </button>
+                </div>
+
+                <div class="modal-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="left-content">Data da aula</th>
+                                <th class="left-content">Presença total</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="aulaBody"></tbody>
                     </table>
                 </div>
             </section>

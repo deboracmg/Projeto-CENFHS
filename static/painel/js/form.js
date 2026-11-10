@@ -26,6 +26,34 @@ function desabilitarEdicaoFormulario(modal) {
     if (btnRemoverFoto) btnRemoverFoto.disabled = true;
 }
 
+function validarCamposReadonly(form) {
+    const camposReadonly = form.querySelectorAll("input[readonly][required]");
+    let valido = true;
+
+    camposReadonly.forEach(campo => {
+        const vazio = campo.value.trim() === "";
+        campo.classList.toggle("campo-invalido", vazio);
+        if (vazio) {
+            valido = false;
+        }
+    });
+
+    return valido;
+}
+
+function checarFormulario(form) {
+    const readonlyValido = validarCamposReadonly(form);
+    const formularioValido = form.checkValidity();
+
+    if (readonlyValido && formularioValido) {
+        form.classList.remove("com-erro");
+        return true;
+    }
+
+    form.classList.add("com-erro");
+    throw new Error("Preencha todos os campos obrigatórios.");
+}
+
 async function salvarCadastro(url, formData) {
     const csrfToken =
         document.querySelector("[name=csrfmiddlewaretoken]")?.value || "";
@@ -40,7 +68,7 @@ async function salvarCadastro(url, formData) {
 
     const dados = await response.json();
 
-    if (!response.ok) {
+    if (!response.ok || !dados.sucesso) {
         throw new Error(dados.mensagem);
     }
     return dados;

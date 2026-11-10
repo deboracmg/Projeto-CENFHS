@@ -280,7 +280,8 @@ label:has(+ textarea[required])::after {
 
 form.com-erro input:invalid,
 form.com-erro select:invalid,
-form.com-erro textarea:invalid {
+form.com-erro textarea:invalid,
+form.com-erro .campo-invalido {
     border: 1px solid var(--cor-vermelha);
     box-shadow: 0 0 5px rgba(220, 53, 69, 0.4);
 }

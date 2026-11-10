@@ -110,7 +110,7 @@ formMatricula.addEventListener("submit", async (event) => {
         event.preventDefault();
 
         formMatricula.classList.remove("com-erro");
-        checarFormulário(formMatricula);
+        checarFormulario(formMatricula);
 
         const url = "/dashboard/matriculas/salvar/";
         const formData = new FormData(formMatricula);
