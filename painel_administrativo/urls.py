@@ -2,8 +2,11 @@ from django.urls import path
 
 from painel_administrativo import views
 
+from painel_administrativo.views.galeria import galeria
+
 
 urlpatterns = [
+    path('galeria/', galeria, name='galeria_site'),
     path('', views.dashboard, name='dashboard'),
 
     # Centro de Formação

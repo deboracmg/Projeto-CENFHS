@@ -1,0 +1,41 @@
+{% extends 'painel/base.html' %}
+{% load static %}
+{% block body_class %}pagina-galeria{% endblock %}
+{% block title %}Galeria do site{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'painel/css/galeria.css' %}">{% endblock %}
+{% block content %}
+<section class="galeria-painel">
+<h1>Galeria do site</h1>
+<p>Visualize, adicione ou substitua as imagens do site. Remover uma imagem personalizada restaura a original, mantendo o layout.</p>
+<p>Formatos JPG, PNG e WebP. Tamanho máximo de 5 MB e até 25 milhões de pixels. Prefira fotos horizontais; o site mantém o recorte do layout atual.</p>
+{% for mensagem in messages %}<p role="status" class="galeria-sucesso">{{ mensagem }}</p>{% endfor %}
+{% if formulario.errors %}<div role="alert" class="galeria-erros"><h2>Confira o envio</h2>{{ formulario.non_field_errors }}{% for campo in formulario %}{{ campo.errors }}{% endfor %}</div>{% endif %}
+<div class="galeria-grade">
+{% for item in imagens %}
+<article class="galeria-card">
+<img src="{{ item.url }}" alt="{{ item.titulo }}">
+<div class="galeria-card-conteudo"><h2>{{ item.titulo }}</h2>
+<p>{% if item.personalizada %}Imagem atualizada pelo painel{% else %}Imagem original do site{% endif %}</p>
+<form method="post" enctype="multipart/form-data">
+{% csrf_token %}
+<input type="hidden" name="acao" value="substituir">
+<input type="hidden" name="posicao" value="{{ item.posicao }}">
+<label for="imagem-{{ item.posicao }}">Escolher nova imagem</label>
+<input type="file" name="imagem" id="imagem-{{ item.posicao }}" accept=".jpg,.jpeg,.png,.webp" required>
+<button type="submit">Substituir imagem</button>
+</form>
+{% if item.personalizada %}
+<form method="post" class="galeria-remover">
+{% csrf_token %}
+<input type="hidden" name="acao" value="remover">
+<input type="hidden" name="posicao" value="{{ item.posicao }}">
+<label><input type="checkbox" required> Confirmo a remoção e o retorno à imagem original.</label>
+<button type="submit">Remover imagem personalizada</button>
+</form>
+{% endif %}
+</div>
+</article>
+{% endfor %}
+</div></section>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'painel/js/galeria.js' %}" defer></script>{% endblock %}
