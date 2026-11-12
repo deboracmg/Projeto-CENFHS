@@ -93,8 +93,7 @@ async function buscarFamiliarPorCpf() {
 ========================================================= */
 
 cpfFamiliar.addEventListener("input", function (e) {
-    e.target.value = formatarCampoCpf(e);
-    cpfFamiliar.setCustomValidity("");
+    e.target.value = formatarCampoCpf(e, cpfFamiliar);
 });
 
 cpfFamiliar.addEventListener("blur", buscarFamiliarPorCpf);

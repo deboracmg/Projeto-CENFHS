@@ -144,8 +144,7 @@ function exibirTratamentos(paciente_id, tratamentos) {
 ========================================================= */
 
 campoCpf.addEventListener("input", function (e) {
-    e.target.value = formatarCampoCpf(e);
-    campoCpf.setCustomValidity("");
+    e.target.value = formatarCampoCpf(e, campoCpf);
 });
 
 campoTelefone.addEventListener("input", function (e) {
@@ -153,8 +152,7 @@ campoTelefone.addEventListener("input", function (e) {
 });
 
 campoCep.addEventListener("input", (e) => {
-    e.target.value = formatarCampoCep(e);
-    campoCep.setCustomValidity("");
+    e.target.value = formatarCampoCep(e, campoCep);
 });
 
 campoCep.addEventListener("blur", async () => {

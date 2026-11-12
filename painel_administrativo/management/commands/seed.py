@@ -457,13 +457,14 @@ class Command(BaseCommand):
                 tratamento=dados[0],
                 n_sessoes=[10, 20, 8, 15][i],
                 observacoes=dados[1],
-                acompanhante=[
+                nome_acompanhante=[
                     "Maria Silva",
                     "João Santos",
                     "Ana Oliveira",
                     "Carlos Lima",
                 ][i],
                 telefone_acompanhante=f"(83) 9{9400-0000 + i:08d}",
+                cpf_acompanhante = "9999999999"+str(i),
                 registrado_por="Administrador",
             )
             tratamentos.append(tratamento)
