@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 
 
-from painel_administrativo.models.servicos import Aula, Matricula, Servico, Turma
+from painel_administrativo.models.servicos import Servico
 
 def buscar_servicos(request):
     if request.method != "GET":

@@ -25,14 +25,7 @@ dialog::backdrop {
 }
 
 .small-modal {
-    width: min(400px, 120vw);
-}
-
-.vinculo-familiar {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    margin-top: 25px;
+    width: min(480px, 120vw);
 }
 
 /* HEADER */
@@ -237,11 +230,33 @@ dialog::backdrop {
     gap: 7px;
 }
 
+.form-group-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.separated {
+    margin-top: 20px;
+}
+
+.section-checkbox {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.checkbox-group label {
+    color: #444;
+    font-size: 13px;
+}
+
 .form-group label,
 .form-group p,
 .form-footer p,
-.photo-label,
-.checkbox-group label {
+.section-checkbox p,
+.photo-label {
     color: #444;
     font-size: 13px;
     font-weight: 600;
@@ -265,7 +280,8 @@ label:has(+ textarea[required])::after {
 
 form.com-erro input:invalid,
 form.com-erro select:invalid,
-form.com-erro textarea:invalid {
+form.com-erro textarea:invalid,
+form.com-erro .campo-invalido {
     border: 1px solid var(--cor-vermelha);
     box-shadow: 0 0 5px rgba(220, 53, 69, 0.4);
 }
@@ -332,6 +348,10 @@ input[type="checkbox"] {
 }
 
 /* BUTTONS */
+.modal-footer button[hidden] {
+    display: none
+}
+
 .modal-footer button,
 .tab-top button {
     display: inline-flex;
@@ -385,6 +405,29 @@ input[type="checkbox"] {
 .btn-remover-arquivo:disabled {
     opacity: 0.45;
     cursor: not-allowed;
+}
+
+.label-com-acao {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.btn-texto-limpar {
+    padding: 0;
+    border: none;
+    background: none;
+    color: var(--cor-secundaria);
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.btn-texto-limpar:hover {
+    text-decoration: underline;
+}
+
+.btn-texto-limpar[hidden] {
+    display: none;
 }
 
 

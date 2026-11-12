@@ -2,8 +2,11 @@ from django.urls import path
 
 from painel_administrativo import views
 
+from painel_administrativo.views.galeria import galeria
+
 
 urlpatterns = [
+    path('galeria/', galeria, name='galeria_site'),
     path('', views.dashboard, name='dashboard'),
 
     # Centro de Formação
@@ -28,8 +31,17 @@ urlpatterns = [
 
     path('cursos/', views.listar_cursos, name='cursos'),
     path('turmas/', views.listar_turmas, name='turmas'),
-    path('matriculas/', views.matriculas, name='matriculas'),
-    path('aulas/', views.aulas, name='aulas'),
+    path('turmas/<int:id>/', views.detalhar_turma, name='detalhar_turma'),
+    path('turmas/salvar/', views.salvar_turma, name='salvar_turma'),
+    path('turmas/buscar-alunos-nao-matriculados/<int:turma_id>/', views.buscar_alunos_nao_matriculados_na_turma, name='buscar_alunos_nao_matriculados'),
+    path('turmas/buscar-alunos-matriculados/<int:turma_id>/', views.buscar_alunos_matriculados_na_turma, name='buscar_alunos_matriculados'),
+
+    path('matriculas/salvar/', views.salvar_matricula, name='salvar_matricula'),
+    path('matriculas/excluir/', views.excluir_matricula, name='excluir_matricula'),
+    
+    path('aulas/buscar_frequencias/<int:aula_id>/', views.buscar_frequencias, name='buscar_frequencias'),
+    path('aulas/salvar/', views.salvar_aula, name='salvar_aula'),
+    path("aulas/excluir/", views.excluir_aula, name="excluir_aula"),
 
     path('servicos/buscar/', views.buscar_servicos, name='buscar_servicos'),
     path('servicos/<int:id>/', views.detalhar_servico, name='detalhar_servico'),

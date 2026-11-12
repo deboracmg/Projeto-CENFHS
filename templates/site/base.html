@@ -1,4 +1,4 @@
-{% load static %}
+{% load static imagens_site %}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Centro de Formação Humana e Social{% endblock %}</title>
 
-    <link rel="icon" href="{% static 'site/img/logo.png' %}">
+    <link rel="icon" href="{% imagem_site 'logo' %}">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,7 +24,7 @@
     <header class="site-header">
         <div class="container">
             <a href="{% url 'index' %}" class="site-header__brand">
-                <img src="{% static 'site/img/logo.png' %}" alt="Logo do Centro de Formação Humana e Social">
+                <img src="{% imagem_site 'logo' %}" alt="Logo do Centro de Formação Humana e Social">
                 <span>Centro de Formação<br>Humana e Social</span>
             </a>
 
@@ -76,7 +76,7 @@
                 <div>
                     <strong>Centro de Formação<br>Humana e Social</strong>
                 </div>
-                <img src="{% static 'site/img/logo.png' %}" alt="Logo do Centro de Formação Humana e Social">
+                <img src="{% imagem_site 'logo' %}" alt="Logo do Centro de Formação Humana e Social">
             </a>
         </div>
 

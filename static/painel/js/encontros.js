@@ -1,6 +1,5 @@
 const modalEncontro = document.getElementById("modalPrimario");
 const formEncontro = modalEncontro.querySelector("#formEncontro");
-const camposEncontro = formEncontro.querySelectorAll("input, select");
 const btnNovoEncontro = document.getElementById("btnNovoCadastro");
 
 const tituloModalEncontro = modalEncontro.querySelector("#tituloModal");
@@ -125,7 +124,7 @@ formEncontro.addEventListener("submit", async (event) => {
     try {
         event.preventDefault();
         formEncontro.classList.remove("com-erro");
-        checarFormulário(formEncontro);
+        checarFormulario(formEncontro);
 
         const url = "/dashboard/encontros/salvar/";
         const formData = new FormData(formEncontro);

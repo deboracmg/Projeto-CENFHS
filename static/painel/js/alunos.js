@@ -255,8 +255,7 @@ btnEditarAluno.addEventListener("click", () => {
    VALIDAÇÃO DE CAMPOS
    ========================================================= */
 campoCep.addEventListener("input", (e) => {
-    e.target.value = formatarCampoCep(e);
-    campoCep.setCustomValidity("");
+    e.target.value = formatarCampoCep(e, campoCep);
 });
 
 campoCep.addEventListener("blur", async () => {
@@ -295,8 +294,7 @@ campoTelefone.addEventListener("input", (e) => {
 });
 
 campoCpf.addEventListener("input", (e) => {
-    e.target.value = formatarCampoCpf(e);
-    campoCpf.setCustomValidity("");
+    e.target.value = formatarCampoCpf(e, campoCpf);
 });
 
 /* =========================================================
@@ -309,7 +307,7 @@ async function salvarAluno() {
         campoCep.setCustomValidity("");
         formAluno.classList.remove("com-erro");
 
-        checarFormulário(formAluno);
+        checarFormulario(formAluno);
         checarCpf(campoCpf, formAluno);
         checarCep(campoCep, formAluno);
 

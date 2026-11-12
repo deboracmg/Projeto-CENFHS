@@ -2,13 +2,6 @@
    VALIDAÇÃO
 ========================================================= */
 
-function checarFormulário(form) {
-    if (form.checkValidity()) return;
-
-    form.classList.add("com-erro");
-    throw new Error("Preencha todos os campos obrigatórios.");
-}
-
 function checarCpf(campoCpf, form) {
     if (validarCPF(campoCpf.value)) return;
 
@@ -101,7 +94,8 @@ function permitirApenasNumeros(event) {
     return event.target.value.replace(/\D/g, "");
 }
 
-function formatarCampoCpf(e) {
+function formatarCampoCpf(e, campo) {
+    campo.setCustomValidity("");
     let valor = permitirApenasNumeros(e);
 
     if (valor.length > 9) {
@@ -127,7 +121,8 @@ function formatarCampoTelefone(e) {
     return valor;
 }
 
-function formatarCampoCep(e) {
+function formatarCampoCep(e, campo) {
+    campo.setCustomValidity("");
     let valor = permitirApenasNumeros(e);
 
     if (valor.length > 5) {

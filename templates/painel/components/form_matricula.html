@@ -1,0 +1,102 @@
+<dialog id="modalSecundario" class="medium-modal">
+    <div class="modal-header">
+        <div>
+            <h2 id="tituloModal">Matricular aluno</h2>
+            <p id="subtituloModal">Preencha os dados abaixo</p>
+        </div>
+
+        <button type="button" class="modal-close" id="btnFechar">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <form id="formMatricula" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+
+            <input
+                type="hidden"
+                id="matricula_id"
+                name="matricula_id"
+                value=""
+            />
+
+            <div class="form-grid-duplo">
+                <div class="form-group">
+                    <label for="aluno_nome" class="obrigatorio">Aluno</label>
+                    <input
+                        type="hidden"
+                        name="aluno_id"
+                        id="aluno_id"
+                        value=""
+                    />
+
+                    <div class="campo-busca">
+                        <input
+                            type="text"
+                            id="aluno_nome"
+                            name="aluno_nome"
+                            placeholder="Selecione um aluno"
+                            readonly
+                            disabled
+                            required
+                        />
+
+                        <button
+                            type="button"
+                            class="btn-buscar"
+                            id="btnBuscarAluno"
+                            aria-label="Buscar aluno"
+                            title="Buscar aluno"
+                        >
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="matriculado_por">Matriculado por</label>
+
+                    <input
+                        type="text"
+                        id="matriculado_por"
+                        name="matriculado_por"
+                        placeholder="Nome do voluntário"
+                        maxlength="150"
+                        disabled
+                        required
+                    />
+                </div>
+            </div>
+
+            <div class="form-footer separated">
+                <p>
+                    Data de matrícula:
+                    <span id="data_matricula"></span>
+                </p>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn-delete" id="btnExcluir">
+            <i class="fa-regular fa-trash-can"></i>
+            Excluir
+        </button>
+
+        <button type="button" class="btn-edit" id="btnEditar">
+            <i class="fa-solid fa-pen"></i>
+            Editar
+        </button>
+
+        <button
+            type="submit"
+            form="formMatricula"
+            class="btn-save"
+            id="btnSalvar"
+        >
+            <i class="fa-solid fa-floppy-disk"></i>
+            Salvar
+        </button>
+    </div>
+</dialog>
