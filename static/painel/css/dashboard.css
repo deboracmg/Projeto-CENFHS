@@ -61,6 +61,40 @@ section {
     background-color: white;
 }
 
+.dashboard-filters button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 9px 18px;
+    background-color: var(--cor-principal);
+    color: #ffffff;
+
+    border: none;
+    border-radius: 6px;
+
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.dashboard-filters button:hover {
+    background-color: #214e83;
+    transform: translateY(-1px);
+}
+
+.dashboard-filters button:active {
+    transform: translateY(0);
+}
+
+.dashboard-filters button:focus-visible {
+    outline: 3px solid #80b6f0;
+    outline-offset: 2px;
+}
+
 /* TÍTULO */
 .section-title {
     display: flex;
