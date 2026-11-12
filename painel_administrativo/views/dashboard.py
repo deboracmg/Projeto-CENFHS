@@ -1,16 +1,16 @@
 
-from datetime import date, datetime, timedelta
+from datetime import date, datetime
 
-from django.db.models import Avg, Count, Q, Sum
+from django.db.models import Avg, Q, Sum
 from django.shortcuts import render
 from django.utils import timezone
 
 from painel_administrativo.models.servicos import (
-    Encontro, 
-    Frequencia, 
-    Servico, 
-    Tratamento, 
-    Avaliacao
+    Encontro,
+    Frequencia,
+    Servico,
+    Tratamento,
+    Avaliacao,
 )
 
 
@@ -28,7 +28,7 @@ def dashboard(request):
     except (ValueError, TypeError):
         mes = hoje.month
         ano = hoje.year
-    
+
     inicio_mes = date(ano, mes, 1)
 
     if mes == 12:
@@ -78,12 +78,12 @@ def dashboard(request):
     atividades_mensal = atividades.filter(
         data_hora__gte=inicio_mes_hora,
         data_hora__lt=proximo_mes_hora
-    ).aggregate(total=Sum("qtd_participantes"))["total"]
+    ).aggregate(total=Sum("qtd_participantes"))["total"] or 0
 
     atividades_anual = atividades.filter(
         data_hora__gte=inicio_ano_hora,
         data_hora__lt=proximo_ano_hora
-    ).aggregate(total=Sum("qtd_participantes"))["total"]
+    ).aggregate(total=Sum("qtd_participantes"))["total"] or 0
 
     # Participações em eventos
     eventos = Encontro.objects.filter(
@@ -93,14 +93,14 @@ def dashboard(request):
     eventos_mensal = eventos.filter(
         data_hora__gte=inicio_mes_hora,
         data_hora__lt=proximo_mes_hora
-    ).aggregate(total=Sum("qtd_participantes"))["total"]
+    ).aggregate(total=Sum("qtd_participantes"))["total"] or 0
 
     eventos_anual = eventos.filter(
         data_hora__gte=inicio_ano_hora,
         data_hora__lt=proximo_ano_hora
-    ).aggregate(total=Sum("qtd_participantes"))["total"]
+    ).aggregate(total=Sum("qtd_participantes"))["total"] or 0
 
-     # Pacientes em atendimento hoje
+    # Pacientes em atendimento hoje
     tratamentos_hoje = Tratamento.objects.filter(
         data_entrada__lte=hoje
     ).filter(
@@ -111,11 +111,36 @@ def dashboard(request):
         "paciente_id"
     ).distinct().count()
 
-    acompanhantes_hoje = tratamentos_hoje.exclude(
-        acompanhante__isnull=True
-    ).exclude(
-        acompanhante=""
-    ).count()
+    # Acompanhantes diferentes presentes hoje
+    # Usa o CPF quando disponível e o nome como alternativa.
+    acompanhantes = tratamentos_hoje.values_list(
+        "cpf_acompanhante",
+        "nome_acompanhante"
+    )
+
+    acompanhantes_identificados = set()
+
+    for cpf, nome in acompanhantes:
+        cpf = (cpf or "").strip()
+        nome = (nome or "").strip()
+
+        if cpf:
+            identificador = ("cpf", "".join(
+                caractere for caractere in cpf if caractere.isdigit()
+            ))
+            if not identificador[1]:
+                identificador = ("nome", nome.casefold())
+
+        elif nome:
+            identificador = ("nome", nome.casefold())
+
+        else:
+            continue
+
+        if identificador[1]:
+            acompanhantes_identificados.add(identificador)
+
+    acompanhantes_hoje = len(acompanhantes_identificados)
 
     # Pacientes atendidos no ano selecionado
     inicio_ano = date(ano, 1, 1)
@@ -127,7 +152,7 @@ def dashboard(request):
         Q(data_saida__gte=inicio_ano) |
         Q(data_saida__isnull=True)
     ).values("paciente_id").distinct().count()
-    
+
     # Média das avaliações realizadas no ano selecionado
     avaliacoes_ano = Avaliacao.objects.filter(
         data_avaliacao__gte=inicio_ano_hora,
@@ -182,7 +207,10 @@ def dashboard(request):
             (11, "Novembro"),
             (12, "Dezembro"),
         ],
-        "anos": range(max(1, hoje.year - 5), max(hoje.year, ano) + 2),
+        "anos": range(
+            max(1, hoje.year - 5),
+            max(hoje.year, ano) + 2
+        ),
 
         "frequencia_mensal": (
             round(frequencia_mensal * 100, 1)
