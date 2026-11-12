@@ -94,7 +94,8 @@ function permitirApenasNumeros(event) {
     return event.target.value.replace(/\D/g, "");
 }
 
-function formatarCampoCpf(e) {
+function formatarCampoCpf(e, campo) {
+    campo.setCustomValidity("");
     let valor = permitirApenasNumeros(e);
 
     if (valor.length > 9) {
@@ -120,7 +121,8 @@ function formatarCampoTelefone(e) {
     return valor;
 }
 
-function formatarCampoCep(e) {
+function formatarCampoCep(e, campo) {
+    campo.setCustomValidity("");
     let valor = permitirApenasNumeros(e);
 
     if (valor.length > 5) {

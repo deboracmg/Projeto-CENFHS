@@ -1,22 +1,10 @@
 from django.db import transaction
-from django.views.decorators.http import require_POST
-from django.shortcuts import render
 from django.http import JsonResponse
 from django.db.models import Count, Q
 import json
 
 
 from painel_administrativo.models.servicos import Aula, Frequencia, Matricula
-
-
-def aulas(request):
-    aulas = Aula.objects.select_related("turma").all()
-
-    return render(
-        request,
-        "painel/servicos/aulas.html",
-        {"aulas": aulas}
-    )
 
 
 def buscar_aulas(turma_id):

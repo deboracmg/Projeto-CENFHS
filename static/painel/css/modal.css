@@ -348,6 +348,10 @@ input[type="checkbox"] {
 }
 
 /* BUTTONS */
+.modal-footer button[hidden] {
+    display: none
+}
+
 .modal-footer button,
 .tab-top button {
     display: inline-flex;

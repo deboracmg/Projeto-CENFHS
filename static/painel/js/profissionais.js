@@ -77,8 +77,7 @@ function preencherFormularioProfissional(profissional) {
 ========================================================= */
 
 campoCpf.addEventListener("input", function (e) {
-    e.target.value = formatarCampoCpf(e);
-    campoCpf.setCustomValidity("");
+    e.target.value = formatarCampoCpf(e, campoCpf);
 });
 
 campoTelefone.addEventListener("input", function (e) {

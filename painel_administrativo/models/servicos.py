@@ -191,8 +191,9 @@ class Tratamento(models.Model):
 
     observacoes = models.TextField(blank=True)
 
-    acompanhante = models.CharField(max_length=150, blank=True)
+    nome_acompanhante = models.CharField(max_length=150, blank=True)
     telefone_acompanhante = models.CharField(max_length=20, blank=True)
+    cpf_acompanhante = models.CharField(max_length=14, blank=True)
 
     registrado_por = models.CharField(max_length=150)
 

@@ -42,7 +42,6 @@ urlpatterns = [
     path('aulas/buscar_frequencias/<int:aula_id>/', views.buscar_frequencias, name='buscar_frequencias'),
     path('aulas/salvar/', views.salvar_aula, name='salvar_aula'),
     path("aulas/excluir/", views.excluir_aula, name="excluir_aula"),
-    path('aulas/', views.aulas, name='aulas'),
 
     path('servicos/buscar/', views.buscar_servicos, name='buscar_servicos'),
     path('servicos/<int:id>/', views.detalhar_servico, name='detalhar_servico'),

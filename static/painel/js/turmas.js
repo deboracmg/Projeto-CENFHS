@@ -158,7 +158,7 @@ function exibirAulas(turma_id, aulas) {
     aulas.forEach((a, index) => {
         contentAulas += `
             <tr data-aula-id="${a.id}">
-                <td>${a.data}</td>
+                <td>${formatarData(a.data)}</td>
                 <td>${a.total_presentes}</td>
                 <td class="centralize-button">    
                     <button

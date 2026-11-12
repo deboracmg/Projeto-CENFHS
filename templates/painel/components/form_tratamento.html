@@ -21,6 +21,7 @@
             />
             <section>
                 <div class="form-section">
+                    <h3>Dados do tratamento</h3>
                     <div class="form-grid-triplo">
                         <!-- Data de entrada -->
                         <div class="form-group">
@@ -88,34 +89,6 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="acompanhante">Acompanhante</label>
-                            <input
-                                type="text"
-                                id="acompanhante"
-                                name="acompanhante"
-                                placeholder="Nome do acompanhante"
-                                maxlength="150"
-                                disabled
-                            />
-                        </div>
-
-                        <!-- Telefone -->
-                        <div class="form-group">
-                            <label for="telefone_acompanhante"
-                                >Telefone do acompanhante</label
-                            >
-
-                            <input
-                                type="text"
-                                id="telefone_acompanhante"
-                                name="telefone_acompanhante"
-                                maxlength="15"
-                                placeholder="(00) 00000-0000"
-                                disabled
-                            />
-                        </div>
-
-                        <div class="form-group">
                             <label for="registrado_por">Registrado por</label>
                             <input
                                 type="text"
@@ -128,10 +101,8 @@
                             />
                         </div>
                     </div>
-                </div>
 
-                <div class="form-section">
-                    <div class="form-group">
+                    <div class="form-group separated">
                         <label for="observacoes">Observações</label>
 
                         <textarea
@@ -140,6 +111,54 @@
                             placeholder="Digite observações sobre o tratamento"
                             disabled
                         ></textarea>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="form-section">
+                    <h3>Acompanhante responsável</h3>
+
+                    <div class="form-grid-triplo">
+                        <div class="form-group">
+                            <label for="nome_acompanhante">Nome</label>
+                            <input
+                                type="text"
+                                id="nome_acompanhante"
+                                name="nome_acompanhante"
+                                placeholder="Nome do acompanhante"
+                                maxlength="150"
+                                disabled
+                            />
+                        </div>
+
+                        <!-- Telefone -->
+                        <div class="form-group">
+                            <label for="telefone_acompanhante">Telefone</label>
+
+                            <input
+                                type="text"
+                                id="telefone_acompanhante"
+                                name="telefone_acompanhante"
+                                maxlength="15"
+                                placeholder="(00) 00000-0000"
+                                disabled
+                            />
+                        </div>
+
+                        <!-- CPF -->
+                        <div class="form-group">
+                            <label for="cpf_acompanhante">CPF</label>
+
+                            <input
+                                type="text"
+                                id="cpf_acompanhante"
+                                name="cpf_acompanhante"
+                                placeholder="000.000.000-00"
+                                maxlength="14"
+                                disabled
+                            />
+                        </div>
                     </div>
                 </div>
             </section>
@@ -339,6 +358,7 @@
             type="button"
             class="btn-concluir-avaliar"
             id="btnConcluirAvaliar"
+            hidden
         >
             <i class="fa-solid fa-check"></i>
             Concluir e Avaliar

@@ -1,17 +1,22 @@
 .galeria-painel h1 {
-    color: var(--cor-principal);
-    margin-bottom: 16px;
+    color: var(--cor-texto-principal);
+    margin-bottom: 8px;
+    font-size: 25px;
 }
 
 .galeria-painel>p {
-    margin-bottom: 16px;
     line-height: 1.5;
+    font-size: 14px;
+    color: var(--cor-texto-secundario);
 }
 
 .galeria-grade {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
     gap: 24px;
+    overflow-y: scroll;
+    max-height: 65vh;
+    margin-top: 16px;
 }
 
 .galeria-card {
