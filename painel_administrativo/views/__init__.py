@@ -12,9 +12,7 @@ from .aulas import buscar_aulas, buscar_frequencias, salvar_aula, excluir_aula
 from .encontros import listar_encontros, detalhar_encontro, salvar_encontro
 
 
-def dashboard(request):
-    return render(
-        request,
-        'painel/dashboard.html'
-    )
 
+
+
+from .dashboard import dashboard

@@ -62,7 +62,7 @@ def about_us(request):
         "site/about-us.html",
         {
             "active_page": "about_us",
-            "doadores": Doador.objects.all(),
+            "doadores": Doador.objects.filter(aprovado=True),
             "doacao_concluida": request.GET.get("doado") == "1",
             "doador_nome": request.GET.get("nome", ""),
         },
