@@ -1,7 +1,7 @@
 {% extends "painel/base.html" %}
 {% load static %}
 
-{% block title %}Dashboard{% endblock %}
+{% block titulo %}Dashboard{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'painel/css/dashboard.css' %}" />
@@ -10,86 +10,156 @@
 {% block content %}
 <div class="dashboard">
 
-    <!-- CENTRO DE FORMAÇÃO -->
-    <section class="group-section">
-        <div class="header-section">
-            <div class="section-title">
-                <i class="fa-solid fa-graduation-cap"></i>
-                <h2>Centro de Formação</h2>
+    <!-- CABEÇALHO E FILTRO GLOBAL -->
+    <header class="dashboard-header">
+        <div class="dashboard-title">
+            <h1>Dashboard</h1>
+            <p>Resumo de indicadores referente a <strong>{{ mes_nome }} de {{ ano }}</strong></p>
+        </div>
+
+        <form class="dashboard-filters" method="get">
+            <div class="filter-group">
+                <label for="filtroMes">Mês</label>
+                <select id="filtroMes" name="mes" onchange="this.form.submit()">
+                    {% for numero, nome in meses %}
+                    <option value="{{ numero }}" {% if numero == mes %}selected{% endif %}>
+                        {{ nome }}
+                    </option>
+                    {% endfor %}
+                </select>
             </div>
 
-            <form class="dashboard-filters" method="get">
-                <div class="filter-group">
-                    <select id="filtroMes" name="mes">
-                        {% for numero, nome in meses %}
-                        <option value="{{ numero }}" {% if numero == mes %}selected{% endif %}>
-                            {{ nome }}
-                        </option>
-                        {% endfor %}
-                    </select>
-                </div>
+            <div class="filter-group">
+                <label for="filtroAno">Ano</label>
+                <select id="filtroAno" name="ano" onchange="this.form.submit()">
+                    {% for numero in anos %}
+                    <option value="{{ numero }}" {% if numero == ano %}selected{% endif %}>
+                        {{ numero }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </form>
+    </header>
 
-                <div class="filter-group">
-                    <select id="filtroAno" name="ano">
-                        {% for numero in anos %}
-                        <option value="{{ numero }}" {% if numero == ano %}selected{% endif %}>
-                            {{ numero }}
-                        </option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-                <button type="submit">
-                    <i class="fa-solid fa-filter" aria-hidden="true"></i>
-                    Aplicar filtros
-                </button>
-            </form>
+    <!-- CENTRO DE FORMAÇÃO -->
+    <section class="group-section">
+        <div class="section-title">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <h2>Centro de Formação</h2>
         </div>
 
         <div class="group-cards">
 
-            <div class="dashboard-card">
-                <h5 class="metrica-label">Cursos</h5>
-                <p>Frequência média</p>
+            <article class="dashboard-card">
+                <div class="card-header">
+                    <div>
+                        <h3 class="metrica-label">Cadastros</h3>
+                        <p class="card-subtitle">Base ativa do centro</p>
+                    </div>
+                </div>
 
-                <p>
-                    Mensal:
-                    {% if frequencia_mensal != None %}
-                    {{ frequencia_mensal }}%
-                    {% else %}
-                    Sem dados
-                    {% endif %}
-                </p>
+                <div class="metrica-grid">
+                    <div class="metrica-item">
+                        <span class="metrica-periodo">Alunos</span>
+                        <strong class="metrica-valor">{{ total_alunos }}</strong>
+                        <span class="metrica-detalhe">{{ total_matriculas }} matrícula(s)</span>
+                    </div>
 
-                <p>
-                    Anual:
-                    {% if frequencia_anual != None %}
-                    {{ frequencia_anual }}%
-                    {% else %}
-                    Sem dados
-                    {% endif %}
-                </p>
-            </div>
+                    <div class="metrica-item">
+                        <span class="metrica-periodo">Turmas</span>
+                        <strong class="metrica-valor">{{ total_turmas }}</strong>
+                        <span class="metrica-detalhe">{{ total_profissionais }} profissional(is)</span>
+                    </div>
+                </div>
+            </article>
 
-            <div class="dashboard-card">
-                <h5 class="metrica-label">Atividades</h5>
-                <p>Participantes</p>
-                <p>Mensal: {{ atividades_mensal|default_if_none:"0" }}</p>
-                <p>Anual: {{ atividades_anual|default_if_none:"0" }}</p>
-            </div>
+            <article class="dashboard-card">
+                <div class="card-header">
+                    <div>
+                        <h3 class="metrica-label">Cursos</h3>
+                        <p class="card-subtitle">Frequência média nas aulas</p>
+                    </div>
+                </div>
 
-            <div class="dashboard-card">
-                <h5 class="metrica-label">Eventos</h5>
-                <p>Participantes</p>
-                <p>Mensal: {{ eventos_mensal|default_if_none:"0" }}</p>
-                <p>Anual: {{ eventos_anual|default_if_none:"0" }}</p>
-            </div>
+                <div class="metrica-grid">
+                    <div class="metrica-item">
+                        <span class="metrica-periodo">Mensal ({{ mes_nome|slice:":3" }})</span>
+                        <strong class="metrica-valor {% if frequencia_mensal == None %}sem-dados{% endif %}">
+                            {% if frequencia_mensal != None %}
+                                {{ frequencia_mensal }}%
+                            {% else %}
+                                Sem dados
+                            {% endif %}
+                        </strong>
+                        <span class="metrica-detalhe">{{ aulas_mensal }} aula(s) no mês</span>
+                    </div>
+
+                    <div class="metrica-item">
+                        <span class="metrica-periodo">Anual ({{ ano }})</span>
+                        <strong class="metrica-valor {% if frequencia_anual == None %}sem-dados{% endif %}">
+                            {% if frequencia_anual != None %}
+                                {{ frequencia_anual }}%
+                            {% else %}
+                                Sem dados
+                            {% endif %}
+                        </strong>
+                        <span class="metrica-detalhe">{{ aulas_anual }} aula(s) no ano</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="dashboard-card">
+                <div class="card-header">
+                    <div>
+                        <h3 class="metrica-label">Atividades</h3>
+                        <p class="card-subtitle">Total de participantes no período</p>
+                    </div>
+                </div>
+
+                <div class="metrica-grid">
+                    <div class="metrica-item">
+                        <span class="metrica-periodo">Mensal ({{ mes_nome|slice:":3" }})</span>
+                        <strong class="metrica-valor">{{ atividades_mensal|default_if_none:"0" }}</strong>
+                        <span class="metrica-detalhe">{{ atividades_encontros_mensal }} encontro(s)</span>
+                    </div>
+
+                    <div class="metrica-item">
+                        <span class="metrica-periodo">Anual ({{ ano }})</span>
+                        <strong class="metrica-valor">{{ atividades_anual|default_if_none:"0" }}</strong>
+                        <span class="metrica-detalhe">{{ atividades_encontros_anual }} encontro(s)</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="dashboard-card">
+                <div class="card-header">
+                    <div>
+                        <h3 class="metrica-label">Eventos</h3>
+                        <p class="card-subtitle">Total de participantes no período</p>
+                    </div>
+                </div>
+
+                <div class="metrica-grid">
+                    <div class="metrica-item">
+                        <span class="metrica-periodo">Mensal ({{ mes_nome|slice:":3" }})</span>
+                        <strong class="metrica-valor">{{ eventos_mensal|default_if_none:"0" }}</strong>
+                        <span class="metrica-detalhe">{{ eventos_realizados_mensal }} evento(s)</span>
+                    </div>
+
+                    <div class="metrica-item">
+                        <span class="metrica-periodo">Anual ({{ ano }})</span>
+                        <strong class="metrica-valor">{{ eventos_anual|default_if_none:"0" }}</strong>
+                        <span class="metrica-detalhe">{{ eventos_realizados_anual }} evento(s)</span>
+                    </div>
+                </div>
+            </article>
 
         </div>
     </section>
 
     <!-- CASA DE APOIO -->
-    <section>
+    <section class="group-section">
         <div class="section-title">
             <i class="fa-solid fa-house-medical"></i>
             <h2>Casa de Apoio</h2>
@@ -97,34 +167,91 @@
 
         <div class="group-cards">
 
-            <div class="dashboard-card">
-                <h5 class="metrica-label">Hoje</h5>
-                <p>Pacientes em atendimento: {{ pacientes_hoje }}</p>
-                <p>Acompanhantes: {{ acompanhantes_hoje }}</p>
-            </div>
+            <article class="dashboard-card">
+                <div class="card-header">
+                    <div>
+                        <h3 class="metrica-label">Atendimento Hoje</h3>
+                        <p class="card-subtitle">Pessoas acolhidas no momento</p>
+                    </div>
+                </div>
 
-            <div class="dashboard-card">
-                <h5 class="metrica-label">Anual</h5>
-                <p>Pacientes atendidos: {{ pacientes_anual }}</p>
-                <p>
-                    Avaliação de serviço:
-                    {{ avaliacao_anual|default_if_none:"Sem avaliações" }}
-                </p>
-            </div>
+                <div class="metrica-unica">
+                    <span class="metrica-periodo">Pacientes em atendimento</span>
+                    <strong class="metrica-valor">{{ pacientes_hoje }}</strong>
+                    <span class="metrica-detalhe">{{ acompanhantes_hoje }} acompanhante(s)</span>
+                </div>
+            </article>
+
+            <article class="dashboard-card">
+                <div class="card-header">
+                    <div>
+                        <h3 class="metrica-label">Pacientes Atendidos</h3>
+                        <p class="card-subtitle">Atendimentos no período</p>
+                    </div>
+                </div>
+
+                <div class="metrica-grid">
+                    <div class="metrica-item">
+                        <span class="metrica-periodo">Mensal ({{ mes_nome|slice:":3" }})</span>
+                        <strong class="metrica-valor">{{ pacientes_mensal }}</strong>
+                        <span class="metrica-detalhe">{{ tratamentos_mensal }} tratamento(s)</span>
+                    </div>
+
+                    <div class="metrica-item">
+                        <span class="metrica-periodo">Anual ({{ ano }})</span>
+                        <strong class="metrica-valor">{{ pacientes_anual }}</strong>
+                        <span class="metrica-detalhe">{{ tratamentos_anual }} tratamento(s)</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="dashboard-card">
+                <div class="card-header">
+                    <div>
+                        <h3 class="metrica-label">Avaliação de Serviço</h3>
+                        <p class="card-subtitle">Satisfação (escala de 1 a 5)</p>
+                    </div>
+                </div>
+
+                <div class="metrica-grid">
+                    <div class="metrica-item">
+                        <span class="metrica-periodo">Mensal ({{ mes_nome|slice:":3" }})</span>
+                        <strong class="metrica-valor {% if avaliacao_mensal == None %}sem-dados{% endif %}">
+                            {% if avaliacao_mensal != None %}
+                                {{ avaliacao_mensal }} <span class="metrica-conceito">- {{ avaliacao_mensal_rotulo }}</span>
+                            {% else %}
+                                Sem avaliações
+                            {% endif %}
+                        </strong>
+                        <span class="metrica-detalhe">{{ total_avaliacoes_mensal }} avaliação(ões) no mês</span>
+                    </div>
+
+                    <div class="metrica-item">
+                        <span class="metrica-periodo">Anual ({{ ano }})</span>
+                        <strong class="metrica-valor {% if avaliacao_anual == None %}sem-dados{% endif %}">
+                            {% if avaliacao_anual != None %}
+                                {{ avaliacao_anual }} <span class="metrica-conceito">- {{ avaliacao_anual_rotulo }}</span>
+                            {% else %}
+                                Sem avaliações
+                            {% endif %}
+                        </strong>
+                        <span class="metrica-detalhe">{{ total_avaliacoes_anual }} avaliação(ões) no ano</span>
+                    </div>
+                </div>
+            </article>
 
         </div>
     </section>
 
     <!-- PRÓXIMOS EVENTOS -->
-    <section class="eventos-card">
+    <section class="group-section eventos-card">
         <div class="section-title">
             <i class="fa-solid fa-calendar-days"></i>
-            <h2>Próximos eventos</h2>
+            <h2>Próximos Eventos</h2>
         </div>
 
         <div class="eventos-lista">
             {% for evento in proximos_eventos %}
-
             <div class="evento">
                 <div class="evento-data">
                     <strong>{{ evento.data_hora|date:"d" }}</strong>
@@ -134,14 +261,21 @@
                 <div class="evento-info">
                     <strong>{{ evento.servico.nome }}</strong>
                     <p>
-                        Local: {{ evento.local }} -
-                        Horário: {{ evento.data_hora|date:"H:i" }}
+                        <span><i class="fa-regular fa-clock"></i> {{ evento.data_hora|date:"d/m/Y" }} às {{ evento.data_hora|date:"H:i" }}</span>
+                        <span><i class="fa-solid fa-location-dot"></i> {{ evento.local }}</span>
+                        {% if evento.responsavel_interno or evento.responsavel_externo %}
+                        <span>
+                            <i class="fa-regular fa-user"></i>
+                            {{ evento.responsavel_interno.nome|default:evento.responsavel_externo }}
+                        </span>
+                        {% endif %}
                     </p>
                 </div>
             </div>
-
             {% empty %}
-            <p>Nenhum evento futuro cadastrado.</p>
+            <div class="eventos-vazio">
+                Nenhum evento futuro cadastrado.
+            </div>
             {% endfor %}
         </div>
     </section>

@@ -1,6 +1,6 @@
 // Sidebar
 const menuToggles = document.querySelectorAll(".menu-toggle");
-const submenuLinks = document.querySelectorAll(".submenu a");
+const submenuLinks = document.querySelectorAll(".sidebar-menu a");
 
 // Abre/fecha os menus ao clicar na opção principal
 menuToggles.forEach((toggle) => {
@@ -24,6 +24,7 @@ submenuLinks.forEach((link) => {
     const linkPath = link.getAttribute("href");
 
     if (linkPath === currentPath) {
+        console.log(link);
         link.classList.add("selected");
 
         const menuGroup = link.closest(".menu-group");

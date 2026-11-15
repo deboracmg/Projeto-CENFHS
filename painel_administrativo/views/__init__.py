@@ -1,5 +1,6 @@
 from django.shortcuts import render
 
+from .galeria import galeria
 from .alunos import listar_alunos, detalhar_aluno, salvar_aluno
 from .familia import buscar_familiar_por_cpf, salvar_familiar, excluir_familiar
 from .tratamentos import salvar_tratamento
@@ -10,9 +11,4 @@ from .turmas import listar_turmas, detalhar_turma, buscar_alunos_nao_matriculado
 from .matriculas import buscar_matriculas, excluir_matricula, salvar_matricula
 from .aulas import buscar_aulas, buscar_frequencias, salvar_aula, excluir_aula
 from .encontros import listar_encontros, detalhar_encontro, salvar_encontro
-
-
-
-
-
 from .dashboard import dashboard

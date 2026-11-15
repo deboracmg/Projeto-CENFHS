@@ -5,7 +5,8 @@
 __pycache__
 db.sqlite3
 media
-migrations
+**/migrations/*
+!**/migrations/__init__.py
 
 # Backup files # 
 *.bak 
@@ -38,6 +39,10 @@ migrations
 # Gradle
 .idea/**/gradle.xml
 .idea/**/libraries
+
+# Agent Files
+AGENTS.md
+PROJECT_CONTEXT.md
 
 # File-based project format
 *.iws

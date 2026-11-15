@@ -157,7 +157,8 @@ body {
     background-color: var(--cor-secundaria);
 }
 
-.submenu a.selected {
+.submenu a.selected,
+.menu-item.selected {
     background-color: var(--cor-fundo);
     color: var(--cor-principal);
     font-weight: 700;
