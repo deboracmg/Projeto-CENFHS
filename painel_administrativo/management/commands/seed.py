@@ -377,12 +377,12 @@ class Command(BaseCommand):
 
         turmas.append(
             Turma.objects.create(
-                servico=servicos[3],
-                descricao="Futebol - Infantil",
+                servico=servicos[1],
+                descricao="Iniciação Musical - Tarde",
                 dias_semana=["TER", "QUI"],
                 hora_inicio=time(16, 0),
                 hora_fim=time(18, 0),
-                local="Quadra esportiva",
+                local="Estúdio",
                 responsavel=profissionais[2],
             )
         )
