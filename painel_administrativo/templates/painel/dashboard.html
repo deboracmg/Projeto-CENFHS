@@ -1,7 +1,7 @@
 {% extends "painel/base.html" %}
 {% load static %}
 
-{% block title %}Dashboard{% endblock %}
+{% block titulo %}Dashboard{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'painel/css/dashboard.css' %}" />
@@ -39,9 +39,9 @@
                     </select>
                 </div>
 
-                <button type="submit">
-                    <i class="fa-solid fa-filter" aria-hidden="true"></i>
-                    Aplicar filtros
+                <button class="btn-apply" type="submit">
+                    <i class="fa-solid fa-filter"></i>
+                    Aplicar
                 </button>
             </form>
         </div>
@@ -55,18 +55,18 @@
                 <p>
                     Mensal:
                     {% if frequencia_mensal != None %}
-                    {{ frequencia_mensal }}%
+                        {{ frequencia_mensal }}%
                     {% else %}
-                    Sem dados
+                        Sem dados
                     {% endif %}
                 </p>
 
                 <p>
                     Anual:
                     {% if frequencia_anual != None %}
-                    {{ frequencia_anual }}%
+                        {{ frequencia_anual }}%
                     {% else %}
-                    Sem dados
+                        Sem dados
                     {% endif %}
                 </p>
             </div>
