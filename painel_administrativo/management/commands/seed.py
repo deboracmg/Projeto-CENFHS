@@ -1,5 +1,6 @@
 from datetime import date, datetime, time, timedelta
 from decimal import Decimal
+from hmac import new
 
 from django.core.management.base import BaseCommand
 from django.db import transaction
@@ -376,12 +377,12 @@ class Command(BaseCommand):
 
         turmas.append(
             Turma.objects.create(
-                servico=servicos[3],
-                descricao="Futebol - Infantil",
+                servico=servicos[1],
+                descricao="Iniciação Musical - Tarde",
                 dias_semana=["TER", "QUI"],
                 hora_inicio=time(16, 0),
                 hora_fim=time(18, 0),
-                local="Quadra esportiva",
+                local="Estúdio",
                 responsavel=profissionais[2],
             )
         )
@@ -451,18 +452,19 @@ class Command(BaseCommand):
             tratamento = Tratamento.objects.create(
                 paciente=pacientes[i],
                 data_entrada=date(2026, 9, 1 + i),
-                data_saida=None if i < 3 else date(2026, 10, 20),
+                data_saida=None if i < 2 else (date.today()),
                 tipo_paciente="Paciente adulto",
                 tratamento=dados[0],
                 n_sessoes=[10, 20, 8, 15][i],
                 observacoes=dados[1],
-                acompanhante=[
+                nome_acompanhante=[
                     "Maria Silva",
                     "João Santos",
                     "Ana Oliveira",
                     "Carlos Lima",
                 ][i],
                 telefone_acompanhante=f"(83) 9{9400-0000 + i:08d}",
+                cpf_acompanhante = "9999999999"+str(i),
                 registrado_por="Administrador",
             )
             tratamentos.append(tratamento)
@@ -471,7 +473,9 @@ class Command(BaseCommand):
         # 16. AVALIAÇÕES - 6 registros
         # ==========================================================
 
-        for i, tratamento in enumerate(tratamentos):
+        tratamentos_finalizados = [tratamentos[2], tratamentos[3]]
+
+        for i, tratamento in enumerate(tratamentos_finalizados):
             nota_base = (i % 3) + 3
 
             Avaliacao.objects.create(

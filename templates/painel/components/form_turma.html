@@ -1,0 +1,332 @@
+<dialog id="modalPrimario" class="large-modal">
+    <div class="modal-header">
+        <div>
+            <h2 id="tituloModal">Cadastrar nova turma</h2>
+            <p id="subtituloModal">Preencha os dados abaixo</p>
+        </div>
+
+        <button type="button" class="modal-close" id="btnFechar">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
+
+    <!-- ABAS -->
+    <div class="modal-tabs">
+        <button type="button" class="tab-button active" data-tab="dados-turma">
+            Dados da turma
+        </button>
+
+        <button type="button" class="tab-button" data-tab="matriculas">
+            Matrículas
+        </button>
+
+        <button type="button" class="tab-button" data-tab="aulas">
+            Aulas
+        </button>
+    </div>
+
+    <!-- DADOS DA TURMA -->
+    <div class="modal-body">
+        <form id="formTurma" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            <section class="tab-content active" id="dados-turma">
+                <div class="form-section">
+                    <h3>Dados da turma</h3>
+
+                    <input
+                        type="hidden"
+                        id="turma_id"
+                        name="turma_id"
+                        value=""
+                    />
+
+                    <div class="form-grid-triplo">
+                        <div class="form-group">
+                            <label for="nome_curso" class="obrigatorio"
+                                >Curso</label
+                            >
+                            <input
+                                type="hidden"
+                                name="curso_id"
+                                id="curso_id"
+                                value=""
+                            />
+
+                            <div class="campo-busca">
+                                <input
+                                    type="text"
+                                    id="nome_curso"
+                                    name="nome_curso"
+                                    placeholder="Selecione um curso"
+                                    readonly
+                                    disabled
+                                    required
+                                />
+
+                                <button
+                                    type="button"
+                                    class="btn-buscar"
+                                    id="btnBuscarCurso"
+                                    aria-label="Buscar curso"
+                                    title="Buscar curso"
+                                >
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="professor" class="obrigatorio"
+                                >Professor</label
+                            >
+
+                            <input
+                                type="hidden"
+                                name="professor_id"
+                                id="professor_id"
+                            />
+
+                            <div class="campo-busca">
+                                <input
+                                    type="text"
+                                    id="professor"
+                                    name="professor"
+                                    placeholder="Voluntário cadastrado"
+                                    disabled
+                                    required
+                                    readonly
+                                />
+
+                                <button
+                                    type="button"
+                                    class="btn-buscar"
+                                    id="btnBuscarProfessor"
+                                    aria-label="Buscar professor"
+                                    title="Buscar professor"
+                                >
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="descricao">Descrição</label>
+
+                            <input
+                                type="text"
+                                id="descricao"
+                                name="descricao"
+                                placeholder="Dê um nome a turma"
+                                maxlength="150"
+                                disabled
+                                required
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="local">Local</label>
+
+                            <input
+                                type="text"
+                                id="local"
+                                name="local"
+                                placeholder="Local da aula"
+                                maxlength="150"
+                                disabled
+                                required
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="hora_inicio">Horário de início</label>
+
+                            <input
+                                type="time"
+                                id="hora_inicio"
+                                name="hora_inicio"
+                                disabled
+                                required
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="hora_fim">Horário de fim</label>
+
+                            <input
+                                type="time"
+                                id="hora_fim"
+                                name="hora_fim"
+                                disabled
+                                required
+                            />
+                        </div>
+                    </div>
+
+                    <div class="section-checkbox">
+                        <p>Dias de aula</p>
+
+                        <div class="form-group-checkbox">
+                            <div class="checkbox-group">
+                                <input
+                                    type="checkbox"
+                                    id="domingo"
+                                    name="dias_semana"
+                                    value="DOM"
+                                    disabled
+                                />
+                                <label for="domingo">Domingo</label>
+                            </div>
+                            <div class="checkbox-group">
+                                <input
+                                    type="checkbox"
+                                    id="segunda"
+                                    name="dias_semana"
+                                    value="SEG"
+                                    disabled
+                                />
+                                <label for="segunda">Segunda</label>
+                            </div>
+                            <div class="checkbox-group">
+                                <input
+                                    type="checkbox"
+                                    id="terca"
+                                    name="dias_semana"
+                                    value="TER"
+                                    disabled
+                                />
+                                <label for="terca">Terça</label>
+                            </div>
+                            <div class="checkbox-group">
+                                <input
+                                    type="checkbox"
+                                    id="quarta"
+                                    name="dias_semana"
+                                    value="QUA"
+                                    disabled
+                                />
+                                <label for="quarta">Quarta</label>
+                            </div>
+                            <div class="checkbox-group">
+                                <input
+                                    type="checkbox"
+                                    id="quinta"
+                                    name="dias_semana"
+                                    value="QUI"
+                                    disabled
+                                />
+                                <label for="quinta">Quinta</label>
+                            </div>
+                            <div class="checkbox-group">
+                                <input
+                                    type="checkbox"
+                                    id="sexta"
+                                    name="dias_semana"
+                                    value="SEX"
+                                    disabled
+                                />
+                                <label for="sexta">Sexta</label>
+                            </div>
+                            <div class="checkbox-group">
+                                <input
+                                    type="checkbox"
+                                    id="sabado"
+                                    name="dias_semana"
+                                    value="SAB"
+                                    disabled
+                                />
+                                <label for="sabado">Sábado</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-footer">
+                    <p>
+                        Data de cadastro:
+                        <span id="data_cadastro"></span>
+                    </p>
+                </div>
+            </section>
+
+            <!-- MATRÍCULAS -->
+            <section class="tab-content" id="matriculas">
+                <div class="tab-top">
+                    <div>
+                        <h3>Matrículas</h3>
+                        <p>Alunos matriculados na turma</p>
+                    </div>
+
+                    <button
+                        type="button"
+                        class="btn-add-aluno"
+                        id="btnMatricularAluno"
+                    >
+                        <i class="fa-solid fa-plus"></i>
+                        Matricular aluno
+                    </button>
+                </div>
+
+                <div class="modal-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="left-content">Aluno</th>
+                                <th class="left-content">CPF</th>
+                                <th class="left-content">Data Matrícula</th>
+                                <th class="left-content">Matriculado Por</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="matriculaBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- AULAS -->
+            <section class="tab-content" id="aulas">
+                <div class="tab-top">
+                    <div>
+                        <h3>Aulas</h3>
+                        <p>Aulas referentes a turma</p>
+                    </div>
+
+                    <button
+                        type="button"
+                        class="btn-add-aluno"
+                        id="btnAdicionarAula"
+                    >
+                        <i class="fa-solid fa-plus"></i>
+                        Registrar aula
+                    </button>
+                </div>
+
+                <div class="modal-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="left-content">Data da aula</th>
+                                <th class="left-content">Presença total</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="aulaBody"></tbody>
+                    </table>
+                </div>
+            </section>
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn-edit" id="btnEditar">
+            <i class="fa-solid fa-pen"></i>
+            Editar
+        </button>
+
+        <button type="submit" form="formTurma" class="btn-save" id="btnSalvar">
+            <i class="fa-solid fa-floppy-disk"></i>
+            Salvar
+        </button>
+    </div>
+</dialog>

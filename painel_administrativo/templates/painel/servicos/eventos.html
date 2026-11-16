@@ -1,6 +1,11 @@
 {% extends "painel/components/tabela.html" %}
+{% load static %}
 
-{% block title %}Eventos{% endblock %}
+{% block individual_css %}
+<link rel="stylesheet" href="{% static 'painel/css/servicos.css' %}">
+{% endblock %}
+
+{% block pagina_atual %}evento{% endblock %}
 
 {% block titulo %}
 Eventos
@@ -24,6 +29,7 @@ Buscar evento
 
 {% block cabecalho %}
 
+<th>Status</th>
 <th>Evento</th>
 <th>Data de Cadastro</th>
 <th class="column-action"></th>
@@ -36,13 +42,29 @@ Buscar evento
 {% for evento in eventos %}
 
 <tr>
+    <td>
+        {% if evento.ativo %}
+            <span class="status status-ativo">
+                <i class="fa-solid fa-circle-check"
+                   aria-hidden="true"></i>
+                Ativo
+            </span>
+        {% else %}
+            <span class="status status-inativo">
+                <i class="fa-solid fa-circle-xmark"
+                   aria-hidden="true"></i>
+                Inativo
+            </span>
+        {% endif %}
+    </td>
     <td>{{ evento.nome }}</td>
-    <td>{{ evento.data_cadastro|date:"d/m/Y" }}</td>
+    <td>{{ evento.data_cadastro|date:"d/m/Y - H:i" }}</td>
     
     <td>
         <button
             type="button"
-            class="action-button"
+            class="action-button btn-abrir-servico"
+            data-servico-id="{{ evento.id }}"
             title="Mais informações"
             >
             <i class="fa-solid fa-circle-info"></i>
@@ -61,4 +83,12 @@ Buscar evento
 
 {% endfor %}
 
+{% endblock %}
+
+{% block modal %} 
+{% include "painel/components/form_servico.html" %}
+{% endblock modal %}
+
+{% block individual_js %}
+<script src="{% static 'painel/js/servicos.js' %}"></script>
 {% endblock %}

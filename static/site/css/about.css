@@ -322,6 +322,20 @@
     box-shadow: var(--sombra);
 }
 
+.donate-panel__key {
+    font-size: 14px;
+    color: var(--cor-texto-suave);
+    margin: 0 auto 16px;
+}
+
+.donate-panel__key strong {
+    display: block;
+    margin-top: 2px;
+    font-size: 17px;
+    color: var(--cor-principal);
+    user-select: all;
+}
+
 .donate-panel__payment > .text-muted {
     max-width: 320px;
     margin: 0 auto 22px;

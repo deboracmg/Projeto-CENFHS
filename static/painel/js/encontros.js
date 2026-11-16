@@ -1,6 +1,5 @@
 const modalEncontro = document.getElementById("modalPrimario");
 const formEncontro = modalEncontro.querySelector("#formEncontro");
-const camposEncontro = formEncontro.querySelectorAll("input, select");
 const btnNovoEncontro = document.getElementById("btnNovoCadastro");
 
 const tituloModalEncontro = modalEncontro.querySelector("#tituloModal");
@@ -59,7 +58,7 @@ btnNovoEncontro.addEventListener("click", () => {
     btnBuscarProfissional.disabled = false;
     btnBuscarServico.disabled = true;
     limparArquivo();
-    formNovoCadastro(modalEncontro, "encontro");
+    formNovoCadastro(modalEncontro, "Cadastrar novo encontro");
 });
 
 btnFecharEncontro.addEventListener("click", () => modalEncontro.close());
@@ -125,7 +124,7 @@ formEncontro.addEventListener("submit", async (event) => {
     try {
         event.preventDefault();
         formEncontro.classList.remove("com-erro");
-        checarFormulário(formEncontro);
+        checarFormulario(formEncontro);
 
         const url = "/dashboard/encontros/salvar/";
         const formData = new FormData(formEncontro);
@@ -259,14 +258,9 @@ btnBuscarServico.addEventListener("click", () => {
         return;
     }
 
-    const opcaoTipos = {
-        ATIVIDADE: "atividade",
-        EVENTO: "evento",
-    };
-
     abrirModalBusca({
-        titulo: `Buscar ${opcaoTipos[tipoServico.value]}`,
-        placeholder: `Buscar ${opcaoTipos[tipoServico.value]} por nome`,
+        titulo: `Buscar ${opcaoTiposServico[tipoServico.value]}`,
+        placeholder: `Buscar ${opcaoTiposServico[tipoServico.value]} por nome`,
         url: "/dashboard/servicos/buscar/",
         parametros: {
             tipo: tipoServico.value,

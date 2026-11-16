@@ -13,7 +13,7 @@
 
         <!-- Dashboard -->
         <a href="{% url 'dashboard' %}" class="menu-item">
-            <i class="fa-solid fa-house"></i>
+            <i class="fa-solid fa-chart-pie"></i>
             <span>Dashboard</span>
         </a>
 
@@ -60,14 +60,6 @@
                     <span class="submenu-dot"></span>
                     Turmas
                 </a>
-                <a href="{% url 'matriculas' %}">
-                    <span class="submenu-dot"></span>
-                    Matrículas
-                </a>
-                <a href="{% url 'aulas' %}">
-                    <span class="submenu-dot"></span>
-                    Aulas
-                </a>
             </div>
         </div>
 
@@ -108,18 +100,19 @@
                     <span class="submenu-dot"></span>
                     Pacientes
                 </a>
-                <a href="{% url 'avaliacoes' %}">
-                    <span class="submenu-dot"></span>
-                    Avaliações
-                </a>
             </div>
         </div>
 
+        <!-- Galeria do site -->
+        <a href="{% url 'galeria_site' %}" class="menu-item">
+            <i class="fa-solid fa-images"></i>
+            <span>Galeria do site</span>
+        </a>
+
         <!-- Relatórios -->
         <a class="menu-item">
-            <i class="fa-solid fa-house"></i>
+            <i class="fa-solid fa-chart-column"></i>
             <span>Relatórios</span>
         </a>
     </nav>
 </aside>
-

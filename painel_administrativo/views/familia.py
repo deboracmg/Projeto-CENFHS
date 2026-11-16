@@ -1,5 +1,6 @@
 from django.db import transaction
 from django.http import JsonResponse
+import json
 
 from painel_administrativo.models.pessoas import Familiar, Parentesco
 
@@ -133,40 +134,49 @@ def buscar_familia(aluno_id):
 
 @transaction.atomic
 def excluir_familiar(request):
-    if request.method != "POST":
+    if request.method != "DELETE":
         return JsonResponse({
-            "sucesso": False,            
+            "sucesso": False,
             "mensagem": "Método não permitido."
-            },
-            status=405
-        )
+        }, status=405)
 
-    aluno_id = request.POST.get("aluno_id")
-    familiar_id = request.POST.get("familiar_id")
+    dados = json.loads(request.body)
+
+    aluno_id = dados.get("aluno_id")
+    familiar_id = dados.get("familiar_id")
 
     if not aluno_id or not familiar_id:
         return JsonResponse({
-            "sucesso": False,            
+            "sucesso": False,
             "mensagem": "Aluno ou familiar não informado."
-            },
-            status=400
-        )
+        }, status=400)
 
-    Parentesco.objects.get(aluno_id=aluno_id, familiar_id=familiar_id).delete()
+    try:
+        Parentesco.objects.get(
+            aluno_id=aluno_id,
+            familiar_id=familiar_id
+        ).delete()
 
-    possui_outros_relacionamentos = Parentesco.objects.filter(
-                    familiar_id=familiar_id).exists()
+        possui_outros_relacionamentos = Parentesco.objects.filter(
+            familiar_id=familiar_id
+        ).exists()
 
-    if not possui_outros_relacionamentos:
-        Familiar.objects.filter(id=familiar_id).delete()
+        if not possui_outros_relacionamentos:
+            Familiar.objects.filter(id=familiar_id).delete()
 
-    dados_familia = buscar_familia(aluno_id)
+        dados_familia = buscar_familia(aluno_id)
 
-    return JsonResponse({
-        "sucesso": True,
-        "familiar_id": int(familiar_id),
-        "aluno_id": aluno_id,
-        "familia": dados_familia,
-        "mensagem": "Familiar excluído com sucesso."
-    }, status=200)
+        return JsonResponse({
+            "sucesso": True,
+            "familiar_id": int(familiar_id),
+            "aluno_id": aluno_id,
+            "familia": dados_familia,
+            "mensagem": "Familiar excluído com sucesso."
+        }, status=200)
 
+    except Parentesco.DoesNotExist:
+        return JsonResponse({
+            "sucesso": False,
+            "mensagem": "Familiar não encontrado para este aluno."
+        }, status=404)
+    

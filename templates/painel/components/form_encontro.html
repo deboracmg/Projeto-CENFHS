@@ -33,10 +33,9 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="nome_servico" class="obrigatorio"
-                        >Serviço</label
-                    >
-                    <input type="hidden" name="servico_id" id="servico_id" />
+                    <label for="nome_servico" class="obrigatorio">Serviço</label>
+
+                    <input type="hidden" name="servico_id" id="servico_id" required/>
 
                     <div class="campo-busca">
                         <input
@@ -45,7 +44,6 @@
                             name="nome_servico"
                             placeholder="Selecione um serviço"
                             readonly
-                            disabled
                             required
                         />
 

@@ -31,8 +31,9 @@ def salvar_tratamento(request):
         tratamento.tipo_paciente = request.POST.get("tipo_paciente")
         tratamento.tratamento = request.POST.get("tratamento")
         tratamento.n_sessoes = request.POST.get("n_sessoes")
-        tratamento.acompanhante = request.POST.get("acompanhante")
+        tratamento.nome_acompanhante = request.POST.get("nome_acompanhante")
         tratamento.telefone_acompanhante = request.POST.get("telefone_acompanhante")
+        tratamento.cpf_acompanhante = request.POST.get("cpf_acompanhante")
         tratamento.registrado_por = request.POST.get("registrado_por")
         tratamento.observacoes = request.POST.get("observacoes")
 
@@ -95,8 +96,9 @@ def buscar_tratamentos(paciente_id):
             "tipo_paciente": t.tipo_paciente,
             "tratamento": t.tratamento,
             "n_sessoes": t.n_sessoes,
-            "acompanhante": t.acompanhante,
+            "nome_acompanhante": t.nome_acompanhante,
             "telefone_acompanhante": t.telefone_acompanhante,
+            "cpf_acompanhante": t.cpf_acompanhante,
             "observacoes": t.observacoes,
             "registrado_por": t.registrado_por,
         }
@@ -109,7 +111,7 @@ def buscar_tratamentos(paciente_id):
         if avaliacao:
             tratamento.update({
                 "avaliacao_id": avaliacao.id,
-                "data_avaliacao": avaliacao.data_avaliacao.strftime("%d/%m/%Y"),
+                "data_avaliacao": avaliacao.data_avaliacao,
                 "atendimento": avaliacao.atendimento,
                 "infraestrutura": avaliacao.infraestrutura,
                 "higiene": avaliacao.higiene,

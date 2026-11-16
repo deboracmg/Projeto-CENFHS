@@ -18,7 +18,10 @@ const subtituloModalTratamento =
 const telefoneAcompanhante = modalTratamento.querySelector(
     "#telefone_acompanhante",
 );
+const cpfAcompanhante = modalTratamento.querySelector("#cpf_acompanhante");
 const nSessoes = modalTratamento.querySelector("#n_sessoes");
+const dataAvaliacao = document.getElementById("data_avaliacao");
+const avaliacaoMedia = document.getElementById("avaliacao_media");
 
 const btnAdicionarTratamento = document.getElementById(
     "btnAdicionarTratamento",
@@ -48,8 +51,10 @@ btnEditarTratamento.addEventListener("click", () => {
 btnConcluirAvaliar.addEventListener("click", () => {
     document.getElementById("data_saida").value = preencherDataAtual();
     exibirNotificacao("Salve o cadastro para efetuar a conclusão.", "info");
-    document.getElementById("avaliacao").classList.add("active");
-    document.getElementById("data_avaliacao").textContent = "-- / -- / ----";
+    dataAvaliacao.textContent = "-- / -- / ----";
+    sectionAvaliacao.classList.add("active");
+    btnConcluirAvaliar.disabled = true;
+    btnConcluirAvaliar.hidden = true;
 
     modalBodyTratamento.scrollTo({
         top: modalBodyTratamento.scrollHeight,
@@ -71,8 +76,12 @@ btnAdicionarTratamento.addEventListener("click", async () => {
 
     dispensarCamposAvaliacao();
     btnConcluirAvaliar.disabled = true;
+    btnConcluirAvaliar.hidden = true;
 
-    formNovoCadastro(modalTratamento, "tratamento");
+    formNovoCadastro(modalTratamento, "Cadastrar novo tratamento");
+    avaliacaoMedia.textContent = "---";
+    dataAvaliacao.textContent = "-- / -- / ----";
+    sectionAvaliacao.classList.remove("active");
     modalTratamento.querySelector("#data_entrada").value = preencherDataAtual();
     if (dados.mensagem) exibirNotificacao(dados.mensagem, "sucesso");
 });
@@ -85,14 +94,17 @@ function detalharTratamento(tratamento) {
     tituloModalTratamento.textContent = "Dados do tratamento";
     subtituloModalTratamento.textContent =
         "Código: " + tratamento.tratamento_id;
+    formTratamento.classList.remove("com-erro");
 
     if (tratamento.avaliacao_id) {
-        document.getElementById("avaliacao").classList.add("active");
+        sectionAvaliacao.classList.add("active");
         btnConcluirAvaliar.disabled = true;
+        btnConcluirAvaliar.hidden = true;
         exigirCamposAvaliacao();
     } else {
-        document.getElementById("avaliacao").classList.remove("active");
+        sectionAvaliacao.classList.remove("active");
         btnConcluirAvaliar.disabled = false;
+        btnConcluirAvaliar.hidden = false;
         dispensarCamposAvaliacao();
     }
 
@@ -110,10 +122,12 @@ function preencherFormularioTratamento(tratamento) {
         tratamento.tipo_paciente || "";
     document.getElementById("tratamento").value = tratamento.tratamento || "";
     document.getElementById("n_sessoes").value = tratamento.n_sessoes || "";
-    document.getElementById("acompanhante").value =
-        tratamento.acompanhante || "";
+    document.getElementById("nome_acompanhante").value =
+        tratamento.nome_acompanhante || "";
     document.getElementById("telefone_acompanhante").value =
         tratamento.telefone_acompanhante || "";
+    document.getElementById("cpf_acompanhante").value =
+        tratamento.cpf_acompanhante || "";
     document.getElementById("registrado_por").value =
         tratamento.registrado_por || "";
     document.getElementById("observacoes").value = tratamento.observacoes || "";
@@ -130,14 +144,16 @@ function preencherFormularioTratamento(tratamento) {
     document.getElementById("acolhimento").value = tratamento.acolhimento || "";
     document.getElementById("organizacao").value = tratamento.organizacao || "";
     document.getElementById("gestao").value = tratamento.gestao || "";
-    document.getElementById("data_avaliacao").textContent =
-        tratamento.data_avaliacao || "";
-    document.getElementById("avaliacao_media").textContent = "---";
 
+    dataAvaliacao.textContent = "-- / -- / ----";
+    avaliacaoMedia.textContent = "---";
+    
     if (tratamento.avaliacao_id) {
-        const resultado = calcularMedia(tratamento);
-        document.getElementById("avaliacao_media").textContent =
-            `${resultado[0]} - ${resultado[1]}`;
+        const data = converterDataHora(tratamento.data_avaliacao);
+        dataAvaliacao.textContent = data.split(", ").join(" - ");
+
+        const media = calcularMedia(tratamento);
+        avaliacaoMedia.textContent = `${media[0]} - ${media[1]}`;
     }
 }
 
@@ -172,6 +188,10 @@ telefoneAcompanhante.addEventListener("input", (e) => {
     e.target.value = formatarCampoTelefone(e);
 });
 
+cpfAcompanhante.addEventListener("input", (e) => {
+    e.target.value = formatarCampoCpf(e, cpfAcompanhante);
+});
+
 nSessoes.addEventListener("input", (e) => {
     e.target.value = permitirApenasNumeros(e);
 });
@@ -183,8 +203,13 @@ formTratamento.addEventListener("submit", async (event) => {
     try {
         event.preventDefault();
 
+        cpfAcompanhante.setCustomValidity("");
         formTratamento.classList.remove("com-erro");
-        checarFormulário(formTratamento);
+
+        checarFormulario(formTratamento);
+        if (cpfAcompanhante.value) {
+            checarCpf(cpfAcompanhante, formTratamento);
+        }
 
         const url = "/dashboard/tratamentos/salvar/";
         const formData = new FormData(formTratamento);
