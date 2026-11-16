@@ -1,10 +1,13 @@
 from django.urls import path
 
 from painel_administrativo import views
+from painel_administrativo.views.relatorios import relatorios
 
 urlpatterns = [
     path('', views.dashboard, name='dashboard'),
     path('galeria/', views.galeria, name='galeria_site'),
+    path('relatorios/', relatorios, name='relatorios'),
+    path('relatorios/<slug>:tipo', relatorios, name='relatorio_tipo'),
 
     # Centro de Formação
     path('alunos/', views.listar_alunos, name='alunos'),
