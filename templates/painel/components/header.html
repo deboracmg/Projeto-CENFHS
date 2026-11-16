@@ -16,7 +16,7 @@
         <div class="user-menu">
             <button class="user-button" type="button">
                 <span class="user-greeting">
-                    Olá, Fulano!
+                    Olá, {{ request.user.get_short_name|default:request.user.username }}!
                     <!-- <strong>{{ request.user.first_name }}</strong> -->
                 </span>
 
@@ -40,10 +40,13 @@
                     Configurações
                 </a>
 
-                <a href="#" class="dropdown-logout">
-                    <i class="fa-solid fa-right-from-bracket"></i>
-                    Sair
-                </a>
+                <form method="post" action="{% url 'logout' %}" class="dropdown-logout-form">
+                    {% csrf_token %}
+                    <button type="submit" class="dropdown-logout">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        Sair
+                    </button>
+                </form>
             </div>
         </div>
     </div>

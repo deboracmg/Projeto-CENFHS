@@ -34,10 +34,12 @@
                     <span class="submenu-dot"></span>
                     Profissionais
                 </a>
-                <a>
-                    <span class="submenu-dot"></span>
-                    Usuários
-                </a>
+                {% if request.user.is_staff or request.user.is_superuser %}
+                    <a href="{% url 'admin:auth_user_changelist' %}">
+                        <span class="submenu-dot"></span>
+                        Usuários
+                    </a>
+                {% endif %}
             </div>
         </div>
 

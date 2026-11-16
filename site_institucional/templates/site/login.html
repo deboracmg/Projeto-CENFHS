@@ -66,6 +66,7 @@
                 <input type="hidden" name="next" value="{{ next }}">
                 <button type="submit" class="btn btn-primary">Entrar</button>
 
+                <a href="{% url 'password_reset' %}" class="login-form__back">Esqueceu sua senha?</a>
                 <a href="{% url 'index' %}" class="login-form__back"><i class="fa-solid fa-arrow-left"></i> Voltar para o site</a>
             </form>
         </div>
