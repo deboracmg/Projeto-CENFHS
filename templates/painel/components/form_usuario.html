@@ -1,0 +1,159 @@
+<dialog id="modalPrimario" class="medium-modal">
+    <div class="modal-header">
+        <div>
+            <h2 id="tituloModal">Cadastrar novo usuário</h2>
+            <p id="subtituloModal">Preencha os dados abaixo</p>
+        </div>
+
+        <button type="button" class="modal-close" id="btnFechar">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <form id="formUsuario" novalidate>
+            {% csrf_token %}
+            <input
+                type="hidden"
+                id="usuario_id"
+                name="usuario_id"
+                value=""
+            />
+
+            <div class="form-section">
+                <h3>Dados de acesso</h3>
+
+                <div class="form-grid-triplo">
+                    <div class="form-group">
+                        <label for="nome">Nome completo</label>
+                        <input
+                            type="text"
+                            id="nome"
+                            name="nome"
+                            placeholder="Nome do usuário"
+                            maxlength="150"
+                            disabled
+                            required
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="username">Usuário (login)</label>
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            placeholder="Ex.: maria.silva"
+                            maxlength="150"
+                            autocomplete="off"
+                            disabled
+                            required
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">E-mail</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="exemplo@email.com"
+                            maxlength="254"
+                            autocomplete="off"
+                            disabled
+                            required
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-footer">
+                <div class="form-group-checkbox">
+                    <div class="checkbox-group">
+                        <input
+                            type="checkbox"
+                            id="is_staff"
+                            name="is_staff"
+                            disabled
+                        />
+                        <label for="is_staff">Administrador?</label>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input
+                            checked
+                            type="checkbox"
+                            id="ativo"
+                            name="ativo"
+                            disabled
+                        />
+                        <label for="ativo">Ativo?</label>
+                    </div>
+                </div>
+
+                <div>
+                    <p>
+                        Data de cadastro:
+                        <span id="data_cadastro"></span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="extra-section" id="secaoSenhaTemporaria" hidden>
+                <h3>Senha temporária</h3>
+                <p class="section-description" id="descricaoSenha">
+                    Copie a senha gerada abaixo e informe-a ao usuário. Ele deverá alterá-la obrigatoriamente no próximo acesso.
+                </p>
+
+                <div class="form-group">
+                        <div class="campo-senha-gerada">
+                        <input
+                            type="text"
+                            id="senha"
+                            name="senha"
+                            aria-label="Senha temporária gerada"
+                            readonly
+                            disabled
+                            autocomplete="off"
+                        />
+                        <button
+                            type="button"
+                            class="btn-copiar-senha"
+                            id="btnCopiarSenha"
+                            title="Copiar senha temporária"
+                        >
+                            <i class="fa-regular fa-copy"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn-delete" id="btnExcluir">
+            <i class="fa-solid fa-trash"></i>
+            Excluir
+        </button>
+
+        <button type="button" class="btn-redefinir-senha" id="btnRedefinirSenha" hidden>
+            <i class="fa-solid fa-key"></i>
+            Redefinir senha
+        </button>
+
+        <button type="button" class="btn-edit" id="btnEditar">
+            <i class="fa-solid fa-pen"></i>
+            Editar
+        </button>
+
+        <button
+            type="submit"
+            form="formUsuario"
+            class="btn-save"
+            id="btnSalvar"
+        >
+            <i class="fa-solid fa-floppy-disk"></i>
+            Salvar
+        </button>
+    </div>
+</dialog>

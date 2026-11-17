@@ -1,0 +1,139 @@
+<dialog id="modalPerfil" class="medium-modal">
+    <div class="modal-header">
+        <div>
+            <h2>Meu perfil</h2>
+            <p id="subtituloPerfil">Gerencie seus dados de acesso e senha</p>
+        </div>
+
+        <button type="button" class="modal-close" id="btnFecharPerfil">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <form id="formPerfil" novalidate>
+            {% csrf_token %}
+
+            <div class="form-section">
+                <h3>Dados da conta</h3>
+
+                <div class="form-grid-triplo">
+                    <div class="form-group">
+                        <label for="perfil_nome">Nome completo</label>
+                        <input
+                            type="text"
+                            id="perfil_nome"
+                            name="nome"
+                            placeholder="Seu nome"
+                            maxlength="150"
+                            required
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="perfil_username">Usuário (login)</label>
+                        <input
+                            type="text"
+                            id="perfil_username"
+                            name="username"
+                            placeholder="Seu usuário"
+                            maxlength="150"
+                            required
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="perfil_email">E-mail</label>
+                        <input
+                            type="email"
+                            id="perfil_email"
+                            name="email"
+                            placeholder="seuemail@exemplo.com"
+                            maxlength="254"
+                            required
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section" id="secaoAlterarSenha" hidden>
+                <h3>Alterar senha</h3>
+
+                <div class="form-grid-triplo">
+                    <div class="form-group">
+                        <label for="senha_atual">Senha atual</label>
+                        <input
+                            type="password"
+                            id="senha_atual"
+                            name="senha_atual"
+                            placeholder="Sua senha atual"
+                            autocomplete="current-password"
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nova_senha">Nova senha</label>
+                        <input
+                            type="password"
+                            id="nova_senha"
+                            name="nova_senha"
+                            placeholder="Mínimo de 8 caracteres"
+                            autocomplete="new-password"
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmar_nova_senha">Confirmar nova senha</label>
+                        <input
+                            type="password"
+                            id="confirmar_nova_senha"
+                            name="confirmar_nova_senha"
+                            placeholder="Repita a nova senha"
+                            autocomplete="new-password"
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <ul class="requisitos-senha" id="requisitosSenha" hidden>
+                <li data-requisito="tamanho">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                    <span>A senha deve conter pelo menos 8 caracteres.</span>
+                </li>
+                <li data-requisito="numerica">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                    <span>A senha não pode ser inteiramente numérica.</span>
+                </li>
+                <li data-requisito="similaridade">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                    <span>A senha não deve conter os dados da conta.</span>
+                </li>
+                <li data-requisito="confirmacao">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                    <span>A confirmação da senha deve coincidir com a nova senha</span>
+                </li>
+            </ul>
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <button
+            type="button"
+            class="btn-redefinir-senha"
+            id="btnAlterarSenha"
+        >
+            <i class="fa-solid fa-key"></i>
+            Alterar senha
+        </button>
+
+        <button
+            type="submit"
+            form="formPerfil"
+            class="btn-save"
+            id="btnSalvarPerfil"
+        >
+            <i class="fa-solid fa-floppy-disk"></i>
+            Salvar
+        </button>
+    </div>
+</dialog>
