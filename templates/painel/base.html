@@ -27,6 +27,7 @@
         </main>
     </div>
 
+    {% include "painel/components/form_perfil.html" %}
     <div id="notificacoes" popover="manual"></div>
     <script src="{% static 'painel/js/base.js' %}"></script>
     <script src="{% static 'painel/js/form.js' %}"></script>
@@ -34,4 +35,3 @@
     {% block extra_js %}{% endblock %}
 </body>
 </html>
-

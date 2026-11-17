@@ -1,7 +1,6 @@
 import logging
 
 from django.contrib import messages
-from django.contrib.admin.views.decorators import staff_member_required
 from django.db import transaction
 from django.shortcuts import redirect, render
 from django.templatetags.static import static
@@ -26,7 +25,6 @@ def apagar_arquivo(storage, nome):
         )
 
 
-@staff_member_required
 @require_http_methods(['GET', 'POST'])
 def galeria(request):
     formulario = None

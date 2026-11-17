@@ -66,6 +66,11 @@ async function salvarCadastro(url, formData) {
         },
     });
 
+    if (response.redirected && response.url.includes("/entrar/")) {
+        window.location.href = response.url;
+        return null;
+    }
+
     const dados = await response.json();
 
     if (!response.ok || !dados.sucesso) {
@@ -126,6 +131,11 @@ async function excluirRegistro({
             },
             body: JSON.stringify(dados),
         });
+
+        if (resposta.redirected && resposta.url.includes("/entrar/")) {
+            window.location.href = resposta.url;
+            return;
+        }
 
         const resultado = await resposta.json();
 

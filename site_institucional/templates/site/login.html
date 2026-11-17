@@ -30,8 +30,8 @@
                 <div class="login-info">
                     <div class="login-info__icon"><i class="fa-solid fa-circle-question"></i></div>
                     <div>
-                        <h3>Precisa de ajuda?</h3>
-                        <p>Esqueceu a senha ou quer um acesso? <a href="{% url 'contact_us' %}">Fale com a gente</a>.</p>
+                        <h3>Esqueceu a senha?</h3>
+                        <p>Colaboradores devem solicitar uma senha temporária a um administrador. Administradores podem recuperar pelo e-mail.</p>
                     </div>
                 </div>
             </div>
@@ -66,7 +66,7 @@
                 <input type="hidden" name="next" value="{{ next }}">
                 <button type="submit" class="btn btn-primary">Entrar</button>
 
-                <a href="{% url 'password_reset' %}" class="login-form__back">Esqueceu sua senha?</a>
+                <a href="{% url 'password_reset' %}" class="login-form__back">Recuperar senha de administrador</a>
                 <a href="{% url 'index' %}" class="login-form__back"><i class="fa-solid fa-arrow-left"></i> Voltar para o site</a>
             </form>
         </div>
