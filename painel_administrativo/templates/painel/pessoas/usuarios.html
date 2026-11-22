@@ -1,0 +1,80 @@
+{% extends "painel/components/tabela.html" %}
+{% load static %}
+
+{% block pagina_atual %}usuario{% endblock %}
+
+{% block titulo %}
+Usuários
+{% endblock %}
+
+{% block descricao %}
+Gerencie os usuários com acesso ao painel administrativo.
+{% endblock %}
+
+{% block texto_botao %}
+Novo usuário
+{% endblock %}
+
+{% block placeholder_busca %}
+Buscar usuário
+{% endblock %}
+
+{% block cabecalho %}
+<th>Usuário</th>
+<th>Nome</th>
+<th>E-mail</th>
+<th>Perfil</th>
+<th>Situação</th>
+<th class="column-action"></th>
+{% endblock %}
+
+{% block corpo %}
+{% for usuario in usuarios %}
+<tr>
+    <td>{{ usuario.username }}</td>
+    <td>{{ usuario.first_name|default:"-" }}</td>
+    <td>{{ usuario.email|default:"-" }}</td>
+    <td>
+        {% if usuario.is_staff or usuario.is_superuser %}
+            Administrador
+        {% else %}
+            Colaborador
+        {% endif %}
+    </td>
+    <td>
+        {% if not usuario.is_active %}
+            Inativo
+        {% elif not usuario.is_staff and not usuario.is_superuser and not usuario.last_login %}
+            Senha temporária
+        {% else %}
+            Ativo
+        {% endif %}
+    </td>
+    <td>
+        <button
+            type="button"
+            class="action-button btn-abrir-usuario"
+            data-usuario-id="{{ usuario.id }}"
+            title="Mais informações"
+        >
+            <i class="fa-solid fa-circle-info"></i>
+        </button>
+    </td>
+</tr>
+{% empty %}
+<tr>
+    <td colspan="6" class="empty-message">
+        Nenhum usuário cadastrado.
+    </td>
+</tr>
+{% endfor %}
+{% endblock %}
+
+{% block modal %}
+{% include "painel/components/form_usuario.html" %}
+{% include "painel/components/confirmacao.html" %}
+{% endblock modal %}
+
+{% block individual_js %}
+<script src="{% static 'painel/js/usuarios.js' %}"></script>
+{% endblock %}

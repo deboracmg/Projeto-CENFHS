@@ -72,6 +72,11 @@ async function buscarRegistros(termo = "") {
     try {
         const resposta = await fetch(`${configuracaoBusca.url}?${parametros}`);
 
+        if (resposta.redirected && resposta.url.includes("/entrar/")) {
+            window.location.href = resposta.url;
+            return;
+        }
+
         if (!resposta.ok) {
             throw new Error("Falha na consulta.");
         }

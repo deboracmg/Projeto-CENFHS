@@ -2,48 +2,37 @@
 
 <header class="top-header">
     <div class="header-left">
-        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-        <a href="{% url 'index' %}" class="header-link" target="_blank">Ver Site</a>
+        <a href="{% url 'index' %}" class="header-link" target="_blank">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            <span>Ver Site</span>
+        </a>
     </div>
 
     <div class="header-right">
-        <!-- Notificações -->
-        <button class="header-icon" type="button" title="Notificações">
-            <i class="fa-solid fa-bell"></i>
-        </button>
-
         <!-- Usuário -->
         <div class="user-menu">
             <button class="user-button" type="button">
-                <span class="user-greeting">
-                    Olá, Fulano!
-                    <!-- <strong>{{ request.user.first_name }}</strong> -->
+                <i class="fa-solid fa-circle-user user-icon" aria-hidden="true"></i>
+                <span class="user-greeting" id="saudacaoUsuario">
+                    Olá, {{ request.user.first_name.split.0|default:request.user.username }}!
                 </span>
-
-                <!-- <img
-                    src="{% static 'painel/img/avatar-default.png' %}"
-                    alt="Foto do usuário"
-                    class="user-avatar"
-                > -->
-                <i class="fa-solid fa-circle-user" title="Sem foto"></i>
+                <i class="fa-solid fa-chevron-down user-arrow" aria-hidden="true"></i>
             </button>
 
             <!-- Menu suspenso -->
             <div class="user-dropdown">
-                <a href="#">
+                <button type="button" class="dropdown-item" id="btnAbrirPerfil">
                     <i class="fa-solid fa-user"></i>
                     Meu perfil
-                </a>
+                </button>
 
-                <a href="#">
-                    <i class="fa-solid fa-gear"></i>
-                    Configurações
-                </a>
-
-                <a href="#" class="dropdown-logout">
-                    <i class="fa-solid fa-right-from-bracket"></i>
-                    Sair
-                </a>
+                <form method="post" action="{% url 'logout' %}" class="dropdown-logout-form">
+                    {% csrf_token %}
+                    <button type="submit" class="dropdown-logout">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        Sair
+                    </button>
+                </form>
             </div>
         </div>
     </div>
