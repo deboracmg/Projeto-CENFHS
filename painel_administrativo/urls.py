@@ -1,6 +1,7 @@
 from django.urls import path
 
 from painel_administrativo import views
+from painel_administrativo.views.relatorios import relatorios
 from painel_administrativo.permissions import (
     acesso_painel_required,
     administrador_required,
@@ -9,6 +10,10 @@ from painel_administrativo.permissions import (
 urlpatterns = [
     path('', acesso_painel_required(views.dashboard), name='dashboard'),
     path('galeria/', acesso_painel_required(views.galeria), name='galeria_site'),
+
+    # Relatórios
+    path('relatorios/', acesso_painel_required(relatorios), name='relatorios'),
+    path('relatorios/<slug:tipo>/', acesso_painel_required(relatorios), name='relatorio_tipo'),
 
     # Perfil do usuário autenticado
     path('perfil/', acesso_painel_required(views.detalhar_perfil), name='detalhar_perfil'),

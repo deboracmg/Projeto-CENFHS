@@ -1,0 +1,85 @@
+{% extends "painel/base.html" %}
+{% load static %}
+
+{% block titulo %}Relatórios{% endblock %}
+{% block body_class %}pagina-relatorios{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'painel/css/tabela.css' %}">
+<link rel="stylesheet" href="{% static 'painel/css/relatorios.css' %}">
+{% endblock %}
+
+{% block content %}
+<header class="page-header">
+    <h1>Relatórios</h1>
+</header>
+
+<nav class="relatorios-menu" aria-label="Tipos de relatório">
+    {% for aba in abas %}
+    <a href="{% url 'relatorio_tipo' aba.slug %}" {% if aba.ativa %} aria-current="page" {% endif %}>
+        {{ aba.titulo }}
+    </a>
+    {% endfor %}
+</nav>
+
+<section class="data-card relatorios-card" aria-labelledby="titulo-relatorio">
+    <h2 id="titulo-relatorio">{{ relatorio.titulo }}</h2>
+    <p class="relatorios-criterio">{{ relatorio.criterio }}</p>
+
+    <form class="relatorios-filtros" method="get" action="{% url 'relatorio_tipo' tipo %}">
+        {% for campo in formulario %}
+        <div class="relatorios-campo">
+            {{ campo.label_tag }}
+            {{ campo }}
+            {{ campo.errors }}
+        </div>
+        {% endfor %}
+        <div class="relatorios-acoes">
+            <button class="btn-new" type="submit">Aplicar filtros</button>
+            <a class="relatorios-link" href="{% url 'relatorio_tipo' tipo %}">Limpar</a>
+        </div>
+        {{ formulario.non_field_errors }}
+    </form>
+
+    {% if pagina is not None %}
+    {% if linhas %}
+    <div class="table-toolbar">
+        <p>{{ pagina.paginator.count }} resultado{{ pagina.paginator.count|pluralize }}</p>
+        <a class="btn-new relatorios-exportar" href="?{{ filtros_url }}formato=csv">
+            <i class="fa-solid fa-download" aria-hidden="true"></i> Exportar CSV
+        </a>
+    </div>
+    <div class="table-container" tabindex="0" role="region" aria-labelledby="titulo-relatorio">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    {% for coluna in relatorio.colunas %}<th scope="col">{{ coluna }}</th>{% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for linha in linhas %}
+                <tr>
+                    {% for valor in linha %}<td>{{ valor }}</td>{% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% if pagina.has_other_pages %}
+    <nav class="table-footer relatorios-paginacao" aria-label="Páginas do relatório">
+        {% if pagina.has_previous %}
+        <a href="?{{ filtros_url }}pagina={{ pagina.previous_page_number }}">Anterior</a>
+        {% endif %}
+        <span>Página {{ pagina.number }} de {{ pagina.paginator.num_pages }}</span>
+        {% if pagina.has_next %}
+        <a href="?{{ filtros_url }}pagina={{ pagina.next_page_number }}">Próxima</a>
+        {% endif %}
+    </nav>
+    {% endif %}
+    {% else %}
+    <p class="relatorios-vazio">Nenhum dado disponível para os filtros selecionados.</p>
+    {% endif %}
+    {% endif %}
+</section>
+{% endblock %}
