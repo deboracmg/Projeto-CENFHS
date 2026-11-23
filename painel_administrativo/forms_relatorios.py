@@ -24,7 +24,7 @@ class FiltroPeriodoForm(forms.Form):
 
 class FiltroTurmasForm(FiltroPeriodoForm):
     curso = forms.ModelChoiceField(
-        label="Curso ou atividade", required=False, empty_label="Todos",
+        label="Curso", required=False, empty_label="Todos",
         queryset=Servico.objects.filter(turmas__isnull=False).distinct().order_by("nome", "pk"),
     )
     turma = forms.ModelChoiceField(
@@ -37,7 +37,7 @@ class FiltroTurmasForm(FiltroPeriodoForm):
         curso = dados.get("curso")
         turma = dados.get("turma")
         if curso and turma and turma.servico_id != curso.pk:
-            self.add_error("turma", "Escolha uma turma do curso ou atividade selecionada.")
+            self.add_error("turma", "Escolha uma turma do curso selecionada.")
         return dados
 
 

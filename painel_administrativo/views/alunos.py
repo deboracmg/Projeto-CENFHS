@@ -1,9 +1,19 @@
+import logging
+from pathlib import Path
+
+from django.core.exceptions import ValidationError
 from django.db import transaction
+from django.db.models import Count, F, Q
 from django.http import JsonResponse
 from django.shortcuts import render
+from PIL import Image, UnidentifiedImageError
 
 from painel_administrativo.models.pessoas import Aluno, Familiar, Saude, Socioeconomico
+from painel_administrativo.models.servicos import Matricula
 from painel_administrativo.views.familia import buscar_familia
+
+logger = logging.getLogger(__name__)
+
 
 # Centro de Formação
 def listar_alunos(request):
@@ -39,6 +49,7 @@ def detalhar_aluno(request, id):
     ).get(id=id)
 
     dados_familia = buscar_familia(id)
+    dados_matriculas = _buscar_matriculas_aluno(id)
 
     dados_saude = None
     if hasattr(aluno, "saude"):
@@ -91,7 +102,8 @@ def detalhar_aluno(request, id):
 
         "saude": dados_saude,
         "socioeconomico": dados_socioeconomico,
-        "familia": dados_familia
+        "familia": dados_familia,
+        "matriculas": dados_matriculas,
     }
 
     return JsonResponse(dados)
@@ -99,16 +111,32 @@ def detalhar_aluno(request, id):
 
 @transaction.atomic
 def salvar_aluno(request):
+    aluno = None
+    foto_antiga = None
+    remover_foto = False
+    foto_enviada = None
+
     try:
         if request.method != "POST":
             return JsonResponse({
-                "sucesso": False,            
+                "sucesso": False,
                 "mensagem": "Método não permitido."
                 },
                 status=405,
             )
 
         aluno_id = request.POST.get("aluno_id")
+        cpf = (request.POST.get("cpf") or "").strip()
+
+        cpf_existente = Aluno.objects.filter(cpf=cpf)
+        if aluno_id:
+            cpf_existente = cpf_existente.exclude(id=aluno_id)
+        if cpf_existente.exists():
+            return JsonResponse({
+                "sucesso": False,
+                "mensagem": "Já existe um aluno cadastrado com este CPF."
+            }, status=400)
+
         if aluno_id:
             mensagem = "Aluno atualizado com sucesso."
             aluno = Aluno.objects.get(id=aluno_id)
@@ -116,9 +144,15 @@ def salvar_aluno(request):
             mensagem = "Aluno cadastrado com sucesso."
             aluno = Aluno()
 
-        
+        foto_antiga = (aluno.foto.storage, aluno.foto.name) if aluno.foto else None
+        remover_foto = request.POST.get("remover_foto") == "true"
+        foto_enviada = request.FILES.get("foto")
+
+        if not remover_foto and foto_enviada:
+            _validar_foto_aluno(foto_enviada)
+
         aluno.nome = request.POST.get("nome")
-        aluno.cpf = request.POST.get("cpf")
+        aluno.cpf = cpf
         aluno.rg = request.POST.get("rg")
         aluno.data_nascimento = request.POST.get("data_nascimento")
         aluno.naturalidade = request.POST.get("naturalidade")
@@ -139,19 +173,22 @@ def salvar_aluno(request):
         aluno.observacoes = request.POST.get("observacoes")
         aluno.autoriza_uso_imagem = (request.POST.get("autoriza_uso_imagem") == "on")
 
-        remover_foto = request.POST.get("remover_foto") == "true"
         if remover_foto:
-            if aluno.foto:
-                aluno.foto.delete(save=False)
             aluno.foto = None
-
-        elif request.FILES.get("foto"):
-            aluno.foto = request.FILES.get("foto")
+        elif foto_enviada:
+            aluno.foto = foto_enviada
 
         if request.FILES.get("termo_autorizacao"):
             aluno.termo_autorizacao = request.FILES.get("termo_autorizacao")
 
         aluno.save()
+
+        if foto_antiga and (remover_foto or foto_enviada):
+            nome_atual = aluno.foto.name if aluno.foto else None
+            if nome_atual != foto_antiga[1]:
+                transaction.on_commit(
+                    lambda antigo=foto_antiga: _apagar_arquivo_foto(*antigo)
+                )
 
         dados_saude = {
             "sus": request.POST.get("sus"),
@@ -170,7 +207,7 @@ def salvar_aluno(request):
                 defaults=dados_saude
             )
         else:
-            Saude.objects.filter(aluno=aluno).delete()     
+            Saude.objects.filter(aluno=aluno).delete()
 
         renda_familiar = request.POST.get("renda_familiar")
         qtd_moradores = request.POST.get("qtd_moradores")
@@ -199,13 +236,98 @@ def salvar_aluno(request):
             "id": aluno.id,
             "mensagem": mensagem
         }, status=200)
-    
+
+    except ValidationError as erro:
+        transaction.set_rollback(True)
+        return JsonResponse({
+            "sucesso": False,
+            "mensagem": erro.message
+        }, status=400)
+
     except Exception as erro:
+        transaction.set_rollback(True)
+        if (
+            aluno is not None
+            and not remover_foto
+            and foto_enviada
+            and aluno.foto
+            and getattr(aluno.foto, "_committed", False)
+            and (not foto_antiga or aluno.foto.name != foto_antiga[1])
+        ):
+            _apagar_arquivo_foto(aluno.foto.storage, aluno.foto.name)
         print(f"Erro ao salvar aluno: {erro}")
 
         return JsonResponse({
             "sucesso": False,
             "mensagem": "Não foi possível salvar o aluno."
         }, status=500)
+
+
+# Funções auxiliares
+LIMITE_FOTO_BYTES = 2 * 1024 * 1024
+FORMATOS_FOTO_PERMITIDOS = {
+    ".jpg": "JPEG",
+    ".jpeg": "JPEG",
+    ".png": "PNG",
+    ".webp": "WEBP",
+}
+
+
+def _buscar_matriculas_aluno(aluno_id):
+    mesma_turma = Q(frequencias__aula__turma_id=F("turma_id"))
+    matriculas = (
+        Matricula.objects
+        .filter(aluno_id=aluno_id)
+        .select_related("turma")
+        .annotate(
+            total_aulas=Count("frequencias", filter=mesma_turma, distinct=True),
+            faltas=Count(
+                "frequencias",
+                filter=mesma_turma & Q(frequencias__presente=False),
+                distinct=True,
+            ),
+        )
+        .order_by("-data_matricula")
+    )
+
+    return [
+        {
+            "id": m.id,
+            "turma": m.turma.descricao,
+            "total_aulas": m.total_aulas,
+            "faltas": m.faltas,
+        }
+        for m in matriculas
+    ]
+
+
+def _validar_foto_aluno(foto):
+    if foto.size > LIMITE_FOTO_BYTES:
+        raise ValidationError("A foto deve ter no máximo 2 MB.")
+
+    extensao = Path(foto.name).suffix.lower()
+    if extensao not in FORMATOS_FOTO_PERMITIDOS:
+        raise ValidationError("Envie uma imagem JPG, PNG ou WebP válida.")
+
+    try:
+        with Image.open(foto) as imagem:
+            formato = imagem.format
+            imagem.verify()
+    except (UnidentifiedImageError, OSError, Image.DecompressionBombError):
+        raise ValidationError("O arquivo selecionado não é uma imagem válida.")
+    finally:
+        foto.seek(0)
+
+    if formato != FORMATOS_FOTO_PERMITIDOS[extensao]:
+        raise ValidationError(
+            "Envie uma imagem JPG, PNG ou WebP válida, com a extensão correspondente."
+        )
+
+
+def _apagar_arquivo_foto(storage, nome):
+    try:
+        storage.delete(nome)
+    except OSError:
+        logger.exception("Não foi possível remover a foto do aluno.")
 
 

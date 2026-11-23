@@ -58,6 +58,16 @@ def salvar_familiar(request):
 
         familiar_id = request.POST.get("familiar_id")
         aluno_id = request.POST.get("aluno_id")
+        cpf = (request.POST.get("cpf_familiar") or "").strip()
+
+        cpf_existente = Familiar.objects.filter(cpf=cpf)
+        if familiar_id:
+            cpf_existente = cpf_existente.exclude(id=familiar_id)
+        if cpf_existente.exists():
+            return JsonResponse({
+                "sucesso": False,
+                "mensagem": "Já existe um familiar cadastrado com este CPF."
+            }, status=400)
 
         if familiar_id:
             familiar = Familiar.objects.get(id=familiar_id)
@@ -65,7 +75,7 @@ def salvar_familiar(request):
             familiar = Familiar()
 
         familiar.nome = request.POST.get("nome_familiar")
-        familiar.cpf = request.POST.get("cpf_familiar")
+        familiar.cpf = cpf
         familiar.telefone = request.POST.get("telefone_familiar")
         familiar.profissao = request.POST.get("profissao_familiar")
         familiar.local_trabalho = request.POST.get("local_trabalho")
