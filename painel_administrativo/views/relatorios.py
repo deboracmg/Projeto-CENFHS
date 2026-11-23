@@ -2,7 +2,6 @@ import csv
 from datetime import date, datetime, time, timedelta
 from urllib.parse import urlencode
 
-from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Count, F, Q, Sum
 from django.http import Http404, HttpResponse
@@ -173,7 +172,6 @@ def exportar_csv(tipo, colunas, registros):
 
 
 @never_cache
-@login_required
 @require_safe
 def relatorios(request, tipo="matriculas", slug=None):
     if slug is not None:

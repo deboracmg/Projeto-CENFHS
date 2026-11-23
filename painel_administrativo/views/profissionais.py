@@ -72,6 +72,16 @@ def salvar_profissional(request):
             )
 
         profissional_id = request.POST.get("profissional_id")
+        cpf = (request.POST.get("cpf") or "").strip()
+
+        cpf_existente = Profissional.objects.filter(cpf=cpf)
+        if profissional_id:
+            cpf_existente = cpf_existente.exclude(id=profissional_id)
+        if cpf_existente.exists():
+            return JsonResponse({
+                "sucesso": False,
+                "mensagem": "Já existe um profissional cadastrado com este CPF."
+            }, status=400)
 
         if profissional_id:
             profissional = Profissional.objects.get(id=profissional_id)
@@ -81,7 +91,7 @@ def salvar_profissional(request):
             mensagem = "Profissional cadastrado com sucesso."
 
         profissional.nome = request.POST.get("nome")
-        profissional.cpf = request.POST.get("cpf")
+        profissional.cpf = cpf
         profissional.data_nascimento = request.POST.get("data_nascimento")
         profissional.telefone = request.POST.get("telefone")
         profissional.email = request.POST.get("email")

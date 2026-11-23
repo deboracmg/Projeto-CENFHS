@@ -72,6 +72,17 @@ def salvar_paciente(request):
             )
 
         paciente_id = request.POST.get("paciente_id")
+        cpf = (request.POST.get("cpf") or "").strip()
+
+        cpf_existente = Paciente.objects.filter(cpf=cpf)
+        if paciente_id:
+            cpf_existente = cpf_existente.exclude(id=paciente_id)
+        if cpf_existente.exists():
+            return JsonResponse({
+                "sucesso": False,
+                "mensagem": "Já existe um paciente cadastrado com este CPF."
+            }, status=400)
+
         if paciente_id:
             mensagem = "Paciente atualizado com sucesso."
             paciente = Paciente.objects.get(id=paciente_id)
@@ -80,7 +91,7 @@ def salvar_paciente(request):
             paciente = Paciente()
 
         paciente.nome = request.POST.get("nome")
-        paciente.cpf = request.POST.get("cpf")
+        paciente.cpf = cpf
         paciente.rg = request.POST.get("rg")
         paciente.data_nascimento = request.POST.get("data_nascimento")
         paciente.naturalidade = request.POST.get("naturalidade")

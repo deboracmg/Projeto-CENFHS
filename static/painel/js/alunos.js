@@ -1,5 +1,6 @@
 const modalAluno = document.getElementById("modalPrimario");
 const familiaBody = modalAluno.querySelector("#familiaBody");
+const matriculasBody = modalAluno.querySelector("#matriculasBody");
 
 const btnNovoAluno = document.getElementById("btnNovoCadastro");
 const btnFecharAluno = modalAluno.querySelector("#btnFechar");
@@ -13,6 +14,7 @@ const camposAluno = formAluno.querySelectorAll("input, select, textarea");
 const tituloModalAluno = modalAluno.querySelector("#tituloModal");
 const subtituloModalAluno = modalAluno.querySelector("#subtituloModal");
 const previewPhoto = modalAluno.querySelector(".photo-preview");
+const inputFoto = document.getElementById("foto");
 const campoCpf = modalAluno.querySelector("#cpf");
 const campoTelefone = modalAluno.querySelector("#telefone");
 const campoRendaFamiliar = modalAluno.querySelector("#renda_familiar");
@@ -56,10 +58,9 @@ btnsDetalharAluno.forEach((button) => {
 
 btnNovoAluno.addEventListener("click", () => {
     document.getElementById("remover_foto").value = "false";
-    previewPhoto.innerHTML = `
-        <i class="fa-solid fa-camera"></i>
-        <span class="photo-label">Foto do aluno</span>
-    `;
+    inputFoto.value = "";
+    revogarUrlFotoTemporaria();
+    preencherPreviewFoto(null);
     familiaBody.innerHTML = `
     <tr>
         <td colspan="5" class="empty-message">
@@ -67,7 +68,8 @@ btnNovoAluno.addEventListener("click", () => {
         </td>
     </tr>
     `;
-    
+    exibirMatriculas([]);
+
     formNovoCadastro(modalAluno, "Cadastrar novo aluno");
 });
 
@@ -110,6 +112,9 @@ function preencherFormulario(aluno) {
     const data = converterDataHora(aluno.data_cadastro);
     document.getElementById("data_cadastro").textContent = data.split(", ").join(" - ");
 
+    document.getElementById("remover_foto").value = "false";
+    inputFoto.value = "";
+    revogarUrlFotoTemporaria();
     preencherPreviewFoto(aluno.foto);
 
     /* Endereço */
@@ -149,6 +154,22 @@ function preencherFormulario(aluno) {
         aluno.socioeconomico?.qtd_moradores || "";
 
     exibirFamilia(aluno.id, aluno.familia);
+    exibirMatriculas(aluno.matriculas || []);
+}
+
+/* =========================================================
+   SELECIONAR ARQUIVO IMAGEM
+========================================================= */
+const LIMITE_FOTO = 2 * 1024 * 1024; // 2 MiB
+const TIPOS_FOTO_PERMITIDOS = ["image/jpeg", "image/png", "image/webp"];
+const EXTENSOES_FOTO_PERMITIDAS = /\.(jpe?g|png|webp)$/i;
+let urlFotoTemporaria = null;
+
+function revogarUrlFotoTemporaria() {
+    if (urlFotoTemporaria) {
+        URL.revokeObjectURL(urlFotoTemporaria);
+        urlFotoTemporaria = null;
+    }
 }
 
 function preencherPreviewFoto(url) {
@@ -172,23 +193,85 @@ function preencherPreviewFoto(url) {
         </button>
     `;
 
-    document.getElementById("btnRemoverFoto").addEventListener("click", () => {
-        document.getElementById("remover_foto").value = "true";
-        document.getElementById("foto").value = "";
-
-        preencherPreviewFoto(null);
-    });
+    document
+        .getElementById("btnRemoverFoto")
+        .addEventListener("click", (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            document.getElementById("remover_foto").value = "true";
+            inputFoto.value = "";
+            revogarUrlFotoTemporaria();
+            preencherPreviewFoto(null);
+        });
 }
 
-const inputFoto = document.getElementById("foto");
-inputFoto.addEventListener("change", () => {
-    if (!inputFoto.files[0]) return;
+inputFoto.addEventListener("change", async () => {
+    const arquivo = inputFoto.files[0];
+    if (!arquivo) return;
 
-    const url = URL.createObjectURL(inputFoto.files[0]);
-    preencherPreviewFoto(url);
+    const extensaoValida = EXTENSOES_FOTO_PERMITIDAS.test(arquivo.name);
+    const tipoValido = TIPOS_FOTO_PERMITIDOS.includes(arquivo.type);
+
+    if (!extensaoValida || !tipoValido) {
+        exibirNotificacao("Envie uma imagem JPG, PNG ou WebP válida.", "aviso");
+        inputFoto.value = "";
+        return;
+    }
+
+    if (arquivo.size > LIMITE_FOTO) {
+        exibirNotificacao("A foto deve ter no máximo 2 MB.", "aviso");
+        inputFoto.value = "";
+        return;
+    }
+
+    try {
+        const bitmap = await createImageBitmap(arquivo);
+        bitmap.close();
+    } catch {
+        exibirNotificacao(
+            "O arquivo selecionado não é uma imagem válida.",
+            "aviso",
+        );
+        inputFoto.value = "";
+        return;
+    }
+
+    revogarUrlFotoTemporaria();
+    urlFotoTemporaria = URL.createObjectURL(arquivo);
+    preencherPreviewFoto(urlFotoTemporaria);
 
     document.getElementById("remover_foto").value = "false";
 });
+
+/* =========================================================
+   EXIBIR DADOS RELACIONADOS
+========================================================= */
+function exibirMatriculas(matriculas) {
+    if (!matriculas.length) {
+        matriculasBody.innerHTML = `
+        <tr>
+            <td colspan="4" class="empty-message">
+                Nenhuma matrícula encontrada.
+            </td>
+        </tr>
+        `;
+        return;
+    }
+
+    let contentMatriculas = "";
+    matriculas.forEach((m) => {
+        contentMatriculas += `
+            <tr data-matricula-id="${m.id}">
+                <td>${m.id}</td>
+                <td>${m.turma}</td>
+                <td class="centralize-content">${m.total_aulas}</td>
+                <td class="centralize-content">${m.faltas}</td>
+            </tr>
+        `;
+    });
+
+    matriculasBody.innerHTML = contentMatriculas;
+}
 
 function exibirFamilia(aluno_id, familia) {
     if (!familia.length) {
@@ -337,3 +420,4 @@ formAluno.addEventListener("submit", async (event) => {
 ========================================================= */
 
 btnFecharAluno.addEventListener("click", () => modalAluno.close());
+modalAluno.addEventListener("close", revogarUrlFotoTemporaria);
